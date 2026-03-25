@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Bruno Ap. Silvestre — Fullstack Software Engineer"
+    />
+    <title>Bruno Silvestre — Currículo</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/print.css" media="print" />
+  </head>
+
+  <body>
+    <!-- ======================================================
+       HEADER
+       ====================================================== -->
+    <header class="site-header" role="banner">
+      <div class="header-controls">
+        <button
+          id="lang-toggle"
+          class="btn-lang"
+          aria-label="Switch to English"
+        >
+          <img id="lang-flag" src="assets/img/us-flag.png" alt="English" />
+        </button>
+        <button id="print-btn" class="btn-print" data-i18n="controls.print">
+          Imprimir / PDF
+        </button>
+      </div>
+    </header>
+
+    <!-- ======================================================
+       MAIN CV LAYOUT
+       ====================================================== -->
+    <main class="cv-layout" role="main">
+      <!-- ====================================================
+         SIDEBAR
+         ==================================================== -->
+      <aside class="sidebar" aria-label="Informações pessoais">
+        <!-- Avatar + Name + Title -->
+        <div class="card avatar-card">
+          <div class="avatar-wrapper">
+            <!-- PHOTO: To use a real photo, replace the span below with:
+               <img src="photo.jpg" alt="Bruno Silvestre" />
+               and remove the .avatar-initials span. -->
+            <span class="avatar-initials" aria-hidden="true">BS</span>
+          </div>
+          <h1 class="profile-name">Bruno Ap. Silvestre</h1>
+          <p class="profile-title" data-i18n="sidebar.title">
+            Engenheiro de Software Fullstack
+          </p>
+        </div>
+
+        <!-- Contact -->
+        <div class="card">
+          <h2 class="card-heading" data-i18n="sidebar.contactHeading">
+            Contato
+          </h2>
+          <ul class="contact-list">
+            <li>
+              <svg
+                class="icon"
+                stroke="currentColor"
+                fill="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M460.6 147.3L353 256.9c-.8.8-.8 2 0 2.8l75.3 80.2c5.1 5.1 5.1 13.3 0 18.4-2.5 2.5-5.9 3.8-9.2 3.8s-6.7-1.3-9.2-3.8l-75-79.9c-.8-.8-2.1-.8-2.9 0L313.7 297c-15.3 15.5-35.6 24.1-57.4 24.2-22.1.1-43.1-9.2-58.6-24.9l-17.6-17.9c-.8-.8-2.1-.8-2.9 0l-75 79.9c-2.5 2.5-5.9 3.8-9.2 3.8s-6.7-1.3-9.2-3.8c-5.1-5.1-5.1-13.3 0-18.4l75.3-80.2c.7-.8.7-2 0-2.8L51.4 147.3c-1.3-1.3-3.4-.4-3.4 1.4V368c0 17.6 14.4 32 32 32h352c17.6 0 32-14.4 32-32V148.7c0-1.8-2.2-2.6-3.4-1.4z"
+                ></path>
+                <path
+                  d="M256 295.1c14.8 0 28.7-5.8 39.1-16.4L452 119c-5.5-4.4-12.3-7-19.8-7H79.9c-7.5 0-14.4 2.6-19.8 7L217 278.7c10.3 10.5 24.2 16.4 39 16.4z"
+                ></path>
+              </svg>
+              <a href="mailto:bruno.ap.silvestre@gmail.com"
+                >bruno.ap.silvestre@gmail.com</a
+              >
+            </li>
+            <li>
+              <svg
+                class="icon"
+                stroke="currentColor"
+                fill="currentColor"
+                stroke-width="0"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48zm-16.39 307.37l-15 65A15 15 0 0 1 354 416C194 416 64 286.29 64 126a15.7 15.7 0 0 1 11.63-14.61l65-15A18.23 18.23 0 0 1 144 96a16.27 16.27 0 0 1 13.79 9.09l30 70A17.9 17.9 0 0 1 189 181a17 17 0 0 1-5.5 11.61l-37.89 31a231.91 231.91 0 0 0 110.78 110.78l31-37.89A17 17 0 0 1 299 291a17.85 17.85 0 0 1 5.91 1.21l70 30A16.25 16.25 0 0 1 384 336a17.41 17.41 0 0 1-.39 3.37z"
+                ></path>
+              </svg>
+              <a href="tel:+5514988246613">+55 (14) 98824-6613</a>
+            </li>
+            <li>
+              <svg
+                class="icon"
+                stroke="currentColor"
+                fill="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"
+                ></path>
+              </svg>
+              <span data-i18n="sidebar.location">
+                Araraquara / SP — Brasil
+              </span>
+            </li>
+            <li>
+              <svg
+                class="icon"
+                stroke="currentColor"
+                fill="currentColor"
+                stroke-width="0"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"
+                ></path>
+              </svg>
+              <a
+                href="https://www.linkedin.com/in/bruno-silvestre-aa970820b/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn</a
+              >
+            </li>
+            <li>
+              <svg
+                class="icon"
+                stroke="currentColor"
+                fill="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 32C132.3 32 32 134.9 32 261.7c0 101.5 64.2 187.5 153.2 217.9a17.56 17.56 0 0 0 3.8.4c8.3 0 11.5-6.1 11.5-11.4 0-5.5-.2-19.9-.3-39.1a102.4 102.4 0 0 1-22.6 2.7c-43.1 0-52.9-33.5-52.9-33.5-10.2-26.5-24.9-33.6-24.9-33.6-19.5-13.7-.1-14.1 1.4-14.1h.1c22.5 2 34.3 23.8 34.3 23.8 11.2 19.6 26.2 25.1 39.6 25.1a63 63 0 0 0 25.6-6c2-14.8 7.8-24.9 14.2-30.7-49.7-5.8-102-25.5-102-113.5 0-25.1 8.7-45.6 23-61.6-2.3-5.8-10-29.2 2.2-60.8a18.64 18.64 0 0 1 5-.5c8.1 0 26.4 3.1 56.6 24.1a208.21 208.21 0 0 1 112.2 0c30.2-21 48.5-24.1 56.6-24.1a18.64 18.64 0 0 1 5 .5c12.2 31.6 4.5 55 2.2 60.8 14.3 16.1 23 36.6 23 61.6 0 88.2-52.4 107.6-102.3 113.3 8 7.1 15.2 21.1 15.2 42.5 0 30.7-.3 55.5-.3 63 0 5.4 3.1 11.5 11.4 11.5a19.35 19.35 0 0 0 4-.4C415.9 449.2 480 363.1 480 261.7 480 134.9 379.7 32 256 32z"
+                ></path>
+              </svg>
+              <a
+                href="https://github.com/BrunoSilvestre00"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- Info -->
+        <div class="card">
+          <h2 class="card-heading" data-i18n="sidebar.infoHeading">
+            Informações
+          </h2>
+          <ul class="info-list">
+            <li>
+              <span class="info-label" data-i18n="sidebar.ageLabel"
+                >Idade:</span
+              >
+              <span id="age-display" aria-live="polite"></span>
+            </li>
+            <li>
+              <span class="info-label" data-i18n="sidebar.englishLabel"
+                >Inglês:</span
+              >
+              <a
+                href="https://certs.duolingo.com/3c7vqmarcwmqzqkb"
+                target="_blank"
+                rel="noopener noreferrer"
+                >CEFR B2</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- Skills -->
+        <div class="card">
+          <h2 class="card-heading" data-i18n="sidebar.skillsProficient">
+            Habilidades — Proficiente
+          </h2>
+          <div class="skills-block">
+            <ul class="skill-tags">
+              <li>Django</li>
+              <li>FastAPI</li>
+              <li>ReactJS</li>
+              <li>Docker</li>
+              <li>Git / GitHub</li>
+              <li>AWS EC2</li>
+              <li>AWS ECS</li>
+              <li>AWS S3</li>
+              <li>AWS Lambda</li>
+              <li>SQL</li>
+              <li>Redis</li>
+              <li>Python</li>
+              <li>TypeScript</li>
+            </ul>
+          </div>
+
+          <h2 class="card-heading" data-i18n="sidebar.skillsFamiliar">
+            Habilidades — Familiaridade
+          </h2>
+          <div class="skills-block">
+            <ul class="skill-tags familiar">
+              <li>Java</li>
+              <li>Spring</li>
+              <li>C</li>
+              <li>C++</li>
+              <li>C#</li>
+              <li>Go</li>
+              <li>Angular</li>
+              <li>Qdrant</li>
+              <li>Firebase</li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ====================================================
+         MAIN CONTENT
+         ==================================================== -->
+      <section class="main-content" aria-label="Conteúdo principal">
+        <!-- Summary -->
+        <div class="card">
+          <h2 class="section-heading" data-i18n="main.summaryHeading">
+            Resumo
+          </h2>
+          <p class="summary-text" data-i18n="main.summaryText"></p>
+          <div class="badge-row" style="margin-top: 1rem">
+            <span class="badge" data-i18n="badges.medal"
+              >🏅 Medalhista InterIF</span
+            >
+            <span class="badge" data-i18n="badges.marathon"
+              >🏃 Finalista Maratona SBC</span
+            >
+            <span class="badge">CEFR B2</span>
+          </div>
+        </div>
+
+        <!-- Experience -->
+        <div class="card">
+          <h2 class="section-heading" data-i18n="main.experienceHeading">
+            Experiência
+          </h2>
+
+          <article class="entry">
+            <div class="entry-header">
+              <h3>
+                <a
+                  href="https://dio.me/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >DIO</a
+                >
+              </h3>
+              <span class="entry-date" data-i18n="experience.dio.period"
+                >Abr 2022 – Presente</span
+              >
+            </div>
+            <p class="entry-role" data-i18n="experience.dio.role">
+              Engenheiro de Software Fullstack Pleno
+            </p>
+            <ul class="entry-bullets">
+              <li data-i18n="experience.dio.bullet1">
+                Landing pages automatizadas, catálogo de conteúdos e checkout de
+                pagamento
+              </li>
+              <li data-i18n="experience.dio.bullet2">
+                Fluxo de ensino, educação e disponibilização de conteúdos
+              </li>
+              <li data-i18n="experience.dio.bullet3">
+                Talent-match — plataforma B2B para contratação de talentos
+              </li>
+            </ul>
+          </article>
+        </div>
+
+        <!-- Education -->
+        <div class="card">
+          <h2 class="section-heading" data-i18n="main.educationHeading">
+            Formação
+          </h2>
+
+          <article class="entry">
+            <div class="entry-header">
+              <h3>
+                <a
+                  href="https://www.icmc.usp.br/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >ICMC/USP</a
+                >
+              </h3>
+              <span class="entry-date" data-i18n="education.usp.period"
+                >Mar 2023 – Ago 2026 (previsto)</span
+              >
+            </div>
+            <p class="entry-role" data-i18n="education.usp.degree">
+              Mestrado em Ciências de Computação
+            </p>
+            <p class="entry-note" data-i18n="education.usp.note">
+              Pesquisa: IA e Educação — Testes Adaptativos Computadorizados
+              (CAT), Teoria de Resposta ao Item (IRT) e Modelos de Diagnóstico
+              Cognitivo (CDM)
+            </p>
+          </article>
+
+          <article class="entry">
+            <div class="entry-header">
+              <h3>
+                <a
+                  href="https://www.arq.ifsp.edu.br/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  IFSP —
+                  <span data-i18n="education.ifsp.campus"
+                    >Campus Araraquara</span
+                  >
+                </a>
+              </h3>
+              <span class="entry-date" data-i18n="education.ifsp.period"
+                >Fev 2020 – Dez 2022</span
+              >
+            </div>
+            <p class="entry-role" data-i18n="education.ifsp.degree">
+              Análise e Desenvolvimento de Sistemas
+            </p>
+          </article>
+        </div>
+
+        <!-- Projects -->
+        <div class="card">
+          <h2 class="section-heading" data-i18n="main.projectsHeading">
+            Projetos
+          </h2>
+
+          <article class="entry">
+            <div class="entry-header">
+              <h3>
+                <svg
+                  class="icon-link"
+                  stroke="currentColor"
+                  fill="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                  ></path>
+                </svg>
+                <a
+                  href="https://github.com/cat-api-icmc/master-cat-api"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-i18n="projects.catapi.name"
+                >
+                  CAT API</a
+                >
+              </h3>
+              <span class="entry-date" data-i18n="projects.catapi.period"
+                >2023 – Presente</span
+              >
+            </div>
+            <p class="entry-role" data-i18n="projects.catapi.type">
+              Mestrado / Pesquisa — ICMC-USP
+            </p>
+            <p class="entry-note" data-i18n="projects.catapi.desc_1"></p>
+            <p class="entry-note" data-i18n="projects.catapi.desc_2"></p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <!-- Scripts — i18n must load before main -->
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

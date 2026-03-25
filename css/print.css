@@ -1,0 +1,95 @@
+/**
+ * print.css — A4 PDF print overrides
+ * Keeps the dark blue theme on paper.
+ */
+
+@media print {
+
+  /* ── Page Setup ── */
+  @page {
+    size:   A4 portrait;
+    margin: 14mm 12mm;
+  }
+
+  /* ── Force all backgrounds to render ── */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust:         exact !important;
+  }
+
+  /* ── Disable animations ── */
+  *, *::before, *::after {
+    animation:  none !important;
+    transition: none !important;
+  }
+
+  /* ── Body: keep dark gradient ── */
+  html {
+    background: #0a0f1e !important;
+  }
+
+  body {
+    background: linear-gradient(135deg, #0a0f1e 0%, #0d1b3e 60%, #071030 100%) !important;
+    background-attachment: scroll !important;
+    color:     #e8eaf6 !important;
+    font-size: 9.5pt !important;
+    line-height: 1.55 !important;
+  }
+
+  /* ── Hide UI controls ── */
+  .site-header {
+    display: none !important;
+  }
+
+  /* ── Layout: two columns in pt units ── */
+  .cv-layout {
+    display:               grid !important;
+    grid-template-columns: 160pt 1fr !important;
+    grid-template-areas:   "sidebar main" !important;
+    gap:                   8mm !important;
+    padding:               0 !important;
+    max-width:             none !important;
+  }
+
+  .sidebar {
+    position: static !important;
+  }
+
+  /* ── Cards: solid dark (no backdrop-filter in print) ── */
+  .card {
+    background:              rgba(255, 255, 255, 0.05) !important;
+    border:                  1px solid rgba(79, 126, 247, 0.3) !important;
+    box-shadow:              none !important;
+    backdrop-filter:         none !important;
+    -webkit-backdrop-filter: none !important;
+    break-inside:            avoid !important;
+    page-break-inside:       avoid !important;
+  }
+
+  /* ── Prevent entries from splitting ── */
+  .entry {
+    break-inside:      avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  h2, h3 {
+    break-after:      avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  /* ── Show full URLs after http/https links ── */
+  a[href^="http"]::after,
+  a[href^="https"]::after {
+    content:    " (" attr(href) ")";
+    font-size:  6.5pt;
+    color:      #8892b0;
+    font-style: italic;
+  }
+
+  /* Don't expand mailto / tel links */
+  a[href^="mailto"]::after,
+  a[href^="tel"]::after {
+    content: none !important;
+  }
+
+}

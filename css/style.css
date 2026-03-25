@@ -1,0 +1,477 @@
+/* ============================================================
+   1. CSS Custom Properties (Design Tokens)
+   ============================================================ */
+:root {
+  /* Background */
+  --bg-gradient-start: #0a0f1e;
+  --bg-gradient-end:   #0d1b3e;
+
+  /* Glass cards */
+  --card-bg:      rgba(255, 255, 255, 0.04);
+  --card-border:  rgba(255, 255, 255, 0.08);
+  --card-blur:    12px;
+  --card-radius:  16px;
+  --card-padding: 1.5rem;
+  --card-gap:     1rem;
+
+  /* Accent / Glow */
+  --accent:       #4f7ef7;
+  --accent-glow:  rgba(79, 126, 247, 0.25);
+  --accent-hover: #6b93ff;
+  --accent-dim:   rgba(79, 126, 247, 0.2);
+
+  /* Text */
+  --text-primary:   #e8eaf6;
+  --text-secondary: #8892b0;
+  --text-muted:     #4a5568;
+  --link-color:     #6b93ff;
+
+  /* Layout */
+  --sidebar-width:  280px;
+  --layout-gap:     1.5rem;
+  --layout-padding: 2rem;
+
+  /* Font */
+  --font-body:      'Inter', system-ui, -apple-system, sans-serif;
+  --font-size-base: 15px;
+  --line-height:    1.65;
+
+  /* Transitions */
+  --t-fast: 150ms ease;
+  --t-base: 250ms ease;
+}
+
+/* ============================================================
+   2. Reset & Base
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--bg-gradient-start); /* fallback */
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 60%, #071030 100%);
+  background-attachment: fixed;
+  color:       var(--text-primary);
+  font-family: var(--font-body);
+  font-size:   var(--font-size-base);
+  line-height: var(--line-height);
+  min-height:  100vh;
+}
+
+a {
+  color:           var(--link-color);
+  text-decoration: none;
+  transition:      color var(--t-fast);
+}
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+ul { list-style: none; }
+
+/* ============================================================
+   3. Typography
+   ============================================================ */
+h1 { font-size: 1.5rem; font-weight: 700; line-height: 1.2; }
+h2 { font-size: 0.7rem; }
+h3 { font-size: 0.95rem; font-weight: 600; }
+
+/* ============================================================
+   4. Header & Controls
+   ============================================================ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.6rem var(--layout-padding);
+  background: rgba(10, 15, 30, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.header-controls {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.btn-lang,
+.btn-print {
+  font-family:   var(--font-body);
+  font-size:     0.78rem;
+  font-weight:   600;
+  letter-spacing: 0.03em;
+  padding:       0.38rem 1rem;
+  border-radius: 99px;
+  border:        1px solid var(--card-border);
+  background:    rgba(255, 255, 255, 0.05);
+  color:         var(--text-primary);
+  cursor:        pointer;
+  transition:    border-color var(--t-fast), background var(--t-fast), box-shadow var(--t-fast), color var(--t-fast);
+}
+
+.btn-lang {
+  padding:         0rem;
+  width:           2.2rem;
+  height:          2.2rem;
+  border-radius:   50%;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  overflow:        hidden;
+}
+
+.btn-lang img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display:    block;
+  pointer-events: none;
+}
+
+.btn-lang:hover,
+.btn-print:hover {
+  border-color: var(--accent);
+  background:   rgba(79, 126, 247, 0.12);
+  box-shadow:   0 0 14px var(--accent-glow);
+  color:        var(--accent-hover);
+}
+
+.btn-print {
+  border-color: rgba(79, 126, 247, 0.4);
+  color:        var(--accent-hover);
+}
+
+/* ============================================================
+   5. Layout: Two-Column Grid
+   ============================================================ */
+.cv-layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-areas: "sidebar main";
+  gap:        var(--layout-gap);
+  max-width:  1100px;
+  margin:     0 auto;
+  padding:    var(--layout-padding);
+  align-items: start;
+}
+
+.sidebar      { grid-area: sidebar; display: flex; flex-direction: column; gap: var(--card-gap); position: sticky; top: 60px; }
+.main-content { grid-area: main;    display: flex; flex-direction: column; gap: var(--card-gap); }
+
+/* ============================================================
+   6. Cards (Glassmorphism)
+   ============================================================ */
+.card {
+  background:            var(--card-bg);
+  border:                1px solid var(--card-border);
+  border-radius:         var(--card-radius);
+  padding:               var(--card-padding);
+  backdrop-filter:       blur(var(--card-blur));
+  -webkit-backdrop-filter: blur(var(--card-blur));
+  transition:            border-color var(--t-base), box-shadow var(--t-base);
+}
+
+.card:hover {
+  border-color: rgba(79, 126, 247, 0.28);
+  box-shadow:   0 4px 30px rgba(79, 126, 247, 0.12);
+}
+
+/* ============================================================
+   7. Avatar Card
+   ============================================================ */
+.avatar-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding-top: 2rem;
+  padding-bottom: 1.5rem;
+}
+
+.avatar-wrapper {
+  width:         110px;
+  height:        110px;
+  border-radius: 50%;
+  background:    linear-gradient(135deg, #1a237e 0%, #283593 50%, #1565c0 100%);
+  border:        2.5px solid var(--accent);
+  box-shadow:    0 0 24px var(--accent-glow), 0 0 48px rgba(79, 126, 247, 0.1);
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+  overflow:      hidden; /* photo drops in cleanly */
+  flex-shrink:   0;
+}
+
+/* To use a real photo: replace .avatar-initials span with <img src="photo.jpg" alt="Bruno Silvestre"> */
+.avatar-wrapper img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+}
+
+.avatar-initials {
+  font-size:   2.2rem;
+  font-weight: 700;
+  color:       #fff;
+  user-select: none;
+}
+
+.profile-name {
+  font-size:   1.25rem;
+  font-weight: 700;
+  color:       var(--text-primary);
+  line-height: 1.2;
+  margin-top: 0.25rem;
+}
+
+.profile-title {
+  font-size:  0.82rem;
+  font-weight: 500;
+  color:      var(--accent);
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   8. Contact Card
+   ============================================================ */
+.contact-list {
+  display:        flex;
+  flex-direction: column;
+  gap:            0.55rem;
+  margin-top:     0.5rem;
+}
+
+.contact-list li {
+  display:     flex;
+  align-items: center;
+  gap:         0.5rem;
+  font-size:   0.82rem;
+  color:       var(--text-secondary);
+  word-break:  break-all;
+}
+
+.contact-list li a, .contact-list li span {
+  color: var(--text-secondary);
+  transition: color var(--t-fast);
+}
+
+.contact-list .icon {
+  font-size:  1rem;
+  width:      1.25rem;
+}
+
+/* ============================================================
+   9. Info Card
+   ============================================================ */
+.info-list {
+  display:        flex;
+  flex-direction: column;
+  gap:            0.45rem;
+  margin-top:     0.5rem;
+}
+
+.info-list li {
+  display:     flex;
+  align-items: center;
+  gap:         0.4rem;
+  font-size:   0.82rem;
+  color:       var(--text-secondary);
+}
+
+.info-label {
+  font-weight: 600;
+  color:       var(--text-primary);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   10. Skills Card
+   ============================================================ */
+.skills-block { margin-bottom: 0.75rem; }
+.skills-block:last-child { margin-bottom: 0; }
+
+.skill-tags {
+  display:     flex;
+  flex-wrap:   wrap;
+  gap:         0.35rem;
+  margin-top:  0.45rem;
+}
+
+.skill-tags li {
+  font-size:     0.72rem;
+  font-weight:   500;
+  padding:       0.22rem 0.65rem;
+  border-radius: 99px;
+  background:    rgba(79, 126, 247, 0.1);
+  border:        1px solid rgba(79, 126, 247, 0.28);
+  color:         var(--accent-hover);
+  white-space:   nowrap;
+  transition:    background var(--t-fast), border-color var(--t-fast);
+}
+
+.skill-tags li:hover {
+  background:  rgba(79, 126, 247, 0.2);
+  border-color: var(--accent);
+}
+
+.skill-tags.familiar li {
+  background:   rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+  color:        var(--text-secondary);
+}
+
+.skill-tags.familiar li:hover {
+  border-color: var(--accent-dim);
+  color:        var(--text-primary);
+}
+
+/* ============================================================
+   11. Section Heading
+   ============================================================ */
+.card-heading,
+.section-heading {
+  font-size:      0.68rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color:          var(--accent);
+  padding-bottom: 0.45rem;
+  margin-bottom:  0.75rem;
+  border-bottom:  1px solid rgba(79, 126, 247, 0.18);
+}
+
+/* ============================================================
+   12. Entry (Experience / Education / Projects)
+   ============================================================ */
+.entry {
+  padding-left:  1rem;
+  border-left:   2px solid rgba(79, 126, 247, 0.25);
+  margin-bottom: 1.4rem;
+  transition:    border-color var(--t-base);
+}
+
+.entry:last-child { margin-bottom: 0; }
+
+.entry:hover { border-left-color: var(--accent); }
+
+.entry-header {
+  display:       flex;
+  justify-content: space-between;
+  align-items:   flex-start;
+  flex-wrap:     wrap;
+  gap:           0.25rem;
+  margin-bottom: 0.2rem;
+}
+
+.entry-header h3 a { color: var(--text-primary); }
+.entry-header h3 a:hover { color: var(--accent-hover); }
+
+.entry-date {
+  font-size:   0.75rem;
+  color:       var(--text-secondary);
+  white-space: nowrap;
+  padding-top: 0.05rem;
+}
+
+.entry-role {
+  font-size:     0.82rem;
+  font-weight:   500;
+  color:         var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.entry-bullets {
+  padding-left: 1.1rem;
+  display:      flex;
+  flex-direction: column;
+  gap:          0.2rem;
+}
+
+.entry-bullets li {
+  font-size: 0.84rem;
+  color:     var(--text-secondary);
+  list-style: disc;
+}
+
+.entry-note {
+  font-size:  0.8rem;
+  color:      var(--text-secondary);
+  font-style: italic;
+  margin-top: 0.35rem;
+  text-align: justify;
+}
+
+/* Summary text */
+.summary-text {
+  font-size:   0.88rem;
+  color:       var(--text-secondary);
+  line-height: 1.75;
+}
+
+/* ============================================================
+   13. Badges (awards / certifications)
+   ============================================================ */
+.badge-row {
+  display:    flex;
+  flex-wrap:  wrap;
+  gap:        0.4rem;
+  margin-top: 0.5rem;
+}
+
+.badge {
+  font-size:     0.72rem;
+  font-weight:   600;
+  padding:       0.2rem 0.65rem;
+  border-radius: 99px;
+  background:    rgba(79, 126, 247, 0.08);
+  border:        1px solid rgba(79, 126, 247, 0.22);
+  color:         var(--accent-hover);
+}
+
+/* ============================================================
+   14. Responsive (Mobile)
+   ============================================================ */
+@media (max-width: 768px) {
+  body { background-attachment: scroll; }
+
+  .cv-layout {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "sidebar"
+      "main";
+    padding: 1rem;
+    gap:     1rem;
+  }
+
+  .sidebar { position: static; }
+
+  .avatar-card { padding: 1.5rem; }
+
+  .site-header { padding: 0.5rem 1rem; }
+}
+
+@media (max-width: 480px) {
+  .btn-lang, .btn-print { font-size: 0.72rem; padding: 0.32rem 0.75rem; }
+  .entry-header { flex-direction: column; }
+}
+
+.icon-link {
+  width: 0.75em;
+  height: 0.75em;
+  margin-left: 0.25rem;
+  opacity: 0.6;
+  transition: opacity var(--t-fast);
+}
