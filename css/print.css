@@ -1,39 +1,62 @@
 /**
- * print.css — A4 PDF print overrides
- * Keeps the dark blue theme on paper.
+ * print.css — A4 PDF output
+ *
+ * Follows whichever theme is active on screen, because every colour here
+ * resolves through the tokens in style.css (:root / :root[data-theme="light"]).
+ *
+ * Two hard requirements drive this file:
+ *
+ * 1. TEXT MUST STAY TEXT. Chrome flattens a page into a bitmap when it has to
+ *    composite a layer, which kills text selection and link annotations. The
+ *    triggers are neutralised below for EVERY element (not just .card):
+ *    backdrop-filter, filter, mix-blend-mode, box-shadow, position:sticky and
+ *    background-attachment:fixed. The full-page linear-gradient is also
+ *    replaced by a flat colour (--bg-flat) for the same reason.
+ *
+ * 2. NO WHITE FRAME. @page margin cannot be selected per theme (it is not part
+ *    of the element cascade), so js/main.js injects the right @page rule on
+ *    beforeprint: 12mm for light (invisible, white-on-white, and every page
+ *    gets it) and 0 for dark (full-bleed, no frame). The rule below is only the
+ *    no-JS fallback.
  */
 
 @media print {
 
-  /* ── Page Setup ── */
+  /* ── Page setup (overridden at runtime by main.js → #page-rule) ── */
   @page {
     size:   A4 portrait;
-    margin: 14mm 12mm;
+    margin: 12mm;
   }
 
-  /* ── Force all backgrounds to render ── */
-  * {
+  /* ── Force backgrounds to render, and kill every rasterisation trigger ── */
+  *, *::before, *::after {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust:         exact !important;
-  }
 
-  /* ── Disable animations ── */
-  *, *::before, *::after {
+    /* These are what turn the PDF into an image. */
+    backdrop-filter:         none !important;
+    -webkit-backdrop-filter: none !important;
+    filter:                  none !important;
+    mix-blend-mode:          normal !important;
+    box-shadow:              none !important;
+    text-shadow:             none !important;
+
     animation:  none !important;
     transition: none !important;
   }
 
-  /* ── Body: keep dark gradient ── */
+  /* ── Flat background: no gradient, no fixed attachment ── */
   html {
-    background: #0a0f1e !important;
+    background: var(--bg-flat) !important;
   }
 
   body {
-    background: linear-gradient(135deg, #0a0f1e 0%, #0d1b3e 60%, #071030 100%) !important;
-    background-attachment: scroll !important;
-    color:     #e8eaf6 !important;
-    font-size: 9.5pt !important;
-    line-height: 1.55 !important;
+    background:             var(--bg-flat) !important;
+    background-image:       none !important;
+    background-attachment:  scroll !important;
+    color:                  var(--text-primary) !important;
+    font-size:              9.5pt !important;
+    line-height:            1.55 !important;
   }
 
   /* ── Hide UI controls ── */
@@ -41,55 +64,112 @@
     display: none !important;
   }
 
-  /* ── Layout: two columns in pt units ── */
+  /* ── Layout: two columns in absolute units ── */
   .cv-layout {
     display:               grid !important;
     grid-template-columns: 160pt 1fr !important;
     grid-template-areas:   "sidebar main" !important;
     gap:                   8mm !important;
-    padding:               0 !important;
     max-width:             none !important;
+    margin:                0 !important;
+    /* Light theme relies on the @page margin; dark bleeds to the edge and
+       therefore needs its own inner padding. */
+    padding:               0 !important;
   }
 
-  .sidebar {
+  :root[data-theme="dark"] .cv-layout,
+  :root:not([data-theme="light"]) .cv-layout {
+    padding: 12mm 11mm !important;
+  }
+
+  /* Nothing may be sticky on paper */
+  .sidebar,
+  .site-header {
     position: static !important;
   }
 
-  /* ── Cards: solid dark (no backdrop-filter in print) ── */
+  /* ── Cards: keep the border, drop the glass ── */
   .card {
-    background:              rgba(255, 255, 255, 0.05) !important;
-    border:                  1px solid rgba(79, 126, 247, 0.3) !important;
-    box-shadow:              none !important;
-    backdrop-filter:         none !important;
-    -webkit-backdrop-filter: none !important;
-    break-inside:            avoid !important;
-    page-break-inside:       avoid !important;
+    background:    var(--card-bg) !important;
+    border:        1px solid var(--card-border) !important;
+    border-radius: 10pt !important;
+    padding:       9pt 10pt !important;
+    /* Deliberately NOT break-inside:avoid — the experience card is taller than
+       one page, and an unsatisfiable avoid leaves a huge blank gap. */
+    break-inside:  auto !important;
   }
 
-  /* ── Prevent entries from splitting ── */
+  /* Keep individual items and their headings together instead */
   .entry {
     break-inside:      avoid !important;
     page-break-inside: avoid !important;
   }
 
-  h2, h3 {
+  h2, h3, h4,
+  .card-heading,
+  .section-heading,
+  .entry-subheading {
     break-after:      avoid !important;
     page-break-after: avoid !important;
   }
 
-  /* ── Show full URLs after http/https links ── */
-  a[href^="http"]::after,
-  a[href^="https"]::after {
-    content:    " (" attr(href) ")";
-    font-size:  6.5pt;
-    color:      #8892b0;
-    font-style: italic;
+  .entry-bullets li {
+    break-inside: avoid !important;
   }
 
-  /* Don't expand mailto / tel links */
-  a[href^="mailto"]::after,
-  a[href^="tel"]::after {
-    content: none !important;
+  /* ── Avatar: flatten the gradient, keep the shape ── */
+  .avatar-wrapper {
+    width:      70pt !important;
+    height:     70pt !important;
+    background: var(--avatar-gradient) !important;
+    border:     1.5pt solid var(--avatar-border) !important;
   }
 
+  .avatar-initials { font-size: 22pt !important; }
+
+  /* ── Links stay real anchors: Chrome emits clickable annotations for them.
+        No " (https://…)" expansion — the Drive URLs are 60+ chars and would
+        wreck the layout. Keep them visually marked instead. ── */
+  a {
+    color:           var(--link-color) !important;
+    text-decoration: none !important;
+  }
+
+  .entry-links a,
+  .skill-tags li,
+  .badge {
+    background: var(--tag-bg) !important;
+    border:     1px solid var(--tag-border) !important;
+    color:      var(--tag-text) !important;
+  }
+
+  .skill-tags.familiar li {
+    background:   var(--tag-familiar-bg) !important;
+    border-color: var(--tag-familiar-border) !important;
+    color:        var(--text-secondary) !important;
+  }
+
+  /* ── Tighter type on paper ── */
+  .profile-name  { font-size: 15pt !important; }
+  .profile-title { font-size: 8.5pt !important; }
+
+  .card-heading,
+  .section-heading { font-size: 7pt !important; margin-bottom: 6pt !important; }
+
+  .entry-subheading { font-size: 6.8pt !important; margin-top: 7pt !important; }
+
+  .contact-list li,
+  .info-list li     { font-size: 7.8pt !important; }
+  .skill-tags li    { font-size: 7pt !important; padding: 1pt 5pt !important; }
+  .entry-bullets li { font-size: 8pt !important; }
+  .entry-note,
+  .entry-stack      { font-size: 7.8pt !important; }
+  .summary-text     { font-size: 8.3pt !important; line-height: 1.6 !important; }
+  .entry            { margin-bottom: 9pt !important; }
+
+  /* Justified text with hyphenation reads better in a narrow print column */
+  .entry-note,
+  .summary-text {
+    hyphens: auto;
+  }
 }

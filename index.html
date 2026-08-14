@@ -5,9 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Bruno Ap. Silvestre — Fullstack Software Engineer"
+      content="Bruno Ap. Silvestre — Engenheiro de Software Fullstack, Mestre em Ciências de Computação (ICMC-USP)"
     />
     <title>Bruno Silvestre — Currículo</title>
+
+    <!-- Theme must be resolved BEFORE first paint, otherwise the page flashes
+         the wrong theme while main.js is still loading at the end of <body>. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('cv_theme');
+          var theme =
+            stored ||
+            (window.matchMedia('(prefers-color-scheme: light)').matches
+              ? 'light'
+              : 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,6 +46,24 @@
        ====================================================== -->
     <header class="site-header" role="banner">
       <div class="header-controls">
+        <button
+          id="theme-toggle"
+          class="btn-theme"
+          data-i18n-aria="controls.themeToggle"
+          aria-label="Alternar tema"
+        >
+          <!-- Shows the icon of the theme it switches TO -->
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-14a1 1 0 0 1 1 1v1.5a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1zm0 16a1 1 0 0 1 1 1v1.5a1 1 0 0 1-2 0V20a1 1 0 0 1 1-1zM3 12a1 1 0 0 1 1-1h1.5a1 1 0 0 1 0 2H4a1 1 0 0 1-1-1zm15.5-1H20a1 1 0 0 1 0 2h-1.5a1 1 0 0 1 0-2zM5.99 4.58a1 1 0 0 1 1.42 0l1.06 1.06a1 1 0 0 1-1.42 1.42L5.99 6a1 1 0 0 1 0-1.42zm9.54 9.54a1 1 0 0 1 1.41 0l1.06 1.06a1 1 0 0 1-1.41 1.41l-1.06-1.06a1 1 0 0 1 0-1.41zM18.01 4.58a1 1 0 0 1 0 1.42l-1.06 1.06a1 1 0 0 1-1.42-1.42l1.06-1.06a1 1 0 0 1 1.42 0zM8.47 14.12a1 1 0 0 1 0 1.41l-1.06 1.06a1 1 0 0 1-1.41-1.41l1.06-1.06a1 1 0 0 1 1.41 0z"
+            ></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12.3 4.9c.4-.2.3-.85-.14-.92a8 8 0 1 0 9.86 9.86c-.07-.44-.72-.55-.92-.14a6.5 6.5 0 0 1-8.8-8.8z"
+            ></path>
+          </svg>
+        </button>
         <button
           id="lang-toggle"
           class="btn-lang"
@@ -200,19 +236,59 @@
           </h2>
           <div class="skills-block">
             <ul class="skill-tags">
+              <li>Python</li>
               <li>Django</li>
               <li>FastAPI</li>
+              <li>TypeScript</li>
               <li>ReactJS</li>
+              <li>Redux</li>
+              <li>Vite</li>
+              <li>Tailwind CSS</li>
+              <li>styled-components</li>
+              <li>SQL</li>
+              <li>PostgreSQL</li>
+              <li>MySQL / Aurora</li>
+              <li>MariaDB</li>
+              <li>Redis</li>
+              <li>Celery</li>
               <li>Docker</li>
               <li>Git / GitHub</li>
-              <li>AWS EC2</li>
+            </ul>
+          </div>
+
+          <h2 class="card-heading" data-i18n="sidebar.skillsCloud">
+            Cloud &amp; DevOps
+          </h2>
+          <div class="skills-block">
+            <ul class="skill-tags">
               <li>AWS ECS</li>
-              <li>AWS S3</li>
               <li>AWS Lambda</li>
-              <li>SQL</li>
-              <li>Redis</li>
-              <li>Python</li>
-              <li>TypeScript</li>
+              <li>AWS S3</li>
+              <li>CloudFront</li>
+              <li>EventBridge</li>
+              <li>SQS</li>
+              <li>SES</li>
+              <li>AWS EC2</li>
+              <li>Terraform</li>
+              <li>GitHub Actions</li>
+              <li>Keycloak (SSO)</li>
+            </ul>
+          </div>
+
+          <h2 class="card-heading" data-i18n="sidebar.skillsAI">
+            IA &amp; Dados
+          </h2>
+          <div class="skills-block">
+            <ul class="skill-tags">
+              <li>LangChain</li>
+              <li>Langflow</li>
+              <li>OpenAI API</li>
+              <li>Qdrant</li>
+              <li>Chroma</li>
+              <li>Neo4j</li>
+              <li>R (mirtCAT)</li>
+              <li>Claude Code / Codex</li>
+              <li>MCP</li>
             </ul>
           </div>
 
@@ -223,12 +299,12 @@
             <ul class="skill-tags familiar">
               <li>Java</li>
               <li>Spring</li>
+              <li>Angular</li>
+              <li>Android (Java)</li>
               <li>C</li>
               <li>C++</li>
               <li>C#</li>
               <li>Go</li>
-              <li>Angular</li>
-              <li>Qdrant</li>
               <li>Firebase</li>
             </ul>
           </div>
@@ -246,6 +322,9 @@
           </h2>
           <p class="summary-text" data-i18n="main.summaryText"></p>
           <div class="badge-row" style="margin-top: 1rem">
+            <span class="badge" data-i18n="badges.master"
+              >🎓 Mestre em Ciências de Computação</span
+            >
             <span class="badge" data-i18n="badges.medal"
               >🏅 Medalhista InterIF</span
             >
@@ -271,6 +350,13 @@
                   rel="noopener noreferrer"
                   >DIO</a
                 >
+                <a
+                  class="entry-alt-link"
+                  href="https://web.dio.me/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >web.dio.me</a
+                >
               </h3>
               <span class="entry-date" data-i18n="experience.dio.period"
                 >Abr 2022 – Presente</span
@@ -279,17 +365,48 @@
             <p class="entry-role" data-i18n="experience.dio.role">
               Engenheiro de Software Fullstack Pleno
             </p>
+            <p
+              class="entry-stack"
+              data-i18n-html="experience.dio.stack"
+            ></p>
+            <p class="entry-note" data-i18n="experience.dio.lead"></p>
+
+            <h4
+              class="entry-subheading"
+              data-i18n="experience.dio.projectsLabel"
+            >
+              Principais projetos
+            </h4>
             <ul class="entry-bullets">
-              <li data-i18n="experience.dio.bullet1">
-                Landing pages automatizadas, catálogo de conteúdos e checkout de
-                pagamento
-              </li>
-              <li data-i18n="experience.dio.bullet2">
-                Fluxo de ensino, educação e disponibilização de conteúdos
-              </li>
-              <li data-i18n="experience.dio.bullet3">
-                Talent-match — plataforma B2B para contratação de talentos
-              </li>
+              <li data-i18n-html="experience.dio.proj1"></li>
+              <li data-i18n-html="experience.dio.proj2"></li>
+              <li data-i18n-html="experience.dio.proj3"></li>
+              <li data-i18n-html="experience.dio.proj4"></li>
+              <li data-i18n-html="experience.dio.proj5"></li>
+              <li data-i18n-html="experience.dio.proj6"></li>
+              <li data-i18n-html="experience.dio.proj7"></li>
+              <li data-i18n-html="experience.dio.proj8"></li>
+              <li data-i18n-html="experience.dio.proj9"></li>
+            </ul>
+
+            <h4
+              class="entry-subheading"
+              data-i18n="experience.dio.highlightsLabel"
+            >
+              Destaques de engenharia
+            </h4>
+            <ul class="entry-bullets">
+              <li data-i18n-html="experience.dio.hl1"></li>
+              <li data-i18n-html="experience.dio.hl2"></li>
+              <li data-i18n-html="experience.dio.hl3"></li>
+              <li data-i18n-html="experience.dio.hl4"></li>
+              <li data-i18n-html="experience.dio.hl5"></li>
+              <li data-i18n-html="experience.dio.hl6"></li>
+              <li data-i18n-html="experience.dio.hl7"></li>
+              <li data-i18n-html="experience.dio.hl8"></li>
+              <li data-i18n-html="experience.dio.hl9"></li>
+              <li data-i18n-html="experience.dio.hl10"></li>
+              <li data-i18n-html="experience.dio.hl11"></li>
             </ul>
           </article>
         </div>
@@ -311,17 +428,51 @@
                 >
               </h3>
               <span class="entry-date" data-i18n="education.usp.period"
-                >Mar 2023 – Ago 2026 (previsto)</span
+                >Mar 2023 – Jul 2026</span
               >
             </div>
             <p class="entry-role" data-i18n="education.usp.degree">
-              Mestrado em Ciências de Computação
+              Mestrado em Ciências de Computação — concluído
             </p>
             <p class="entry-note" data-i18n="education.usp.note">
               Pesquisa: IA e Educação — Testes Adaptativos Computadorizados
               (CAT), Teoria de Resposta ao Item (IRT) e Modelos de Diagnóstico
               Cognitivo (CDM)
             </p>
+            <p
+              class="entry-title-quote"
+              data-i18n-html="education.usp.dissertation"
+            ></p>
+            <div class="entry-links">
+              <a
+                href="https://drive.google.com/file/d/11hoGpRHbuZn6gRuxmgRfUnmf3s3usmA9/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5z"
+                  ></path>
+                </svg>
+                <span data-i18n="education.usp.linkDissertation"
+                  >Dissertação</span
+                >
+              </a>
+              <a
+                href="https://drive.google.com/file/d/15wBzHUohVO2E2BIKvcbguki4X2fsp6KF/view?usp=drivesdk"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M12 2 4 6v6c0 5 3.4 9.3 8 10 4.6-.7 8-5 8-10V6l-8-4zm-1.2 13.6L7.6 12.4 9 11l1.8 1.8L15 8.6l1.4 1.4-5.6 5.6z"
+                  ></path>
+                </svg>
+                <span data-i18n="education.usp.linkCertificate"
+                  >Certificado de conclusão</span
+                >
+              </a>
+            </div>
           </article>
 
           <article class="entry">
@@ -379,12 +530,16 @@
                 >
               </h3>
               <span class="entry-date" data-i18n="projects.catapi.period"
-                >2023 – Presente</span
+                >2023 – 2026</span
               >
             </div>
             <p class="entry-role" data-i18n="projects.catapi.type">
               Mestrado / Pesquisa — ICMC-USP
             </p>
+            <p
+              class="entry-stack"
+              data-i18n-html="projects.catapi.stack"
+            ></p>
             <p class="entry-note" data-i18n="projects.catapi.desc_1"></p>
             <p class="entry-note" data-i18n="projects.catapi.desc_2"></p>
           </article>
