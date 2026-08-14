@@ -45,7 +45,7 @@ window.translations = {
     main: {
       summaryHeading: "Resumo",
       summaryText:
-        "Engenheiro de Software Fullstack com mais de {experienceYears} anos de experiência, unindo rigor acadêmico à entrega de produto. Mestre em Ciências de Computação pelo ICMC-USP, com pesquisa em IA e Educação. Atuo de ponta a ponta: Python (Django, FastAPI) e TypeScript (React) no produto, Terraform e AWS na infraestrutura, e pipelines de IA generativa integrando LLMs e bancos vetoriais a aplicações reais.",
+        "Engenheiro de Software Fullstack com mais de {experienceYears} anos construindo produto de ponta a ponta em uma plataforma de educação em tecnologia — do catálogo de conteúdos ao checkout de pagamento, incluindo a infraestrutura AWS que sustenta os dois. Lidero decisões de arquitetura de grandes projetos e atuo nos domínios em que erro custa caro: meios de pagamento, ledger de créditos, autenticação e pipelines de IA generativa em produção. Mestre em Ciências de Computação pelo ICMC-USP, onde além de pesquisar avaliação adaptativa entreguei a solução em produção, validada em turmas reais.",
       experienceHeading: "Experiência",
       educationHeading: "Formação",
       projectsHeading: "Projetos",
@@ -151,7 +151,7 @@ window.translations = {
     main: {
       summaryHeading: "Summary",
       summaryText:
-        "Fullstack Software Engineer with {experienceYears}+ years of industry experience, combining academic rigor with product delivery. M.Sc. in Computer Science from ICMC-USP, researching AI and Education. I work end to end: Python (Django, FastAPI) and TypeScript (React) on the product, Terraform and AWS on the infrastructure, and generative AI pipelines integrating LLMs and vector databases into real-world applications.",
+        "Fullstack Software Engineer with {experienceYears}+ years building product end to end at a tech-education platform — from the content catalog to payment checkout, including the AWS infrastructure behind both. I lead architecture decisions on major projects and work in the domains where mistakes are expensive: payment providers, credit ledgers, authentication, and generative AI pipelines in production. M.Sc. in Computer Science from ICMC-USP, where I not only researched adaptive assessment but shipped the solution to production, validated in real classrooms.",
       experienceHeading: "Experience",
       educationHeading: "Education",
       projectsHeading: "Projects",
