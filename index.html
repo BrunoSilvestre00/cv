@@ -5,9 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Bruno Ap. Silvestre — Fullstack Software Engineer"
+      content="Bruno Ap. Silvestre — Engenheiro de Software Fullstack, Mestre em Ciências de Computação (ICMC-USP)"
     />
     <title>Bruno Silvestre — Currículo</title>
+
+    <!-- Favicon: inline SVG so the page stays dependency-free -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1b3e'/%3E%3Ctext x='32' y='44' font-family='system-ui,sans-serif' font-size='30' font-weight='700' fill='%234f7ef7' text-anchor='middle'%3EBS%3C/text%3E%3C/svg%3E"
+    />
+
+    <!-- Open Graph: gives the link a preview card on LinkedIn / WhatsApp.
+         Deliberately free of any figure that goes stale (years of experience),
+         because crawlers don't run the interpolation in main.js. -->
+    <meta property="og:type" content="profile" />
+    <meta
+      property="og:title"
+      content="Bruno Ap. Silvestre — Engenheiro de Software Fullstack"
+    />
+    <meta
+      property="og:description"
+      content="Mestre em Ciências de Computação (ICMC-USP). Construindo produto de ponta a ponta: Python, TypeScript, AWS e pipelines de IA generativa."
+    />
+    <meta property="og:url" content="https://brunosilvestre00.github.io/cv/" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta name="twitter:card" content="summary" />
+
+    <!-- Theme must be resolved BEFORE first paint, otherwise the page flashes
+         the wrong theme while main.js is still loading at the end of <body>. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('cv_theme');
+          var theme =
+            stored ||
+            (window.matchMedia('(prefers-color-scheme: light)').matches
+              ? 'light'
+              : 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,12 +63,41 @@
     <link rel="stylesheet" href="css/print.css" media="print" />
   </head>
 
+  <!--
+    NOTE ON THE PORTUGUESE TEXT BELOW
+
+    Every [data-i18n] / [data-i18n-html] element carries its Portuguese text
+    inline. That is deliberate: main.js overwrites it on load, but without it a
+    reader that does not execute JavaScript (some ATS, scrapers, curl, link
+    previews) would receive section headings and nothing else.
+
+    The cost is that each PT string exists twice — here and in js/i18n.js. Keep
+    them in sync, or better: treat js/i18n.js as the source and re-derive this.
+  -->
   <body>
     <!-- ======================================================
        HEADER
        ====================================================== -->
-    <header class="site-header" role="banner">
+    <header class="site-header">
       <div class="header-controls">
+        <button
+          id="theme-toggle"
+          class="btn-theme"
+          data-i18n-aria="controls.themeToggle"
+          aria-label="Alternar tema claro/escuro"
+        >
+          <!-- Shows the icon of the theme it switches TO -->
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-14a1 1 0 0 1 1 1v1.5a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1zm0 16a1 1 0 0 1 1 1v1.5a1 1 0 0 1-2 0V20a1 1 0 0 1 1-1zM3 12a1 1 0 0 1 1-1h1.5a1 1 0 0 1 0 2H4a1 1 0 0 1-1-1zm15.5-1H20a1 1 0 0 1 0 2h-1.5a1 1 0 0 1 0-2zM5.99 4.58a1 1 0 0 1 1.42 0l1.06 1.06a1 1 0 0 1-1.42 1.42L5.99 6a1 1 0 0 1 0-1.42zm9.54 9.54a1 1 0 0 1 1.41 0l1.06 1.06a1 1 0 0 1-1.41 1.41l-1.06-1.06a1 1 0 0 1 0-1.41zM18.01 4.58a1 1 0 0 1 0 1.42l-1.06 1.06a1 1 0 0 1-1.42-1.42l1.06-1.06a1 1 0 0 1 1.42 0zM8.47 14.12a1 1 0 0 1 0 1.41l-1.06 1.06a1 1 0 0 1-1.41-1.41l1.06-1.06a1 1 0 0 1 1.41 0z"
+            ></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12.3 4.9c.4-.2.3-.85-.14-.92a8 8 0 1 0 9.86 9.86c-.07-.44-.72-.55-.92-.14a6.5 6.5 0 0 1-8.8-8.8z"
+            ></path>
+          </svg>
+        </button>
         <button
           id="lang-toggle"
           class="btn-lang"
@@ -44,7 +114,7 @@
     <!-- ======================================================
        MAIN CV LAYOUT
        ====================================================== -->
-    <main class="cv-layout" role="main">
+    <main class="cv-layout">
       <!-- ====================================================
          SIDEBAR
          ==================================================== -->
@@ -64,7 +134,7 @@
         </div>
 
         <!-- Contact -->
-        <div class="card">
+        <div class="card card--contact">
           <h2 class="card-heading" data-i18n="sidebar.contactHeading">
             Contato
           </h2>
@@ -164,11 +234,32 @@
                 GitHub</a
               >
             </li>
+            <li>
+              <svg
+                class="icon"
+                stroke="currentColor"
+                fill="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v2.63L12 19l7-3.19v-2.63L12 16l-7-2.82z"
+                ></path>
+              </svg>
+              <a
+                href="http://lattes.cnpq.br/9798985966699271"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Currículo Lattes</a
+              >
+            </li>
           </ul>
         </div>
 
         <!-- Info -->
-        <div class="card">
+        <div class="card card--info">
           <h2 class="card-heading" data-i18n="sidebar.infoHeading">
             Informações
           </h2>
@@ -177,7 +268,7 @@
               <span class="info-label" data-i18n="sidebar.ageLabel"
                 >Idade:</span
               >
-              <span id="age-display" aria-live="polite"></span>
+              <span id="age-display"></span>
             </li>
             <li>
               <span class="info-label" data-i18n="sidebar.englishLabel"
@@ -194,25 +285,69 @@
         </div>
 
         <!-- Skills -->
-        <div class="card">
+        <div class="card card--skills">
           <h2 class="card-heading" data-i18n="sidebar.skillsProficient">
             Habilidades — Proficiente
           </h2>
           <div class="skills-block">
             <ul class="skill-tags">
+              <li>Python</li>
               <li>Django</li>
               <li>FastAPI</li>
+              <li>TypeScript</li>
+              <li>JavaScript</li>
               <li>ReactJS</li>
+              <li>Redux</li>
+              <li>Vite</li>
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>Tailwind CSS</li>
+              <li>styled-components</li>
+              <li>EJS</li>
+              <li>SQL</li>
+              <li>PostgreSQL</li>
+              <li>MySQL / Aurora</li>
+              <li>MariaDB</li>
+              <li>Redis</li>
+              <li>Celery</li>
               <li>Docker</li>
               <li>Git / GitHub</li>
-              <li>AWS EC2</li>
+            </ul>
+          </div>
+
+          <h2 class="card-heading" data-i18n="sidebar.skillsCloud">
+            Cloud &amp; DevOps
+          </h2>
+          <div class="skills-block">
+            <ul class="skill-tags">
               <li>AWS ECS</li>
-              <li>AWS S3</li>
               <li>AWS Lambda</li>
-              <li>SQL</li>
-              <li>Redis</li>
-              <li>Python</li>
-              <li>TypeScript</li>
+              <li>AWS S3</li>
+              <li>CloudFront</li>
+              <li>EventBridge</li>
+              <li>SQS</li>
+              <li>SES</li>
+              <li>AWS EC2</li>
+              <li>Terraform</li>
+              <li>GitHub Actions</li>
+              <li>Keycloak (SSO)</li>
+            </ul>
+          </div>
+
+          <h2 class="card-heading" data-i18n="sidebar.skillsAI">
+            IA &amp; Dados
+          </h2>
+          <div class="skills-block">
+            <ul class="skill-tags">
+              <li>LangChain</li>
+              <li>Langflow</li>
+              <li>OpenAI API</li>
+              <li>Qdrant</li>
+              <li>Chroma</li>
+              <li>Neo4j</li>
+              <li>R (mirtCAT)</li>
+              <li>Claude Code / Codex</li>
+              <li>MCP</li>
             </ul>
           </div>
 
@@ -223,12 +358,12 @@
             <ul class="skill-tags familiar">
               <li>Java</li>
               <li>Spring</li>
+              <li>Angular</li>
+              <li>Android (Java)</li>
               <li>C</li>
               <li>C++</li>
               <li>C#</li>
               <li>Go</li>
-              <li>Angular</li>
-              <li>Qdrant</li>
               <li>Firebase</li>
             </ul>
           </div>
@@ -240,12 +375,35 @@
          ==================================================== -->
       <section class="main-content" aria-label="Conteúdo principal">
         <!-- Summary -->
-        <div class="card">
+        <div class="card card--summary">
           <h2 class="section-heading" data-i18n="main.summaryHeading">
             Resumo
           </h2>
-          <p class="summary-text" data-i18n="main.summaryText"></p>
+          <!-- The year count here is a static fallback; main.js recomputes it
+               from CAREER_START on every load. -->
+          <p class="summary-text" data-i18n="main.summaryP1">
+            Engenheiro de Software Fullstack com mais de 4 anos de experiência,
+            quase toda construída na mesma plataforma de educação em tecnologia —
+            o que me levou a passar por praticamente todas as suas camadas:
+            catálogo de conteúdos, checkout de pagamento, backoffice e a
+            infraestrutura por baixo. Além de escrever o produto, provisiono o
+            que o mantém no ar: clusters ECS, filas, Lambdas e pipelines de CI/CD
+            em Terraform. Respondo pelas decisões de arquitetura dos projetos
+            grandes e pelas áreas que não toleram falha silenciosa — cobrança,
+            ledger de créditos e autenticação.
+          </p>
+          <p class="summary-text" data-i18n="main.summaryP2">
+            Mestre em Ciências de Computação pelo ICMC-USP, com pesquisa em
+            avaliação adaptativa. A dissertação não parou no texto: virou a CAT
+            API, um sistema de código aberto que entrou em produção e foi
+            validado com turmas reais. É daí que vem meu interesse por IA
+            aplicada — hoje construo pipelines de IA generativa em produção,
+            integrando LLMs e bancos vetoriais ao produto.
+          </p>
           <div class="badge-row" style="margin-top: 1rem">
+            <span class="badge" data-i18n="badges.master"
+              >🎓 Mestre em Ciências de Computação</span
+            >
             <span class="badge" data-i18n="badges.medal"
               >🏅 Medalhista InterIF</span
             >
@@ -257,7 +415,7 @@
         </div>
 
         <!-- Experience -->
-        <div class="card">
+        <div class="card card--experience">
           <h2 class="section-heading" data-i18n="main.experienceHeading">
             Experiência
           </h2>
@@ -271,6 +429,13 @@
                   rel="noopener noreferrer"
                   >DIO</a
                 >
+                <a
+                  class="entry-alt-link"
+                  href="https://web.dio.me/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >web.dio.me</a
+                >
               </h3>
               <span class="entry-date" data-i18n="experience.dio.period"
                 >Abr 2022 – Presente</span
@@ -279,23 +444,132 @@
             <p class="entry-role" data-i18n="experience.dio.role">
               Engenheiro de Software Fullstack Pleno
             </p>
+            <p
+              class="entry-progression"
+              data-i18n-html="experience.dio.progression"
+            >
+              <strong>Progressão:</strong> Estágio (Abr 2022) → Júnior (Jan
+              2023) → Pleno (Jul 2024)
+            </p>
+            <p class="entry-stack" data-i18n-html="experience.dio.stack">
+              <span class="stack-label">Stack:</span> Python (Django, FastAPI) ·
+              ReactJS + Vite + Redux + Tailwind + styled-components · PostgreSQL
+              e MySQL (Aurora) · Docker · AWS · Terraform · Git/GitHub
+            </p>
+            <p class="entry-note entry-lead" data-i18n="experience.dio.lead">
+              Participação em todos os grandes projetos da plataforma, do produto
+              à infraestrutura.
+            </p>
+
+            <h4
+              class="entry-subheading"
+              data-i18n="experience.dio.projectsLabel"
+            >
+              Principais projetos
+            </h4>
+            <ul class="entry-bullets projects-inline">
+              <li data-i18n-html="experience.dio.proj1">
+                <strong>DIO Play</strong> — catálogo de conteúdos da plataforma:
+                cursos, trilhas, acelerações, lives e mentorias
+              </li>
+              <li data-i18n-html="experience.dio.proj2">
+                <strong>English 4 Tech</strong> — trilha de formação em inglês
+                para usuários DIO Global, voltada ao mercado de trabalho
+              </li>
+              <li data-i18n-html="experience.dio.proj3">
+                <strong>AI Job Hunter</strong> — agente de IA personalizado que
+                busca vagas aderentes ao currículo do candidato e ajusta seu
+                perfil para ampliar o alcance e a chance de contratação
+              </li>
+              <li data-i18n-html="experience.dio.proj4">
+                <strong>Talent Match</strong> — plataforma B2B para contratação
+                de talentos
+              </li>
+              <li data-i18n-html="experience.dio.proj5">
+                <strong>Reformulação dos componentes de aprendizado</strong> —
+                fluxo de ensino e disponibilização de conteúdo
+              </li>
+              <li data-i18n-html="experience.dio.proj6">
+                <strong>Painéis administrativos</strong> — sistemas de backoffice
+                e projetos internos
+              </li>
+              <li data-i18n-html="experience.dio.proj7">
+                <strong>Landing pages automatizadas</strong> — template que o
+                time de negócio replica para cursos, trilhas e páginas de venda
+                (Pro e Global), trocando textos e imagens sem depender de
+                desenvolvimento
+              </li>
+              <li data-i18n-html="experience.dio.proj8">
+                <strong>Checkout de pagamento</strong> — fluxo de compra da
+                plataforma
+              </li>
+              <li data-i18n-html="experience.dio.proj9">
+                Projetos menores — reformulação de perfil e home, configuração de
+                campanhas de vendas, entre outros
+              </li>
+            </ul>
+
+            <h4
+              class="entry-subheading"
+              data-i18n="experience.dio.highlightsLabel"
+            >
+              Destaques de engenharia
+            </h4>
             <ul class="entry-bullets">
-              <li data-i18n="experience.dio.bullet1">
-                Landing pages automatizadas, catálogo de conteúdos e checkout de
-                pagamento
+              <li data-i18n-html="experience.dio.hl1">
+                <strong>Liderança técnica</strong> — liderei decisões de
+                arquitetura e estrutura de grandes projetos da plataforma.
               </li>
-              <li data-i18n="experience.dio.bullet2">
-                Fluxo de ensino, educação e disponibilização de conteúdos
+              <li data-i18n-html="experience.dio.hl2">
+                <strong>Backoffice end-to-end</strong> — sistema de backoffice
+                construído do zero: FastAPI no backend, React + Vite + Tailwind
+                no frontend, incluindo o provisionamento da infraestrutura de
+                ambos.
               </li>
-              <li data-i18n="experience.dio.bullet3">
-                Talent-match — plataforma B2B para contratação de talentos
+              <li data-i18n-html="experience.dio.hl3">
+                <strong>Infraestrutura como código</strong> — APIs em cluster ECS
+                e frontends em S3 + CloudFront, provisionados com Terraform e
+                CI/CD automatizado via GitHub Actions e Docker.
+              </li>
+              <li data-i18n-html="experience.dio.hl4">
+                <strong>Serverless</strong> — deploy de Lambdas com Terraform e
+                CI/CD, invocadas via SQS.
+              </li>
+              <li data-i18n-html="experience.dio.hl5">
+                <strong>Eventos e mensageria</strong> — orquestração de eventos
+                com EventBridge e SQS, e processamento assíncrono e agendado com
+                Celery Beat.
+              </li>
+              <li data-i18n-html="experience.dio.hl6">
+                <strong>Cache</strong> — controle de cache com Redis.
+              </li>
+              <li data-i18n-html="experience.dio.hl7">
+                <strong>Pagamentos</strong> — checkout e integração com múltiplos
+                meios de pagamento: Malga, Pagar.me, Mercado Pago e Barte.
+              </li>
+              <li data-i18n-html="experience.dio.hl8">
+                <strong>Ledger de créditos</strong> — implementação de ledger
+                para controle de créditos, reaproveitado em mais de uma feature.
+              </li>
+              <li data-i18n-html="experience.dio.hl9">
+                <strong>SSO</strong> — deploy e configuração do Keycloak, com
+                integração nos projetos de backend e frontend.
+              </li>
+              <li data-i18n-html="experience.dio.hl10">
+                <strong>IA generativa</strong> — pipeline com Langflow,
+                LangChain, Qdrant e OpenAI API para geração de revisão de
+                conteúdos.
+              </li>
+              <li data-i18n-html="experience.dio.hl11">
+                <strong>E-mail transacional</strong> — disparos automáticos via
+                SES com templates, a partir de eventos do usuário ou agendados.
               </li>
             </ul>
           </article>
         </div>
 
         <!-- Education -->
-        <div class="card">
+        <div class="card card--education">
           <h2 class="section-heading" data-i18n="main.educationHeading">
             Formação
           </h2>
@@ -311,17 +585,55 @@
                 >
               </h3>
               <span class="entry-date" data-i18n="education.usp.period"
-                >Mar 2023 – Ago 2026 (previsto)</span
+                >Mar 2023 – Jul 2026</span
               >
             </div>
             <p class="entry-role" data-i18n="education.usp.degree">
-              Mestrado em Ciências de Computação
+              Mestrado em Ciências de Computação — concluído
             </p>
-            <p class="entry-note" data-i18n="education.usp.note">
+            <p class="entry-note research-note" data-i18n="education.usp.note">
               Pesquisa: IA e Educação — Testes Adaptativos Computadorizados
               (CAT), Teoria de Resposta ao Item (IRT) e Modelos de Diagnóstico
               Cognitivo (CDM)
             </p>
+            <p
+              class="entry-title-quote"
+              data-i18n-html="education.usp.dissertation"
+            >
+              <strong>Dissertação:</strong> CAT API: Explorando a Aplicação de
+              Modelos de TRI e MDC na Avaliação Formativa por Meio de Testes
+              Adaptativos Computadorizados
+            </p>
+            <div class="entry-links">
+              <a
+                href="https://drive.google.com/file/d/11hoGpRHbuZn6gRuxmgRfUnmf3s3usmA9/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2.5L17.5 8H14V4.5z"
+                  ></path>
+                </svg>
+                <span data-i18n="education.usp.linkDissertation"
+                  >Dissertação</span
+                >
+              </a>
+              <a
+                href="https://drive.google.com/file/d/15wBzHUohVO2E2BIKvcbguki4X2fsp6KF/view?usp=drivesdk"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M12 2 4 6v6c0 5 3.4 9.3 8 10 4.6-.7 8-5 8-10V6l-8-4zm-1.2 13.6L7.6 12.4 9 11l1.8 1.8L15 8.6l1.4 1.4-5.6 5.6z"
+                  ></path>
+                </svg>
+                <span data-i18n="education.usp.linkCertificate"
+                  >Certificado de conclusão</span
+                >
+              </a>
+            </div>
           </article>
 
           <article class="entry">
@@ -349,7 +661,7 @@
         </div>
 
         <!-- Projects -->
-        <div class="card">
+        <div class="card card--projects">
           <h2 class="section-heading" data-i18n="main.projectsHeading">
             Projetos
           </h2>
@@ -379,15 +691,123 @@
                 >
               </h3>
               <span class="entry-date" data-i18n="projects.catapi.period"
-                >2023 – Presente</span
+                >2023 – 2026</span
               >
             </div>
             <p class="entry-role" data-i18n="projects.catapi.type">
               Mestrado / Pesquisa — ICMC-USP
             </p>
-            <p class="entry-note" data-i18n="projects.catapi.desc_1"></p>
-            <p class="entry-note" data-i18n="projects.catapi.desc_2"></p>
+            <p class="entry-stack" data-i18n-html="projects.catapi.stack">
+              <span class="stack-label">Stack:</span> Python + Django · serviço
+              adaptativo em R (mirtCAT + plumber) · CD-CAT próprio · MariaDB ·
+              React + Redux + styled-components · Docker · CI/CD automatizado ·
+              servidor web Ubuntu
+            </p>
+            <p class="entry-note abstract" data-i18n="projects.catapi.desc_1">
+              Resumo: CAT API é uma solução computacional voltada à aplicação de
+              Testes Adaptativos Computadorizados (TAC) no contexto da avaliação
+              formativa. A solução proposta consiste em uma API educacional de
+              código aberto que integra modelos da Teoria de Resposta ao Item
+              (TRI) e Modelos de Diagnóstico Cognitivo (MDC), metodologias
+              amplamente consolidadas na área da Psicometria. O objetivo
+              principal é reduzir as barreiras técnicas e conceituais associadas
+              à adoção de avaliações adaptativas, por meio de uma arquitetura
+              modular, de fácil integração e com baixa curva de aprendizagem,
+              permitindo que diferentes plataformas educacionais e sistemas
+              clientes incorporem testes adaptativos de forma transparente.
+            </p>
+            <p class="entry-note abstract" data-i18n="projects.catapi.desc_2">
+              A API foi concebida para suportar tanto a estimação de proficiência
+              quanto a identificação de habilidades e atributos específicos dos
+              estudantes, possibilitando avaliações mais precisas e informativas
+              quando comparadas aos métodos clássicos. A avaliação da solução
+              incluiu testes controlados baseados em simulações, bem como testes
+              práticos realizados em turmas reais, o que permitiu analisar seu
+              comportamento em cenários educacionais concretos. Os resultados
+              indicam que a abordagem proposta é viável, flexível e capaz de
+              fornecer informações relevantes para avaliadores, contribuindo para
+              o uso mais amplo de avaliações adaptativas em contextos
+              educacionais diversos.
+            </p>
           </article>
+        </div>
+
+        <!-- Competitive Programming -->
+        <div class="card card--competitive">
+          <h2 class="section-heading" data-i18n="main.competitiveHeading">
+            Programação Competitiva
+          </h2>
+
+          <article class="entry competitive-entry">
+            <div class="entry-header">
+              <h3>
+                <a
+                  href="https://maratona.sbc.org.br/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-i18n="competitive.sbc.name"
+                  >Maratona de Programação — SBC</a
+                >
+              </h3>
+              <span class="entry-date" data-i18n="competitive.sbc.period"
+                >2020</span
+              >
+            </div>
+            <p class="entry-role" data-i18n="competitive.sbc.result">
+              Finalista da fase nacional
+            </p>
+            <p class="entry-note" data-i18n="competitive.sbc.desc">
+              Etapa brasileira do ICPC, organizada pela Sociedade Brasileira de
+              Computação: equipes de três estudantes resolvem problemas
+              algorítmicos em cinco horas.
+            </p>
+          </article>
+
+          <article class="entry competitive-entry">
+            <div class="entry-header">
+              <h3 data-i18n="competitive.interif.name">InterIF</h3>
+              <span class="entry-date" data-i18n="competitive.interif.period"
+                >2020 · 2022</span
+              >
+            </div>
+            <p class="entry-role" data-i18n="competitive.interif.result">
+              3º lugar em 2020 · Finalista em 2022
+            </p>
+            <p class="entry-note" data-i18n="competitive.interif.desc">
+              Competição de programação disputada entre campi dos Institutos
+              Federais.
+            </p>
+          </article>
+
+          <p class="entry-stack" data-i18n-html="competitive.stack">
+            <span class="stack-label">Stack:</span> C/C++ e Python
+          </p>
+          <div class="entry-links">
+            <a
+              href="https://judge.beecrowd.com/pt/profile/491514"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z"
+                ></path>
+              </svg>
+              <span data-i18n="competitive.beecrowd">Perfil beecrowd</span>
+            </a>
+            <a
+              href="https://leetcode.com/u/BrunoSilvestre00/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z"
+                ></path>
+              </svg>
+              <span data-i18n="competitive.leetcode">Perfil LeetCode</span>
+            </a>
+          </div>
         </div>
       </section>
     </main>

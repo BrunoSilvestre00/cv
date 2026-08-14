@@ -1,14 +1,26 @@
 /* ============================================================
    1. CSS Custom Properties (Design Tokens)
+
+   Dark is the base theme (:root). The light theme overrides only
+   the tokens — no component rule is duplicated per theme.
+
+   Every colour used by a component MUST be a token here, otherwise
+   it won't follow the theme (and won't follow the print theme).
    ============================================================ */
 :root {
+  color-scheme: dark;
+
   /* Background */
   --bg-gradient-start: #0a0f1e;
-  --bg-gradient-end:   #0d1b3e;
+  --bg-gradient-mid:   #0d1b3e;
+  --bg-gradient-end:   #071030;
+  --bg-flat:           #0a0f1e; /* print: gradient-free fallback */
 
   /* Glass cards */
-  --card-bg:      rgba(255, 255, 255, 0.04);
-  --card-border:  rgba(255, 255, 255, 0.08);
+  --card-bg:           rgba(255, 255, 255, 0.04);
+  --card-border:       rgba(255, 255, 255, 0.08);
+  --card-hover-border: rgba(79, 126, 247, 0.28);
+  --card-hover-shadow: rgba(79, 126, 247, 0.12);
   --card-blur:    12px;
   --card-radius:  16px;
   --card-padding: 1.5rem;
@@ -26,6 +38,23 @@
   --text-muted:     #4a5568;
   --link-color:     #6b93ff;
 
+  /* Component surfaces (themed) */
+  --header-bg:            rgba(10, 15, 30, 0.7);
+  --rule-color:           rgba(79, 126, 247, 0.18);
+  --entry-line:           rgba(79, 126, 247, 0.25);
+  --btn-bg:               rgba(255, 255, 255, 0.05);
+  --btn-hover-bg:         rgba(79, 126, 247, 0.12);
+  --tag-bg:               rgba(79, 126, 247, 0.1);
+  --tag-border:           rgba(79, 126, 247, 0.28);
+  --tag-text:             #6b93ff;
+  --tag-hover-bg:         rgba(79, 126, 247, 0.2);
+  --tag-familiar-bg:      rgba(255, 255, 255, 0.04);
+  --tag-familiar-border:  rgba(255, 255, 255, 0.12);
+  --badge-bg:             rgba(79, 126, 247, 0.08);
+  --badge-border:         rgba(79, 126, 247, 0.22);
+  --avatar-gradient:      linear-gradient(135deg, #1a237e 0%, #283593 50%, #1565c0 100%);
+  --avatar-border:        #4f7ef7;
+
   /* Layout */
   --sidebar-width:  280px;
   --layout-gap:     1.5rem;
@@ -39,6 +68,48 @@
   /* Transitions */
   --t-fast: 150ms ease;
   --t-base: 250ms ease;
+}
+
+/* ── Light theme: token overrides only ──
+   The accent is darkened (#1e46b8) because #4f7ef7 only reaches ~3.3:1
+   against white — not enough for the small uppercase section headings. */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg-gradient-start: #f7f9fc;
+  --bg-gradient-mid:   #eef3fb;
+  --bg-gradient-end:   #e9f0fa;
+  --bg-flat:           #ffffff;
+
+  --card-bg:           rgba(255, 255, 255, 0.72);
+  --card-border:       rgba(23, 42, 84, 0.1);
+  --card-hover-border: rgba(30, 70, 184, 0.3);
+  --card-hover-shadow: rgba(30, 70, 184, 0.1);
+
+  --accent:       #1e46b8;
+  --accent-glow:  rgba(30, 70, 184, 0.18);
+  --accent-hover: #163a9e;
+  --accent-dim:   rgba(30, 70, 184, 0.18);
+
+  --text-primary:   #16213d;
+  --text-secondary: #4a5878;
+  --text-muted:     #8a94ab;
+  --link-color:     #1a46c0;
+
+  --header-bg:            rgba(247, 249, 252, 0.78);
+  --rule-color:           rgba(30, 70, 184, 0.18);
+  --entry-line:           rgba(30, 70, 184, 0.22);
+  --btn-bg:               rgba(255, 255, 255, 0.7);
+  --btn-hover-bg:         rgba(30, 70, 184, 0.08);
+  --tag-bg:               rgba(30, 70, 184, 0.07);
+  --tag-border:           rgba(30, 70, 184, 0.25);
+  --tag-text:             #1e46b8;
+  --tag-hover-bg:         rgba(30, 70, 184, 0.14);
+  --tag-familiar-bg:      rgba(23, 42, 84, 0.04);
+  --tag-familiar-border:  rgba(23, 42, 84, 0.14);
+  --badge-bg:             rgba(30, 70, 184, 0.06);
+  --badge-border:         rgba(30, 70, 184, 0.22);
+  --avatar-border:        #1e46b8;
 }
 
 /* ============================================================
@@ -56,13 +127,14 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 60%, #071030 100%);
+  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 60%, var(--bg-gradient-end) 100%);
   background-attachment: fixed;
   color:       var(--text-primary);
   font-family: var(--font-body);
   font-size:   var(--font-size-base);
   line-height: var(--line-height);
   min-height:  100vh;
+  transition:  background var(--t-base), color var(--t-base);
 }
 
 a {
@@ -80,6 +152,7 @@ ul { list-style: none; }
 h1 { font-size: 1.5rem; font-weight: 700; line-height: 1.2; }
 h2 { font-size: 0.7rem; }
 h3 { font-size: 0.95rem; font-weight: 600; }
+h4 { font-size: 0.7rem; font-weight: 700; }
 
 /* ============================================================
    4. Header & Controls
@@ -92,7 +165,7 @@ h3 { font-size: 0.95rem; font-weight: 600; }
   justify-content: flex-end;
   align-items: center;
   padding: 0.6rem var(--layout-padding);
-  background: rgba(10, 15, 30, 0.7);
+  background: var(--header-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--card-border);
@@ -105,6 +178,7 @@ h3 { font-size: 0.95rem; font-weight: 600; }
 }
 
 .btn-lang,
+.btn-theme,
 .btn-print {
   font-family:   var(--font-body);
   font-size:     0.78rem;
@@ -113,13 +187,14 @@ h3 { font-size: 0.95rem; font-weight: 600; }
   padding:       0.38rem 1rem;
   border-radius: 99px;
   border:        1px solid var(--card-border);
-  background:    rgba(255, 255, 255, 0.05);
+  background:    var(--btn-bg);
   color:         var(--text-primary);
   cursor:        pointer;
   transition:    border-color var(--t-fast), background var(--t-fast), box-shadow var(--t-fast), color var(--t-fast);
 }
 
-.btn-lang {
+.btn-lang,
+.btn-theme {
   padding:         0rem;
   width:           2.2rem;
   height:          2.2rem;
@@ -139,16 +214,29 @@ h3 { font-size: 0.95rem; font-weight: 600; }
   pointer-events: none;
 }
 
+/* Theme button shows the icon of the theme it switches TO */
+.btn-theme svg {
+  width:  1.1rem;
+  height: 1.1rem;
+  fill:   currentColor;
+  pointer-events: none;
+}
+.btn-theme .icon-sun  { display: block; }
+.btn-theme .icon-moon { display: none; }
+:root[data-theme="light"] .btn-theme .icon-sun  { display: none; }
+:root[data-theme="light"] .btn-theme .icon-moon { display: block; }
+
 .btn-lang:hover,
+.btn-theme:hover,
 .btn-print:hover {
   border-color: var(--accent);
-  background:   rgba(79, 126, 247, 0.12);
+  background:   var(--btn-hover-bg);
   box-shadow:   0 0 14px var(--accent-glow);
   color:        var(--accent-hover);
 }
 
 .btn-print {
-  border-color: rgba(79, 126, 247, 0.4);
+  border-color: var(--tag-border);
   color:        var(--accent-hover);
 }
 
@@ -179,12 +267,12 @@ h3 { font-size: 0.95rem; font-weight: 600; }
   padding:               var(--card-padding);
   backdrop-filter:       blur(var(--card-blur));
   -webkit-backdrop-filter: blur(var(--card-blur));
-  transition:            border-color var(--t-base), box-shadow var(--t-base);
+  transition:            border-color var(--t-base), box-shadow var(--t-base), background var(--t-base);
 }
 
 .card:hover {
-  border-color: rgba(79, 126, 247, 0.28);
-  box-shadow:   0 4px 30px rgba(79, 126, 247, 0.12);
+  border-color: var(--card-hover-border);
+  box-shadow:   0 4px 30px var(--card-hover-shadow);
 }
 
 /* ============================================================
@@ -204,9 +292,9 @@ h3 { font-size: 0.95rem; font-weight: 600; }
   width:         110px;
   height:        110px;
   border-radius: 50%;
-  background:    linear-gradient(135deg, #1a237e 0%, #283593 50%, #1565c0 100%);
-  border:        2.5px solid var(--accent);
-  box-shadow:    0 0 24px var(--accent-glow), 0 0 48px rgba(79, 126, 247, 0.1);
+  background:    var(--avatar-gradient);
+  border:        2.5px solid var(--avatar-border);
+  box-shadow:    0 0 24px var(--accent-glow), 0 0 48px var(--card-hover-shadow);
   display:       flex;
   align-items:   center;
   justify-content: center;
@@ -260,7 +348,7 @@ h3 { font-size: 0.95rem; font-weight: 600; }
   gap:         0.5rem;
   font-size:   0.82rem;
   color:       var(--text-secondary);
-  word-break:  break-all;
+  word-break:  break-word;
 }
 
 .contact-list li a, .contact-list li span {
@@ -268,9 +356,12 @@ h3 { font-size: 0.95rem; font-weight: 600; }
   transition: color var(--t-fast);
 }
 
+.contact-list li a:hover { color: var(--accent-hover); }
+
 .contact-list .icon {
   font-size:  1rem;
   width:      1.25rem;
+  flex-shrink: 0;
 }
 
 /* ============================================================
@@ -315,21 +406,21 @@ h3 { font-size: 0.95rem; font-weight: 600; }
   font-weight:   500;
   padding:       0.22rem 0.65rem;
   border-radius: 99px;
-  background:    rgba(79, 126, 247, 0.1);
-  border:        1px solid rgba(79, 126, 247, 0.28);
-  color:         var(--accent-hover);
+  background:    var(--tag-bg);
+  border:        1px solid var(--tag-border);
+  color:         var(--tag-text);
   white-space:   nowrap;
   transition:    background var(--t-fast), border-color var(--t-fast);
 }
 
 .skill-tags li:hover {
-  background:  rgba(79, 126, 247, 0.2);
+  background:  var(--tag-hover-bg);
   border-color: var(--accent);
 }
 
 .skill-tags.familiar li {
-  background:   rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.12);
+  background:   var(--tag-familiar-bg);
+  border-color: var(--tag-familiar-border);
   color:        var(--text-secondary);
 }
 
@@ -350,7 +441,7 @@ h3 { font-size: 0.95rem; font-weight: 600; }
   color:          var(--accent);
   padding-bottom: 0.45rem;
   margin-bottom:  0.75rem;
-  border-bottom:  1px solid rgba(79, 126, 247, 0.18);
+  border-bottom:  1px solid var(--rule-color);
 }
 
 /* ============================================================
@@ -358,7 +449,7 @@ h3 { font-size: 0.95rem; font-weight: 600; }
    ============================================================ */
 .entry {
   padding-left:  1rem;
-  border-left:   2px solid rgba(79, 126, 247, 0.25);
+  border-left:   2px solid var(--entry-line);
   margin-bottom: 1.4rem;
   transition:    border-color var(--t-base);
 }
@@ -379,6 +470,17 @@ h3 { font-size: 0.95rem; font-weight: 600; }
 .entry-header h3 a { color: var(--text-primary); }
 .entry-header h3 a:hover { color: var(--accent-hover); }
 
+/* Secondary link next to a company name (e.g. web.dio.me).
+   Selector is scoped through .entry-header h3 to outrank the rule above on
+   specificity rather than with !important. */
+.entry-header h3 a.entry-alt-link {
+  font-size:   0.72rem;
+  font-weight: 400;
+  color:       var(--text-secondary);
+  margin-left: 0.4rem;
+}
+.entry-header h3 a.entry-alt-link:hover { color: var(--accent-hover); }
+
 .entry-date {
   font-size:   0.75rem;
   color:       var(--text-secondary);
@@ -391,6 +493,43 @@ h3 { font-size: 0.95rem; font-weight: 600; }
   font-weight:   500;
   color:         var(--accent);
   margin-bottom: 0.5rem;
+}
+
+/* Career progression inside a single employer entry */
+.entry-progression {
+  font-size:     0.78rem;
+  color:         var(--text-secondary);
+  margin-bottom: 0.4rem;
+  line-height:   1.6;
+}
+
+.entry-progression strong {
+  color:       var(--text-primary);
+  font-weight: 600;
+}
+
+/* Inline "Stack: ..." line under a role */
+.entry-stack {
+  font-size:     0.78rem;
+  color:         var(--text-secondary);
+  margin-bottom: 0.6rem;
+  line-height:   1.6;
+}
+
+.stack-label {
+  font-weight: 600;
+  color:       var(--text-primary);
+}
+
+/* Sub-heading inside an entry (e.g. "Principais projetos") */
+.entry-subheading {
+  font-size:      0.66rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color:          var(--text-secondary);
+  margin-top:     0.75rem;
+  margin-bottom:  0.35rem;
 }
 
 .entry-bullets {
@@ -406,12 +545,62 @@ h3 { font-size: 0.95rem; font-weight: 600; }
   list-style: disc;
 }
 
+.entry-bullets li strong {
+  color:       var(--text-primary);
+  font-weight: 600;
+}
+
 .entry-note {
   font-size:  0.8rem;
   color:      var(--text-secondary);
-  font-style: italic;
   margin-top: 0.35rem;
   text-align: justify;
+}
+
+.entry-note.italic { font-style: italic; }
+
+/* Row of small document links (dissertation, certificate, ...) */
+.entry-links {
+  display:    flex;
+  flex-wrap:  wrap;
+  gap:        0.4rem;
+  margin-top: 0.5rem;
+}
+
+.entry-links a {
+  display:       inline-flex;
+  align-items:   center;
+  gap:           0.3rem;
+  font-size:     0.72rem;
+  font-weight:   600;
+  padding:       0.2rem 0.65rem;
+  border-radius: 99px;
+  background:    var(--tag-bg);
+  border:        1px solid var(--tag-border);
+  color:         var(--tag-text);
+  transition:    background var(--t-fast), border-color var(--t-fast);
+}
+
+.entry-links a:hover {
+  background:   var(--tag-hover-bg);
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+.entry-links svg {
+  width:  0.8em;
+  height: 0.8em;
+  fill:   currentColor;
+  flex-shrink: 0;
+}
+
+/* Dissertation title */
+.entry-title-quote {
+  font-size:   0.8rem;
+  color:       var(--text-primary);
+  font-style:  italic;
+  margin-top:  0.4rem;
+  line-height: 1.55;
 }
 
 /* Summary text */
@@ -420,6 +609,8 @@ h3 { font-size: 0.95rem; font-weight: 600; }
   color:       var(--text-secondary);
   line-height: 1.75;
 }
+
+.summary-text + .summary-text { margin-top: 0.7rem; }
 
 /* ============================================================
    13. Badges (awards / certifications)
@@ -436,8 +627,8 @@ h3 { font-size: 0.95rem; font-weight: 600; }
   font-weight:   600;
   padding:       0.2rem 0.65rem;
   border-radius: 99px;
-  background:    rgba(79, 126, 247, 0.08);
-  border:        1px solid rgba(79, 126, 247, 0.22);
+  background:    var(--badge-bg);
+  border:        1px solid var(--badge-border);
   color:         var(--accent-hover);
 }
 
@@ -464,14 +655,26 @@ h3 { font-size: 0.95rem; font-weight: 600; }
 }
 
 @media (max-width: 480px) {
-  .btn-lang, .btn-print { font-size: 0.72rem; padding: 0.32rem 0.75rem; }
+  .btn-print { font-size: 0.72rem; padding: 0.32rem 0.75rem; }
   .entry-header { flex-direction: column; }
 }
 
+/* ============================================================
+   15. Misc
+   ============================================================ */
 .icon-link {
   width: 0.75em;
   height: 0.75em;
   margin-left: 0.25rem;
   opacity: 0.6;
   transition: opacity var(--t-fast);
+}
+
+/* Respect users who ask for less motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation:  none !important;
+  }
+  html { scroll-behavior: auto; }
 }

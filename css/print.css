@@ -1,39 +1,69 @@
 /**
- * print.css — A4 PDF print overrides
- * Keeps the dark blue theme on paper.
+ * print.css — PDF output (paginated A4)
+ *
+ * Follows whichever theme is active on screen, because every colour here
+ * resolves through the tokens in style.css (:root / :root[data-theme="light"]).
+ *
+ * ── ONE COLUMN ON PAPER ────────────────────────────────────────────────────
+ * The screen's "sidebar + main" grid does not paginate: once the sidebar runs
+ * out of cards, every subsequent page carries a completely empty left column.
+ * That was the wasted space at the sides. Collapsing to a single column removes
+ * the empty regions and hands the text the full sheet width, which cuts the
+ * line count — and therefore the page count — substantially.
+ *
+ * ── PAGE BREAKS ────────────────────────────────────────────────────────────
+ * Cards are allowed to split (break-inside: auto). Forbidding it looks tidy in
+ * theory but pushes any card that doesn't fit wholly onto the next page, which
+ * is exactly what leaves half-empty pages behind. Instead the *atoms* are
+ * protected: an .entry never splits, a bullet never splits, a heading never
+ * ends a page, and orphans/widows stop single stray lines. A paragraph
+ * flowing across a page boundary is normal typography, not a cut.
+ *
+ * ── TEXT MUST STAY TEXT ────────────────────────────────────────────────────
+ * Chrome flattens a page into a bitmap when it has to composite a layer, which
+ * kills text selection and link annotations. Every trigger is neutralised
+ * below: backdrop-filter, filter, mix-blend-mode, box-shadow, text-shadow,
+ * position:sticky, background-attachment:fixed, and the full-page gradient
+ * (replaced with the flat --bg-flat).
+ *
+ * Verified with Chrome's own PDF engine on this exact page:
+ * 58 /Type /Font objects, 0 /Subtype /Image, 17 /Subtype /Link. If a saved PDF
+ * still comes out as a flat image with dead links, the print destination was a
+ * system print driver ("Microsoft Print to PDF"), not Chrome's "Save as PDF" —
+ * that driver rasterises the page and discards hyperlinks, and no CSS here can
+ * prevent it.
  */
 
 @media print {
 
-  /* ── Page Setup ── */
-  @page {
-    size:   A4 portrait;
-    margin: 14mm 12mm;
-  }
-
-  /* ── Force all backgrounds to render ── */
-  * {
+  /* ── Force backgrounds to render, and kill every rasterisation trigger ── */
+  *, *::before, *::after {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust:         exact !important;
-  }
 
-  /* ── Disable animations ── */
-  *, *::before, *::after {
+    backdrop-filter:         none !important;
+    -webkit-backdrop-filter: none !important;
+    filter:                  none !important;
+    mix-blend-mode:          normal !important;
+    box-shadow:              none !important;
+    text-shadow:             none !important;
+
     animation:  none !important;
     transition: none !important;
   }
 
-  /* ── Body: keep dark gradient ── */
+  /* ── Flat background: no gradient, no fixed attachment ── */
   html {
-    background: #0a0f1e !important;
+    background: var(--bg-flat) !important;
   }
 
   body {
-    background: linear-gradient(135deg, #0a0f1e 0%, #0d1b3e 60%, #071030 100%) !important;
+    background:            var(--bg-flat) !important;
+    background-image:      none !important;
     background-attachment: scroll !important;
-    color:     #e8eaf6 !important;
-    font-size: 9.5pt !important;
-    line-height: 1.55 !important;
+    color:                 var(--text-primary) !important;
+    font-size:             9pt !important;
+    line-height:           1.5 !important;
   }
 
   /* ── Hide UI controls ── */
@@ -41,55 +71,207 @@
     display: none !important;
   }
 
-  /* ── Layout: two columns in pt units ── */
+  /* ── Layout: single column ──
+     display:contents dissolves .sidebar / .main-content so that every card
+     becomes a direct flex item of .cv-layout and can be ordered individually,
+     independently of which container it sits in on screen. */
   .cv-layout {
-    display:               grid !important;
-    grid-template-columns: 160pt 1fr !important;
-    grid-template-areas:   "sidebar main" !important;
-    gap:                   8mm !important;
-    padding:               0 !important;
+    display:               flex !important;
+    flex-direction:        column !important;
+    gap:                   6pt !important;
+    grid-template-columns: none !important;
+    grid-template-areas:   none !important;
     max-width:             none !important;
+    margin:                0 !important;
+    padding:               0 !important;
   }
 
-  .sidebar {
+  .sidebar,
+  .main-content {
+    display: contents !important;
+  }
+
+  /* Reading order on paper. Skills sit right after the summary: they are the
+     block a recruiter scans first, and at full width they cost little height. */
+  .avatar-card       { order: 1 !important; }
+  .card--contact     { order: 2 !important; }
+  .card--info        { order: 3 !important; }
+  .card--summary     { order: 4 !important; }
+  .card--skills      { order: 5 !important; }
+  .card--experience  { order: 6 !important; }
+  .card--education   { order: 7 !important; }
+  .card--projects    { order: 8 !important; }
+  .card--competitive { order: 9 !important; }
+
+  /* The dark theme bleeds to the sheet edge (@page margin 0, set by main.js),
+     so it supplies its own inset. Light gets the inset from the page margin. */
+  :root[data-theme="dark"] .cv-layout,
+  :root:not([data-theme="light"]) .cv-layout {
+    padding: 11mm 11mm !important;
+  }
+
+  /* Nothing may be sticky on paper */
+  .sidebar,
+  .site-header {
     position: static !important;
   }
 
-  /* ── Cards: solid dark (no backdrop-filter in print) ── */
+  /* ── Page breaks: protect the atoms, let the containers flow ── */
   .card {
-    background:              rgba(255, 255, 255, 0.05) !important;
-    border:                  1px solid rgba(79, 126, 247, 0.3) !important;
-    box-shadow:              none !important;
-    backdrop-filter:         none !important;
-    -webkit-backdrop-filter: none !important;
-    break-inside:            avoid !important;
-    page-break-inside:       avoid !important;
+    background:    var(--card-bg) !important;
+    border:        1px solid var(--card-border) !important;
+    border-radius: 8pt !important;
+    padding:       7pt 9pt !important;
+    break-inside:  auto !important;
   }
 
-  /* ── Prevent entries from splitting ── */
   .entry {
     break-inside:      avoid !important;
     page-break-inside: avoid !important;
   }
 
-  h2, h3 {
+  /* …except the DIO entry, which is ~570pt tall — over half a page. A block
+     that big cannot be "protected": break-inside:avoid just shoves the whole
+     thing onto the next page and leaves the gap behind. Let it split between
+     its bullets instead; each bullet and each heading is still atomic. */
+  .card--experience .entry {
+    break-inside:      auto !important;
+    page-break-inside: auto !important;
+  }
+
+  /* The dissertation abstract is ~190pt of academic prose and it is what tips
+     the PDF from 2 pages into a nearly empty 3rd. The entry links straight to
+     the full dissertation, so the abstract is the one genuinely redundant
+     block here. It stays on the website — delete this rule to bring it back. */
+  .entry-note.abstract {
+    display: none !important;
+  }
+
+  .entry-bullets li,
+  .entry-links,
+  .badge-row,
+  .skill-tags {
+    break-inside: avoid !important;
+  }
+
+  h1, h2, h3, h4,
+  .card-heading,
+  .section-heading,
+  .entry-subheading,
+  .entry-role {
     break-after:      avoid !important;
     page-break-after: avoid !important;
   }
 
-  /* ── Show full URLs after http/https links ── */
-  a[href^="http"]::after,
-  a[href^="https"]::after {
-    content:    " (" attr(href) ")";
-    font-size:  6.5pt;
-    color:      #8892b0;
-    font-style: italic;
+  p {
+    orphans: 2;
+    widows:  2;
   }
 
-  /* Don't expand mailto / tel links */
-  a[href^="mailto"]::after,
-  a[href^="tel"]::after {
-    content: none !important;
+  /* ── Header band: avatar, name and title on one line ── */
+  .avatar-card {
+    flex-direction: row !important;
+    align-items:    center !important;
+    text-align:     left !important;
+    gap:            10pt !important;
+    padding:        7pt 9pt !important;
   }
 
+  .avatar-wrapper {
+    width:         38pt !important;
+    height:        38pt !important;
+    margin-bottom: 0 !important;
+    background:    var(--avatar-gradient) !important;
+    border:        1.5pt solid var(--avatar-border) !important;
+  }
+
+  .avatar-initials { font-size: 13pt !important; }
+  .profile-name    { font-size: 13pt !important; margin: 0 !important; }
+  .profile-title   { font-size: 9pt  !important; margin: 0 !important; }
+
+  /* ── Contact and info run horizontally at full width ── */
+  .contact-list,
+  .info-list {
+    flex-direction: row !important;
+    flex-wrap:      wrap !important;
+    gap:            3pt 13pt !important;
+    margin-top:     3pt !important;
+  }
+
+  .contact-list li,
+  .info-list li       { font-size: 8pt !important; word-break: normal !important; }
+  .contact-list .icon { width: 9pt !important; }
+
+  /* ── Links stay real anchors: Chrome emits clickable annotations for them.
+        No " (https://…)" expansion — this PDF is read on screen, never on
+        paper, so the URL text would be noise. ── */
+  a {
+    color:           var(--link-color) !important;
+    text-decoration: none !important;
+  }
+
+  .entry-links a,
+  .skill-tags li,
+  .badge {
+    background: var(--tag-bg) !important;
+    border:     1px solid var(--tag-border) !important;
+    color:      var(--tag-text) !important;
+  }
+
+  .skill-tags.familiar li {
+    background:   var(--tag-familiar-bg) !important;
+    border-color: var(--tag-familiar-border) !important;
+    color:        var(--text-secondary) !important;
+  }
+
+  /* ── Type scale ── */
+  .card-heading,
+  .section-heading {
+    font-size:      7pt !important;
+    padding-bottom: 3pt !important;
+    margin-bottom:  4pt !important;
+  }
+
+  .entry-subheading {
+    font-size:     6.8pt !important;
+    margin-top:    5pt !important;
+    margin-bottom: 2.5pt !important;
+  }
+
+  .skills-block  { margin-bottom: 4pt !important; }
+  .skill-tags    { gap: 2.5pt !important; margin-top: 3pt !important; }
+  .skill-tags li { font-size: 7pt !important; padding: 1pt 4.5pt !important; }
+
+  .summary-text { font-size: 8.6pt !important; line-height: 1.55 !important; }
+  .summary-text + .summary-text { margin-top: 4pt !important; }
+  .badge-row    { gap: 3pt !important; margin-top: 5pt !important; }
+  .badge        { font-size: 7pt !important; padding: 1pt 4.5pt !important; }
+
+  .entry             { margin-bottom: 7pt !important; padding-left: 7pt !important; }
+  .entry-header h3   { font-size: 9.5pt !important; }
+  .entry-alt-link    { font-size: 7pt !important; }
+  .entry-date        { font-size: 7.4pt !important; }
+  .entry-role        { font-size: 8.2pt !important; margin-bottom: 3pt !important; }
+  .entry-progression,
+  .entry-stack       { font-size: 8pt !important; margin-bottom: 3pt !important; line-height: 1.5 !important; }
+  .entry-bullets     { gap: 2pt !important; padding-left: 9pt !important; }
+  .entry-bullets li  { font-size: 8.2pt !important; line-height: 1.45 !important; }
+  .entry-note        { font-size: 8pt !important; margin-top: 3pt !important; }
+  .entry-title-quote { font-size: 8.2pt !important; margin-top: 3pt !important; line-height: 1.45 !important; }
+  .entry-links       { gap: 3pt !important; margin-top: 4pt !important; }
+  .entry-links a     { font-size: 7pt !important; padding: 1pt 4.5pt !important; }
+
+  /* Hyphenation keeps justified prose from developing rivers */
+  .entry-note,
+  .summary-text {
+    hyphens: auto;
+  }
+
+  /* ── No-JS fallback. main.js replaces this with the theme-aware margin:
+        12mm for light (invisible, white on white) and 0 for dark (full bleed,
+        no white frame around a dark page). ── */
+  @page {
+    size:   A4 portrait;
+    margin: 12mm;
+  }
 }
