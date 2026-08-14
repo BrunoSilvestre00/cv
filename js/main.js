@@ -17,6 +17,7 @@
 // Constants
 // ─────────────────────────────────────────────────────────────
 const BIRTHDATE    = new Date("2002-05-28"); // May 28, 2002
+const CAREER_START = new Date("2022-04-01"); // April 2022 — first role (DIO)
 const LS_KEY       = 'cv_lang';
 const THEME_KEY    = 'cv_theme';
 const DEFAULT_LANG = 'pt';
@@ -56,28 +57,31 @@ function writeStored(key, value) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// MODULE: Age Calculation
+// MODULE: Elapsed-time helpers
+//
+// Anything in this CV that would silently go stale — the age, the years of
+// experience — is derived from a date here rather than typed into the copy.
 // ─────────────────────────────────────────────────────────────
 
 /**
- * Returns the current age in whole years.
- * Correctly handles the edge case of running on the birthday itself.
- * @param {Date} birthdate
+ * Whole years elapsed between `from` and today.
+ * Correctly handles the edge case of running on the anniversary itself.
+ * @param {Date} from
  * @returns {number}
  */
-function calculateAge(birthdate) {
+function wholeYearsSince(from) {
   var today = new Date();
-  var age   = today.getFullYear() - birthdate.getFullYear();
-  var hasBirthdayPassed =
-    today.getMonth() > birthdate.getMonth() ||
-    (today.getMonth() === birthdate.getMonth() && today.getDate() >= birthdate.getDate());
-  if (!hasBirthdayPassed) age--;
-  return age;
+  var years = today.getFullYear() - from.getFullYear();
+  var hasAnniversaryPassed =
+    today.getMonth() > from.getMonth() ||
+    (today.getMonth() === from.getMonth() && today.getDate() >= from.getDate());
+  if (!hasAnniversaryPassed) years--;
+  return years;
 }
 
 function renderAge() {
   var el = document.getElementById('age-display');
-  if (el) el.textContent = calculateAge(BIRTHDATE);
+  if (el) el.textContent = wholeYearsSince(BIRTHDATE);
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -151,7 +155,36 @@ function setupPrintButton() {
 // ─────────────────────────────────────────────────────────────
 
 /**
- * Resolves a dot-notation key against the translations object.
+ * Values injected into translation strings via {placeholder} tokens.
+ *
+ * Recomputed on every lookup rather than cached at load time, so a tab left
+ * open across an anniversary still renders the right number.
+ *
+ * @returns {Object<string, string|number>}
+ */
+function i18nVars() {
+  return {
+    experienceYears: wholeYearsSince(CAREER_START),
+  };
+}
+
+/**
+ * Substitutes {placeholder} tokens in a translation string.
+ * Unknown tokens are left untouched so a typo stays visible instead of
+ * silently collapsing to an empty string.
+ * @param {string} str
+ * @returns {string}
+ */
+function interpolate(str) {
+  var vars = i18nVars();
+  return str.replace(/\{(\w+)\}/g, function (token, key) {
+    return Object.prototype.hasOwnProperty.call(vars, key) ? vars[key] : token;
+  });
+}
+
+/**
+ * Resolves a dot-notation key against the translations object, then applies
+ * {placeholder} interpolation.
  * e.g. "main.summaryText" → translations[lang].main.summaryText
  * Falls back to the key path itself if not found (useful for debugging).
  * @param {string} lang
@@ -165,7 +198,8 @@ function getTranslation(lang, keyPath) {
     if (result == null) return keyPath; // graceful fallback
     result = result[parts[i]];
   }
-  return (result != null) ? result : keyPath;
+  if (result == null) return keyPath;
+  return (typeof result === 'string') ? interpolate(result) : result;
 }
 
 /**

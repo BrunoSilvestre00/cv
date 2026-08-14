@@ -10,6 +10,10 @@
  * <span class="stack-label">). Those strings are authored here in the repo and
  * never come from user input — see the note in main.js before adding more.
  *
+ * {placeholder} tokens are substituted at render time by interpolate() in
+ * main.js. Available: {experienceYears} — whole years since CAREER_START.
+ * Never hardcode a number that goes stale on its own; add a token instead.
+ *
  * The pt and en trees MUST stay key-for-key identical; main.js falls back to
  * printing the key path itself when one is missing, which is very visible.
  */
@@ -41,7 +45,7 @@ window.translations = {
     main: {
       summaryHeading: "Resumo",
       summaryText:
-        "Engenheiro de Software Fullstack com mais de 4 anos de experiência, unindo rigor acadêmico à entrega de produto. Mestre em Ciências de Computação pelo ICMC-USP, com pesquisa em IA e Educação — Testes Adaptativos Computadorizados, Teoria de Resposta ao Item e Modelos de Diagnóstico Cognitivo. Graduado em Análise e Desenvolvimento de Sistemas pelo IFSP. Medalhista InterIF e finalista da Maratona de Programação da SBC. Atuo de ponta a ponta: Python (Django, FastAPI) e TypeScript (React) no produto, Terraform e AWS na infraestrutura, e pipelines de IA generativa integrando LLMs e bancos vetoriais a aplicações reais.",
+        "Engenheiro de Software Fullstack com mais de {experienceYears} anos de experiência, unindo rigor acadêmico à entrega de produto. Mestre em Ciências de Computação pelo ICMC-USP, com pesquisa em IA e Educação — Testes Adaptativos Computadorizados, Teoria de Resposta ao Item e Modelos de Diagnóstico Cognitivo. Graduado em Análise e Desenvolvimento de Sistemas pelo IFSP. Medalhista InterIF e finalista da Maratona de Programação da SBC. Atuo de ponta a ponta: Python (Django, FastAPI) e TypeScript (React) no produto, Terraform e AWS na infraestrutura, e pipelines de IA generativa integrando LLMs e bancos vetoriais a aplicações reais.",
       experienceHeading: "Experiência",
       educationHeading: "Formação",
       projectsHeading: "Projetos",
@@ -144,7 +148,7 @@ window.translations = {
     main: {
       summaryHeading: "Summary",
       summaryText:
-        "Fullstack Software Engineer with 4+ years of industry experience, combining academic rigor with product delivery. M.Sc. in Computer Science from ICMC-USP, researching AI and Education — Computerized Adaptive Testing, Item Response Theory, and Cognitive Diagnostic Models. Graduated in Systems Analysis and Development from IFSP. InterIF medal winner and SBC Programming Marathon finalist. I work end to end: Python (Django, FastAPI) and TypeScript (React) on the product, Terraform and AWS on the infrastructure, and generative AI pipelines integrating LLMs and vector databases into real-world applications.",
+        "Fullstack Software Engineer with {experienceYears}+ years of industry experience, combining academic rigor with product delivery. M.Sc. in Computer Science from ICMC-USP, researching AI and Education — Computerized Adaptive Testing, Item Response Theory, and Cognitive Diagnostic Models. Graduated in Systems Analysis and Development from IFSP. InterIF medal winner and SBC Programming Marathon finalist. I work end to end: Python (Django, FastAPI) and TypeScript (React) on the product, Terraform and AWS on the infrastructure, and generative AI pipelines integrating LLMs and vector databases into real-world applications.",
       experienceHeading: "Experience",
       educationHeading: "Education",
       projectsHeading: "Projects",
