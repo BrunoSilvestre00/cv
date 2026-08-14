@@ -81,7 +81,7 @@ window.translations = {
         proj6:
           "<strong>Painéis administrativos</strong> — sistemas de backoffice e projetos internos",
         proj7:
-          "<strong>Landing pages automatizadas</strong> — páginas de divulgação de conteúdos e campanhas geradas sem desenvolvimento manual",
+          "<strong>Landing pages automatizadas</strong> — template que o time de negócio replica para cursos, trilhas e páginas de venda (Pro e Global), trocando textos e imagens sem depender de desenvolvimento",
         proj8:
           "<strong>Checkout de pagamento</strong> — fluxo de compra da plataforma",
         proj9:
@@ -211,7 +211,7 @@ window.translations = {
         proj6:
           "<strong>Admin dashboards</strong> — backoffice systems and internal projects",
         proj7:
-          "<strong>Automated landing pages</strong> — promotional pages for content and campaigns generated without hand-building each one",
+          "<strong>Automated landing pages</strong> — a template the business team replicates for courses, learning tracks, and sales pages (Pro and Global), swapping copy and images without needing development",
         proj8:
           "<strong>Payment checkout</strong> — the platform's purchase flow",
         proj9:
