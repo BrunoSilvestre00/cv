@@ -173,6 +173,21 @@
   /* Superseded by the project list immediately after it. */
   .entry-lead { display: none !important; }
 
+  /* NOT two-columned: measured, and it saved only 9px. These bullets carry a
+     bold label plus a full sentence, so halving the column width roughly
+     doubles each one's line count. Multicolumn only pays off for short items. */
+
+  /* Competitive programming: collapse "result" + "description" into one flowing
+     paragraph per contest instead of two stacked blocks. */
+  .competitive-entry .entry-role,
+  .competitive-entry .entry-note {
+    display:       inline !important;
+    font-size:     7.1pt !important;
+    margin:        0 !important;
+    text-align:    left !important;
+  }
+  .competitive-entry .entry-role::after { content: " — "; }
+
   /* 9 stacked project bullets → one flowing line. Every project name is kept;
      only the bullet stacking is spent. */
   .projects-inline {

@@ -49,6 +49,7 @@ window.translations = {
       experienceHeading: "Experiência",
       educationHeading: "Formação",
       projectsHeading: "Projetos",
+      competitiveHeading: "Programação Competitiva",
     },
     badges: {
       master: "🎓 Mestre em Ciências de Computação",
@@ -109,6 +110,23 @@ window.translations = {
         period: "Fev 2020 – Dez 2022",
       },
     },
+    competitive: {
+      sbc: {
+        name: "Maratona de Programação — SBC",
+        period: "2020",
+        result: "Finalista da fase nacional",
+        desc: "Etapa brasileira do ICPC, organizada pela Sociedade Brasileira de Computação: equipes de três estudantes resolvem problemas algorítmicos em cinco horas.",
+      },
+      interif: {
+        name: "InterIF",
+        period: "2020 · 2022",
+        result: "3º lugar em 2020 · Finalista em 2022",
+        desc: "Competição de programação disputada entre campi dos Institutos Federais.",
+      },
+      stack: '<span class="stack-label">Stack:</span> C/C++ e Python',
+      beecrowd: "Perfil beecrowd",
+      leetcode: "Perfil LeetCode",
+    },
     projects: {
       catapi: {
         name: "CAT API",
@@ -155,6 +173,7 @@ window.translations = {
       experienceHeading: "Experience",
       educationHeading: "Education",
       projectsHeading: "Projects",
+      competitiveHeading: "Competitive Programming",
     },
     badges: {
       master: "🎓 M.Sc. in Computer Science",
@@ -214,6 +233,23 @@ window.translations = {
         campus: "Araraquara Campus",
         period: "Feb 2020 – Dec 2022",
       },
+    },
+    competitive: {
+      sbc: {
+        name: "Maratona de Programação — SBC",
+        period: "2020",
+        result: "Finalist at the national stage",
+        desc: "The Brazilian stage of the ICPC, organized by the Brazilian Computer Society: teams of three students solve algorithmic problems in five hours.",
+      },
+      interif: {
+        name: "InterIF",
+        period: "2020 · 2022",
+        result: "3rd place in 2020 · Finalist in 2022",
+        desc: "Programming contest held between campuses of the Federal Institutes network.",
+      },
+      stack: '<span class="stack-label">Stack:</span> C/C++ and Python',
+      beecrowd: "beecrowd profile",
+      leetcode: "LeetCode profile",
     },
     projects: {
       catapi: {
