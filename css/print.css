@@ -149,26 +149,98 @@
     color:        var(--text-secondary) !important;
   }
 
-  /* ── Tighter type on paper ── */
-  .profile-name  { font-size: 15pt !important; }
-  .profile-title { font-size: 8.5pt !important; }
+  /* ══════════════════════════════════════════════════════════
+     ONE-PAGE BUDGET
+
+     The site carries ~2 A4 pages of content; the PDF must be exactly one.
+     Usable height is 273mm ≈ 1032px, and the main column measured 1972px
+     before any of this — so ~48% had to go.
+
+     Everything below buys vertical space in the PDF ONLY. The screen layout
+     is untouched: nothing here is a content cut, it is a print projection.
+     ══════════════════════════════════════════════════════════ */
+
+  /* Dissertation prose: 290px, the single biggest line item. The PDF links to
+     the full document, so reprinting the abstract is pure duplication. */
+  .entry-note.abstract { display: none !important; }
+
+  /* Research areas — the dissertation title directly below says the same. */
+  .entry-note.research-note { display: none !important; }
+
+  /* Superseded by the project list immediately after it. */
+  .entry-lead { display: none !important; }
+
+  /* 9 stacked project bullets → one flowing line. Every project name is kept;
+     only the bullet stacking is spent. */
+  .projects-inline {
+    display:      block !important;
+    padding-left: 0 !important;
+  }
+  .projects-inline li {
+    display:    inline !important;
+    list-style: none !important;
+  }
+  .projects-inline li:not(:last-child)::after {
+    content: " · ";
+    color:   var(--text-muted);
+  }
+
+  /* ── Type and spacing scale ── */
+  body { font-size: 8pt !important; line-height: 1.4 !important; }
+
+  .cv-layout              { gap: 5mm !important; }
+  .sidebar, .main-content { gap: 5pt !important; }
+  .card                   { padding: 6pt 7pt !important; border-radius: 7pt !important; }
+
+  .avatar-card     { padding: 7pt 7pt 6pt !important; gap: 2pt !important; }
+  .avatar-wrapper  { width: 46pt !important; height: 46pt !important; margin-bottom: 0 !important; }
+  .avatar-initials { font-size: 15pt !important; }
+  .profile-name    { font-size: 12pt !important; }
+  .profile-title   { font-size: 7.5pt !important; }
 
   .card-heading,
-  .section-heading { font-size: 7pt !important; margin-bottom: 6pt !important; }
+  .section-heading {
+    font-size:      6.4pt !important;
+    padding-bottom: 2.5pt !important;
+    margin-bottom:  4pt !important;
+  }
 
-  .entry-subheading { font-size: 6.8pt !important; margin-top: 7pt !important; }
+  .entry-subheading {
+    font-size:     6.2pt !important;
+    margin-top:    4.5pt !important;
+    margin-bottom: 2pt !important;
+  }
 
+  .contact-list,
+  .info-list          { gap: 2.5pt !important; margin-top: 2.5pt !important; }
   .contact-list li,
-  .info-list li     { font-size: 7.8pt !important; }
-  .skill-tags li    { font-size: 7pt !important; padding: 1pt 5pt !important; }
-  .entry-bullets li { font-size: 8pt !important; }
-  .entry-note,
-  .entry-stack      { font-size: 7.8pt !important; }
-  .summary-text     { font-size: 8.3pt !important; line-height: 1.6 !important; }
-  .entry            { margin-bottom: 9pt !important; }
+  .info-list li       { font-size: 7.1pt !important; }
+  .contact-list .icon { width: 8pt !important; }
 
-  /* Justified text with hyphenation reads better in a narrow print column */
+  .skills-block  { margin-bottom: 3pt !important; }
+  .skill-tags    { gap: 2pt !important; margin-top: 2.5pt !important; }
+  .skill-tags li { font-size: 6.3pt !important; padding: 0.5pt 3.5pt !important; }
+
+  .summary-text { font-size: 7.6pt !important; line-height: 1.5 !important; }
+  .badge-row    { gap: 2.5pt !important; margin-top: 5pt !important; }
+  .badge        { font-size: 6.3pt !important; padding: 0.5pt 4pt !important; }
+
+  .entry             { margin-bottom: 6pt !important; padding-left: 6pt !important; }
+  .entry-header h3   { font-size: 8pt !important; }
+  .entry-alt-link    { font-size: 6.2pt !important; }
+  .entry-date        { font-size: 6.6pt !important; }
+  .entry-role        { font-size: 7.2pt !important; margin-bottom: 2.5pt !important; }
+  .entry-stack       { font-size: 7.1pt !important; margin-bottom: 3pt !important; line-height: 1.45 !important; }
+  .entry-bullets     { gap: 1.5pt !important; padding-left: 8pt !important; }
+  .entry-bullets li  { font-size: 7.4pt !important; line-height: 1.4 !important; }
+  .entry-note        { font-size: 7.1pt !important; margin-top: 2pt !important; }
+  .entry-title-quote { font-size: 7.2pt !important; margin-top: 2.5pt !important; line-height: 1.4 !important; }
+  .entry-links       { gap: 2.5pt !important; margin-top: 3pt !important; }
+  .entry-links a     { font-size: 6.3pt !important; padding: 0.5pt 4pt !important; }
+
+  /* Hyphenation stops the narrow columns from developing rivers */
   .entry-note,
+  .entry-bullets li,
   .summary-text {
     hyphens: auto;
   }
