@@ -81,9 +81,11 @@ window.translations = {
         proj6:
           "<strong>Painéis administrativos</strong> — sistemas de backoffice e projetos internos",
         proj7:
-          "<strong>Landing pages automatizadas</strong> e checkout de pagamento",
+          "<strong>Landing pages automatizadas</strong> — páginas de divulgação de conteúdos e campanhas geradas sem desenvolvimento manual",
         proj8:
-          "Projetos menores — reformulação de perfil e home, e configuração de campanhas de vendas",
+          "<strong>Checkout de pagamento</strong> — fluxo de compra da plataforma",
+        proj9:
+          "Projetos menores — reformulação de perfil e home, configuração de campanhas de vendas, entre outros",
         highlightsLabel: "Destaques de engenharia",
         hl1: "<strong>Liderança técnica</strong> — liderei decisões de arquitetura e estrutura de grandes projetos da plataforma.",
         hl2: "<strong>Backoffice end-to-end</strong> — sistema de backoffice construído do zero: FastAPI no backend, React + Vite + Tailwind no frontend, incluindo o provisionamento da infraestrutura de ambos.",
@@ -209,9 +211,11 @@ window.translations = {
         proj6:
           "<strong>Admin dashboards</strong> — backoffice systems and internal projects",
         proj7:
-          "<strong>Automated landing pages</strong> and payment checkout",
+          "<strong>Automated landing pages</strong> — promotional pages for content and campaigns generated without hand-building each one",
         proj8:
-          "Smaller projects — profile and home redesign, and sales campaign configuration",
+          "<strong>Payment checkout</strong> — the platform's purchase flow",
+        proj9:
+          "Smaller projects — profile and home redesign, sales campaign configuration, among others",
         highlightsLabel: "Engineering highlights",
         hl1: "<strong>Technical leadership</strong> — led architecture and structural decisions on major platform projects.",
         hl2: "<strong>End-to-end backoffice</strong> — backoffice system built from scratch: FastAPI on the backend, React + Vite + Tailwind on the frontend, including provisioning the infrastructure for both.",
