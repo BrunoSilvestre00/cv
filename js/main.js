@@ -23,15 +23,16 @@ const THEME_KEY    = 'cv_theme';
 const DEFAULT_LANG = 'pt';
 
 /**
- * Sheet geometry for the PDF.
+ * @page margins per theme. This cannot live in print.css: @page is not part of
+ * the element cascade, so `[data-theme="light"]` can never select it.
  *
- * The PDF is read on screen, never printed on paper, so it is not bound to A4.
- * Instead of paginating — which cuts sections mid-sentence — we emit ONE page
- * exactly as tall as the content. See applyPageRule() below.
+ *  light → 12mm on every page. White on white, so the margin is invisible, and
+ *          every page (not just the first) gets a proper inset.
+ *  dark  → 0, so the dark background bleeds to the sheet edge instead of being
+ *          framed by an unpainted white border. The inset then comes from the
+ *          padding on .cv-layout (see print.css).
  */
-const SHEET_WIDTH_MM = 210;   // keep A4's width so the proportions stay familiar
-const PX_PER_MM      = 96 / 25.4;
-const SHEET_SLACK_MM = 2;     // guards against a sub-pixel overflow spawning a blank 2nd page
+const PAGE_MARGINS = { light: '12mm', dark: '0' };
 
 // ─────────────────────────────────────────────────────────────
 // State
@@ -96,6 +97,7 @@ function getTheme() {
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   writeStored(THEME_KEY, theme);
+  applyPageRule(); // the page margin depends on the theme
 }
 
 function setupThemeToggle() {
@@ -117,6 +119,7 @@ function setupSystemThemeSync() {
   var onChange = function (e) {
     if (readStored(THEME_KEY)) return; // explicit choice takes precedence
     document.documentElement.setAttribute('data-theme', e.matches ? 'light' : 'dark');
+    applyPageRule();
   };
   if (mq.addEventListener) mq.addEventListener('change', onChange);
   else if (mq.addListener) mq.addListener(onChange); // older Safari
@@ -126,86 +129,8 @@ function setupSystemThemeSync() {
 // MODULE: Print
 // ─────────────────────────────────────────────────────────────
 
-/**
- * Extracts the rules inside print.css's `@media print` block straight from the
- * CSSOM. The sheet is same-origin and already parsed, so this is synchronous —
- * which is essential, because it runs inside `beforeprint`.
- *
- * The `@page` fallback declared in print.css is skipped: applyPageRule() is
- * about to emit its own, and re-applying the A4 one would defeat the point.
- *
- * @returns {string} CSS text, or '' if print.css could not be read
- */
-function printRulesText() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (!/print\.css/.test(sheets[i].href || '')) continue;
-    var rules;
-    try {
-      rules = sheets[i].cssRules;
-    } catch (e) {
-      return ''; // cross-origin; cannot introspect. Falls back to A4.
-    }
-    var out = '';
-    for (var j = 0; j < rules.length; j++) {
-      var block = rules[j];
-      if (!block.media || !/print/.test(block.conditionText || block.media.mediaText)) continue;
-      for (var k = 0; k < block.cssRules.length; k++) {
-        var inner = block.cssRules[k];
-        if (inner.cssText.indexOf('@page') === 0) continue;
-        out += inner.cssText + '\n';
-      }
-    }
-    return out;
-  }
-  return '';
-}
-
-/**
- * Measures how tall the print layout actually is.
- *
- * The screen layout can't answer this: print.css changes the type scale, the
- * sidebar width and the padding. So the print rules are applied for real, on
- * the live document, with the body pinned to the sheet width — then the height
- * is read and the rules are torn down again.
- *
- * Append → measure → remove all happen in one task, so the browser never gets
- * a chance to paint the intermediate state. No flicker.
- *
- * @returns {number|null} height in mm, or null if it could not be measured
- */
-function measurePrintHeightMm() {
-  var layout = document.querySelector('.cv-layout');
-  var rules  = printRulesText();
-  if (!layout || !rules) return null;
-
-  var probe = document.createElement('style');
-  probe.textContent =
-    rules +
-    '\nhtml, body { width: ' + SHEET_WIDTH_MM + 'mm !important;' +
-    ' max-width: ' + SHEET_WIDTH_MM + 'mm !important; }';
-  document.head.appendChild(probe);
-
-  // .cv-layout carries the page padding, so its box IS the sheet.
-  var heightPx = layout.getBoundingClientRect().height; // forces synchronous layout
-
-  probe.remove();
-
-  return heightPx > 0 ? Math.ceil(heightPx / PX_PER_MM) + SHEET_SLACK_MM : null;
-}
-
-/**
- * Emits `@page` sized to the content: one continuous sheet, nothing cut, no
- * trailing blank space. Falls back to the A4 rule in print.css if the
- * measurement fails for any reason.
- *
- * Theme-independent — both themes now use margin 0 with the inset supplied by
- * .cv-layout padding, and colour does not affect layout.
- */
+/** Writes the theme-appropriate @page rule into a single reused <style>. */
 function applyPageRule() {
-  var mm = measurePrintHeightMm();
-  if (mm === null) return; // leave print.css's A4 @page in charge
-
   var style = document.getElementById('page-rule');
   if (!style) {
     style = document.createElement('style');
@@ -214,7 +139,7 @@ function applyPageRule() {
     document.head.appendChild(style);
   }
   style.textContent =
-    '@page { size: ' + SHEET_WIDTH_MM + 'mm ' + mm + 'mm; margin: 0; }';
+    '@page { size: A4 portrait; margin: ' + PAGE_MARGINS[getTheme()] + '; }';
 }
 
 function setupPrintButton() {
@@ -354,6 +279,7 @@ document.addEventListener('DOMContentLoaded', function () {
   setupThemeToggle();
   setupSystemThemeSync();
   setupPrintButton();
+  applyPageRule();
 });
 
 // Covers Ctrl+P / File → Print, which bypass the print button entirely.

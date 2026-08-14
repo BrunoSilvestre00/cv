@@ -1,26 +1,37 @@
 /**
- * print.css — PDF output
+ * print.css — PDF output (paginated A4)
  *
  * Follows whichever theme is active on screen, because every colour here
  * resolves through the tokens in style.css (:root / :root[data-theme="light"]).
  *
- * THE PAGE IS ONE CONTINUOUS SHEET.
- * This PDF is never printed on paper, so it is not constrained to A4. main.js
- * measures the real height of this layout on beforeprint and emits
- * `@page { size: 210mm <content height>mm; margin: 0 }`, producing a single
- * page with nothing cut and no trailing blank space. Because of that, NOTHING
- * below hides or abridges content, and the type scale is set for comfort
- * rather than to win millimetres.
+ * ── ONE COLUMN ON PAPER ────────────────────────────────────────────────────
+ * The screen's "sidebar + main" grid does not paginate: once the sidebar runs
+ * out of cards, every subsequent page carries a completely empty left column.
+ * That was the wasted space at the sides. Collapsing to a single column removes
+ * the empty regions and hands the text the full sheet width, which cuts the
+ * line count — and therefore the page count — substantially.
  *
- * If JavaScript never runs, the @page fallback at the bottom of this file
- * paginates to A4 instead, with break-inside:avoid keeping cards whole.
+ * ── PAGE BREAKS ────────────────────────────────────────────────────────────
+ * Cards are allowed to split (break-inside: auto). Forbidding it looks tidy in
+ * theory but pushes any card that doesn't fit wholly onto the next page, which
+ * is exactly what leaves half-empty pages behind. Instead the *atoms* are
+ * protected: an .entry never splits, a bullet never splits, a heading never
+ * ends a page, and orphans/widows stop single stray lines. A paragraph
+ * flowing across a page boundary is normal typography, not a cut.
  *
- * TEXT MUST STAY TEXT. Chrome flattens a page into a bitmap when it has to
- * composite a layer, which kills text selection and link annotations. The
- * triggers are neutralised for EVERY element below: backdrop-filter, filter,
- * mix-blend-mode, box-shadow, text-shadow, position:sticky and
- * background-attachment:fixed. The full-page linear-gradient is also replaced
- * by a flat colour (--bg-flat) for the same reason.
+ * ── TEXT MUST STAY TEXT ────────────────────────────────────────────────────
+ * Chrome flattens a page into a bitmap when it has to composite a layer, which
+ * kills text selection and link annotations. Every trigger is neutralised
+ * below: backdrop-filter, filter, mix-blend-mode, box-shadow, text-shadow,
+ * position:sticky, background-attachment:fixed, and the full-page gradient
+ * (replaced with the flat --bg-flat).
+ *
+ * Verified with Chrome's own PDF engine on this exact page:
+ * 58 /Type /Font objects, 0 /Subtype /Image, 17 /Subtype /Link. If a saved PDF
+ * still comes out as a flat image with dead links, the print destination was a
+ * system print driver ("Microsoft Print to PDF"), not Chrome's "Save as PDF" —
+ * that driver rasterises the page and discards hyperlinks, and no CSS here can
+ * prevent it.
  */
 
 @media print {
@@ -30,7 +41,6 @@
     -webkit-print-color-adjust: exact !important;
     print-color-adjust:         exact !important;
 
-    /* These are what turn the PDF into an image. */
     backdrop-filter:         none !important;
     -webkit-backdrop-filter: none !important;
     filter:                  none !important;
@@ -61,21 +71,44 @@
     display: none !important;
   }
 
-  /* ── Layout ──
-     @page margin is 0 in both themes, so the inner padding lives here. That
-     also means the dark theme bleeds to the sheet edge with no white frame,
-     and the light theme still gets even breathing room on all sides. */
+  /* ── Layout: single column ──
+     display:contents dissolves .sidebar / .main-content so that every card
+     becomes a direct flex item of .cv-layout and can be ordered individually,
+     independently of which container it sits in on screen. */
   .cv-layout {
-    display:               grid !important;
-    grid-template-columns: 160pt 1fr !important;
-    grid-template-areas:   "sidebar main" !important;
-    gap:                   7mm !important;
+    display:               flex !important;
+    flex-direction:        column !important;
+    gap:                   6pt !important;
+    grid-template-columns: none !important;
+    grid-template-areas:   none !important;
     max-width:             none !important;
     margin:                0 !important;
-    padding:               12mm 11mm !important;
+    padding:               0 !important;
   }
 
-  .sidebar, .main-content { gap: 6pt !important; }
+  .sidebar,
+  .main-content {
+    display: contents !important;
+  }
+
+  /* Reading order on paper. Skills sit right after the summary: they are the
+     block a recruiter scans first, and at full width they cost little height. */
+  .avatar-card       { order: 1 !important; }
+  .card--contact     { order: 2 !important; }
+  .card--info        { order: 3 !important; }
+  .card--summary     { order: 4 !important; }
+  .card--skills      { order: 5 !important; }
+  .card--experience  { order: 6 !important; }
+  .card--education   { order: 7 !important; }
+  .card--projects    { order: 8 !important; }
+  .card--competitive { order: 9 !important; }
+
+  /* The dark theme bleeds to the sheet edge (@page margin 0, set by main.js),
+     so it supplies its own inset. Light gets the inset from the page margin. */
+  :root[data-theme="dark"] .cv-layout,
+  :root:not([data-theme="light"]) .cv-layout {
+    padding: 11mm 11mm !important;
+  }
 
   /* Nothing may be sticky on paper */
   .sidebar,
@@ -83,14 +116,13 @@
     position: static !important;
   }
 
-  /* ── Cards ── */
+  /* ── Page breaks: protect the atoms, let the containers flow ── */
   .card {
     background:    var(--card-bg) !important;
     border:        1px solid var(--card-border) !important;
     border-radius: 8pt !important;
-    padding:       8pt 9pt !important;
-    /* Only matters in the no-JS A4 fallback: keeps a section from splitting. */
-    break-inside:  avoid !important;
+    padding:       7pt 9pt !important;
+    break-inside:  auto !important;
   }
 
   .entry {
@@ -98,25 +130,77 @@
     page-break-inside: avoid !important;
   }
 
-  h2, h3, h4,
+  /* …except the DIO entry, which is ~570pt tall — over half a page. A block
+     that big cannot be "protected": break-inside:avoid just shoves the whole
+     thing onto the next page and leaves the gap behind. Let it split between
+     its bullets instead; each bullet and each heading is still atomic. */
+  .card--experience .entry {
+    break-inside:      auto !important;
+    page-break-inside: auto !important;
+  }
+
+  /* The dissertation abstract is ~190pt of academic prose and it is what tips
+     the PDF from 2 pages into a nearly empty 3rd. The entry links straight to
+     the full dissertation, so the abstract is the one genuinely redundant
+     block here. It stays on the website — delete this rule to bring it back. */
+  .entry-note.abstract {
+    display: none !important;
+  }
+
+  .entry-bullets li,
+  .entry-links,
+  .badge-row,
+  .skill-tags {
+    break-inside: avoid !important;
+  }
+
+  h1, h2, h3, h4,
   .card-heading,
   .section-heading,
-  .entry-subheading {
+  .entry-subheading,
+  .entry-role {
     break-after:      avoid !important;
     page-break-after: avoid !important;
   }
 
-  .entry-bullets li { break-inside: avoid !important; }
-
-  /* ── Avatar: keep the shape, drop the glow ── */
-  .avatar-wrapper {
-    width:      62pt !important;
-    height:     62pt !important;
-    background: var(--avatar-gradient) !important;
-    border:     1.5pt solid var(--avatar-border) !important;
+  p {
+    orphans: 2;
+    widows:  2;
   }
 
-  .avatar-initials { font-size: 20pt !important; }
+  /* ── Header band: avatar, name and title on one line ── */
+  .avatar-card {
+    flex-direction: row !important;
+    align-items:    center !important;
+    text-align:     left !important;
+    gap:            10pt !important;
+    padding:        7pt 9pt !important;
+  }
+
+  .avatar-wrapper {
+    width:         38pt !important;
+    height:        38pt !important;
+    margin-bottom: 0 !important;
+    background:    var(--avatar-gradient) !important;
+    border:        1.5pt solid var(--avatar-border) !important;
+  }
+
+  .avatar-initials { font-size: 13pt !important; }
+  .profile-name    { font-size: 13pt !important; margin: 0 !important; }
+  .profile-title   { font-size: 9pt  !important; margin: 0 !important; }
+
+  /* ── Contact and info run horizontally at full width ── */
+  .contact-list,
+  .info-list {
+    flex-direction: row !important;
+    flex-wrap:      wrap !important;
+    gap:            3pt 13pt !important;
+    margin-top:     3pt !important;
+  }
+
+  .contact-list li,
+  .info-list li       { font-size: 8pt !important; word-break: normal !important; }
+  .contact-list .icon { width: 9pt !important; }
 
   /* ── Links stay real anchors: Chrome emits clickable annotations for them.
         No " (https://…)" expansion — this PDF is read on screen, never on
@@ -141,43 +225,35 @@
   }
 
   /* ── Type scale ── */
-  .profile-name  { font-size: 14pt !important; }
-  .profile-title { font-size: 8.5pt !important; }
-
   .card-heading,
   .section-heading {
     font-size:      7pt !important;
     padding-bottom: 3pt !important;
-    margin-bottom:  5pt !important;
+    margin-bottom:  4pt !important;
   }
 
   .entry-subheading {
     font-size:     6.8pt !important;
-    margin-top:    6pt !important;
-    margin-bottom: 3pt !important;
+    margin-top:    5pt !important;
+    margin-bottom: 2.5pt !important;
   }
 
-  .contact-list,
-  .info-list          { gap: 3pt !important; margin-top: 3pt !important; }
-  .contact-list li,
-  .info-list li       { font-size: 8pt !important; }
-  .contact-list .icon { width: 9pt !important; }
-
-  .skills-block  { margin-bottom: 5pt !important; }
+  .skills-block  { margin-bottom: 4pt !important; }
   .skill-tags    { gap: 2.5pt !important; margin-top: 3pt !important; }
   .skill-tags li { font-size: 7pt !important; padding: 1pt 4.5pt !important; }
 
   .summary-text { font-size: 8.6pt !important; line-height: 1.55 !important; }
-  .badge-row    { gap: 3pt !important; margin-top: 6pt !important; }
+  .summary-text + .summary-text { margin-top: 4pt !important; }
+  .badge-row    { gap: 3pt !important; margin-top: 5pt !important; }
   .badge        { font-size: 7pt !important; padding: 1pt 4.5pt !important; }
 
-  .entry             { margin-bottom: 8pt !important; padding-left: 7pt !important; }
+  .entry             { margin-bottom: 7pt !important; padding-left: 7pt !important; }
   .entry-header h3   { font-size: 9.5pt !important; }
   .entry-alt-link    { font-size: 7pt !important; }
   .entry-date        { font-size: 7.4pt !important; }
   .entry-role        { font-size: 8.2pt !important; margin-bottom: 3pt !important; }
   .entry-progression,
-  .entry-stack       { font-size: 8pt !important; margin-bottom: 4pt !important; line-height: 1.5 !important; }
+  .entry-stack       { font-size: 8pt !important; margin-bottom: 3pt !important; line-height: 1.5 !important; }
   .entry-bullets     { gap: 2pt !important; padding-left: 9pt !important; }
   .entry-bullets li  { font-size: 8.2pt !important; line-height: 1.45 !important; }
   .entry-note        { font-size: 8pt !important; margin-top: 3pt !important; }
@@ -185,19 +261,17 @@
   .entry-links       { gap: 3pt !important; margin-top: 4pt !important; }
   .entry-links a     { font-size: 7pt !important; padding: 1pt 4.5pt !important; }
 
-  /* Hyphenation stops the narrow columns from developing rivers */
+  /* Hyphenation keeps justified prose from developing rivers */
   .entry-note,
-  .entry-bullets li,
   .summary-text {
     hyphens: auto;
   }
 
-  /* ── No-JS fallback ──
-     main.js replaces this with a single tall page. Left last so it is the rule
-     that applies when the script never runs: A4, no margin (the padding on
-     .cv-layout already provides the inset), cards kept whole. */
+  /* ── No-JS fallback. main.js replaces this with the theme-aware margin:
+        12mm for light (invisible, white on white) and 0 for dark (full bleed,
+        no white frame around a dark page). ── */
   @page {
     size:   A4 portrait;
-    margin: 0;
+    margin: 12mm;
   }
 }

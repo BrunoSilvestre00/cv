@@ -44,8 +44,10 @@ window.translations = {
     },
     main: {
       summaryHeading: "Resumo",
-      summaryText:
-        "Engenheiro de Software Fullstack com mais de {experienceYears} anos construindo produto de ponta a ponta em uma plataforma de educação em tecnologia — do catálogo de conteúdos ao checkout de pagamento, incluindo a infraestrutura AWS que sustenta os dois. Lidero decisões de arquitetura de grandes projetos e atuo nos domínios em que erro custa caro: meios de pagamento, ledger de créditos, autenticação e pipelines de IA generativa em produção. Mestre em Ciências de Computação pelo ICMC-USP, onde além de pesquisar avaliação adaptativa entreguei a solução em produção, validada em turmas reais.",
+      summaryP1:
+        "Engenheiro de Software Fullstack com mais de {experienceYears} anos de experiência, quase toda construída na mesma plataforma de educação em tecnologia — o que me levou a passar por praticamente todas as suas camadas: catálogo de conteúdos, checkout de pagamento, backoffice e a infraestrutura por baixo. Além de escrever o produto, provisiono o que o mantém no ar: clusters ECS, filas, Lambdas e pipelines de CI/CD em Terraform. Respondo pelas decisões de arquitetura dos projetos grandes e pelas áreas que não toleram falha silenciosa — cobrança, ledger de créditos e autenticação.",
+      summaryP2:
+        "Mestre em Ciências de Computação pelo ICMC-USP, com pesquisa em avaliação adaptativa. A dissertação não parou no texto: virou a CAT API, um sistema de código aberto que entrou em produção e foi validado com turmas reais. É daí que vem meu interesse por IA aplicada — hoje construo pipelines de IA generativa em produção, integrando LLMs e bancos vetoriais ao produto.",
       experienceHeading: "Experiência",
       educationHeading: "Formação",
       projectsHeading: "Projetos",
@@ -170,8 +172,10 @@ window.translations = {
     },
     main: {
       summaryHeading: "Summary",
-      summaryText:
-        "Fullstack Software Engineer with {experienceYears}+ years building product end to end at a tech-education platform — from the content catalog to payment checkout, including the AWS infrastructure behind both. I lead architecture decisions on major projects and work in the domains where mistakes are expensive: payment providers, credit ledgers, authentication, and generative AI pipelines in production. M.Sc. in Computer Science from ICMC-USP, where I not only researched adaptive assessment but shipped the solution to production, validated in real classrooms.",
+      summaryP1:
+        "Fullstack Software Engineer with {experienceYears}+ years of experience, nearly all of it at the same tech-education platform — which has taken me through almost every layer of it: content catalog, payment checkout, backoffice, and the infrastructure underneath. Beyond writing the product, I provision what keeps it running: ECS clusters, queues, Lambdas, and CI/CD pipelines in Terraform. I own the architecture decisions on the large projects, and the areas that tolerate no silent failure — billing, credit ledgers, and authentication.",
+      summaryP2:
+        "M.Sc. in Computer Science from ICMC-USP, researching adaptive assessment. The dissertation did not stop at the text: it became CAT API, an open-source system that reached production and was validated with real classrooms. That is where my interest in applied AI comes from — today I build generative AI pipelines in production, integrating LLMs and vector databases into the product.",
       experienceHeading: "Experience",
       educationHeading: "Education",
       projectsHeading: "Projects",
