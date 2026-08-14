@@ -45,7 +45,7 @@ window.translations = {
     main: {
       summaryHeading: "Resumo",
       summaryText:
-        "Engenheiro de Software Fullstack com mais de {experienceYears} anos de experiência, unindo rigor acadêmico à entrega de produto. Mestre em Ciências de Computação pelo ICMC-USP, com pesquisa em IA e Educação — Testes Adaptativos Computadorizados, Teoria de Resposta ao Item e Modelos de Diagnóstico Cognitivo. Graduado em Análise e Desenvolvimento de Sistemas pelo IFSP. Medalhista InterIF e finalista da Maratona de Programação da SBC. Atuo de ponta a ponta: Python (Django, FastAPI) e TypeScript (React) no produto, Terraform e AWS na infraestrutura, e pipelines de IA generativa integrando LLMs e bancos vetoriais a aplicações reais.",
+        "Engenheiro de Software Fullstack com mais de {experienceYears} anos de experiência, unindo rigor acadêmico à entrega de produto. Mestre em Ciências de Computação pelo ICMC-USP, com pesquisa em IA e Educação. Atuo de ponta a ponta: Python (Django, FastAPI) e TypeScript (React) no produto, Terraform e AWS na infraestrutura, e pipelines de IA generativa integrando LLMs e bancos vetoriais a aplicações reais.",
       experienceHeading: "Experiência",
       educationHeading: "Formação",
       projectsHeading: "Projetos",
@@ -63,18 +63,21 @@ window.translations = {
           '<span class="stack-label">Stack:</span> Python (Django, FastAPI) · ReactJS + Vite + Redux + Tailwind + styled-components · PostgreSQL e MySQL (Aurora) · Docker · AWS · Terraform · Git/GitHub',
         lead: "Participação em todos os grandes projetos da plataforma, do produto à infraestrutura.",
         projectsLabel: "Principais projetos",
-        proj1: "<strong>DIO Play</strong>",
-        proj2: "<strong>English 4 Tech</strong>",
-        proj3: "<strong>Reformulação dos componentes de aprendizado</strong>",
-        proj4: "<strong>AI Job Hunter</strong>",
-        proj5:
+        proj1:
+          "<strong>DIO Play</strong> — catálogo de conteúdos da plataforma: cursos, trilhas, acelerações, lives e mentorias",
+        proj2:
+          "<strong>English 4 Tech</strong> — trilha de formação em inglês para usuários DIO Global, voltada ao mercado de trabalho",
+        proj3:
+          "<strong>AI Job Hunter</strong> — agente de IA personalizado que busca vagas aderentes ao currículo do candidato e ajusta seu perfil para ampliar o alcance e a chance de contratação",
+        proj4:
           "<strong>Talent Match</strong> — plataforma B2B para contratação de talentos",
-        proj6: "<strong>Painéis administrativos e projetos internos</strong>",
+        proj5:
+          "<strong>Reformulação dos componentes de aprendizado</strong> — fluxo de ensino e disponibilização de conteúdo",
+        proj6:
+          "<strong>Painéis administrativos</strong> — sistemas de backoffice e projetos internos",
         proj7:
-          "<strong>Landing pages automatizadas</strong>, catálogo de conteúdos e checkout de pagamento",
+          "<strong>Landing pages automatizadas</strong> e checkout de pagamento",
         proj8:
-          "<strong>Fluxo de ensino</strong> — educação e disponibilização de conteúdos",
-        proj9:
           "Projetos menores — reformulação de perfil e home, e configuração de campanhas de vendas",
         highlightsLabel: "Destaques de engenharia",
         hl1: "<strong>Liderança técnica</strong> — liderei decisões de arquitetura e estrutura de grandes projetos da plataforma.",
@@ -148,7 +151,7 @@ window.translations = {
     main: {
       summaryHeading: "Summary",
       summaryText:
-        "Fullstack Software Engineer with {experienceYears}+ years of industry experience, combining academic rigor with product delivery. M.Sc. in Computer Science from ICMC-USP, researching AI and Education — Computerized Adaptive Testing, Item Response Theory, and Cognitive Diagnostic Models. Graduated in Systems Analysis and Development from IFSP. InterIF medal winner and SBC Programming Marathon finalist. I work end to end: Python (Django, FastAPI) and TypeScript (React) on the product, Terraform and AWS on the infrastructure, and generative AI pipelines integrating LLMs and vector databases into real-world applications.",
+        "Fullstack Software Engineer with {experienceYears}+ years of industry experience, combining academic rigor with product delivery. M.Sc. in Computer Science from ICMC-USP, researching AI and Education. I work end to end: Python (Django, FastAPI) and TypeScript (React) on the product, Terraform and AWS on the infrastructure, and generative AI pipelines integrating LLMs and vector databases into real-world applications.",
       experienceHeading: "Experience",
       educationHeading: "Education",
       projectsHeading: "Projects",
@@ -166,18 +169,21 @@ window.translations = {
           '<span class="stack-label">Stack:</span> Python (Django, FastAPI) · ReactJS + Vite + Redux + Tailwind + styled-components · PostgreSQL and MySQL (Aurora) · Docker · AWS · Terraform · Git/GitHub',
         lead: "Involved in every major platform project, from product to infrastructure.",
         projectsLabel: "Key projects",
-        proj1: "<strong>DIO Play</strong>",
-        proj2: "<strong>English 4 Tech</strong>",
-        proj3: "<strong>Redesign of the learning components</strong>",
-        proj4: "<strong>AI Job Hunter</strong>",
-        proj5:
+        proj1:
+          "<strong>DIO Play</strong> — the platform's content catalog: courses, learning tracks, acceleration programs, live sessions, and mentorships",
+        proj2:
+          "<strong>English 4 Tech</strong> — English learning track for DIO Global users, focused on the job market",
+        proj3:
+          "<strong>AI Job Hunter</strong> — personalized AI agent that finds openings matching the candidate's résumé and tunes their profile to widen reach and improve hiring odds",
+        proj4:
           "<strong>Talent Match</strong> — B2B platform for talent acquisition",
-        proj6: "<strong>Admin dashboards and internal projects</strong>",
+        proj5:
+          "<strong>Redesign of the learning components</strong> — teaching flow and content delivery",
+        proj6:
+          "<strong>Admin dashboards</strong> — backoffice systems and internal projects",
         proj7:
-          "<strong>Automated landing pages</strong>, content catalog, and payment checkout",
+          "<strong>Automated landing pages</strong> and payment checkout",
         proj8:
-          "<strong>Teaching flow</strong> — education and content delivery",
-        proj9:
           "Smaller projects — profile and home redesign, and sales campaign configuration",
         highlightsLabel: "Engineering highlights",
         hl1: "<strong>Technical leadership</strong> — led architecture and structural decisions on major platform projects.",

@@ -67,7 +67,10 @@
   /* ── Layout: two columns in absolute units ── */
   .cv-layout {
     display:               grid !important;
-    grid-template-columns: 160pt 1fr !important;
+    /* Narrower than on screen: the sidebar has ~360px of vertical slack while
+       the main column is what busts the page budget. Every point taken off
+       here widens the main column, which costs lines — at zero content cost. */
+    grid-template-columns: 140pt 1fr !important;
     grid-template-areas:   "sidebar main" !important;
     gap:                   8mm !important;
     max-width:             none !important;
@@ -189,8 +192,8 @@
   body { font-size: 8pt !important; line-height: 1.4 !important; }
 
   .cv-layout              { gap: 5mm !important; }
-  .sidebar, .main-content { gap: 5pt !important; }
-  .card                   { padding: 6pt 7pt !important; border-radius: 7pt !important; }
+  .sidebar, .main-content { gap: 4pt !important; }
+  .card                   { padding: 5pt 6pt !important; border-radius: 7pt !important; }
 
   .avatar-card     { padding: 7pt 7pt 6pt !important; gap: 2pt !important; }
   .avatar-wrapper  { width: 46pt !important; height: 46pt !important; margin-bottom: 0 !important; }
@@ -207,7 +210,7 @@
 
   .entry-subheading {
     font-size:     6.2pt !important;
-    margin-top:    4.5pt !important;
+    margin-top:    3.5pt !important;
     margin-bottom: 2pt !important;
   }
 
