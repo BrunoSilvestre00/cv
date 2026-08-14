@@ -470,14 +470,16 @@ h4 { font-size: 0.7rem; font-weight: 700; }
 .entry-header h3 a { color: var(--text-primary); }
 .entry-header h3 a:hover { color: var(--accent-hover); }
 
-/* Secondary link next to a company name (e.g. web.dio.me) */
-.entry-alt-link {
+/* Secondary link next to a company name (e.g. web.dio.me).
+   Selector is scoped through .entry-header h3 to outrank the rule above on
+   specificity rather than with !important. */
+.entry-header h3 a.entry-alt-link {
   font-size:   0.72rem;
   font-weight: 400;
-  color:       var(--text-secondary) !important;
+  color:       var(--text-secondary);
   margin-left: 0.4rem;
 }
-.entry-alt-link:hover { color: var(--accent-hover) !important; }
+.entry-header h3 a.entry-alt-link:hover { color: var(--accent-hover); }
 
 .entry-date {
   font-size:   0.75rem;
@@ -491,6 +493,19 @@ h4 { font-size: 0.7rem; font-weight: 700; }
   font-weight:   500;
   color:         var(--accent);
   margin-bottom: 0.5rem;
+}
+
+/* Career progression inside a single employer entry */
+.entry-progression {
+  font-size:     0.78rem;
+  color:         var(--text-secondary);
+  margin-bottom: 0.4rem;
+  line-height:   1.6;
+}
+
+.entry-progression strong {
+  color:       var(--text-primary);
+  font-weight: 600;
 }
 
 /* Inline "Stack: ..." line under a role */

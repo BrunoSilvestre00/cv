@@ -62,6 +62,8 @@ window.translations = {
         role: "Engenheiro de Software Fullstack Pleno",
         stack:
           '<span class="stack-label">Stack:</span> Python (Django, FastAPI) · ReactJS + Vite + Redux + Tailwind + styled-components · PostgreSQL e MySQL (Aurora) · Docker · AWS · Terraform · Git/GitHub',
+        progression:
+          "<strong>Progressão:</strong> Estágio (Abr 2022) → Júnior (Jan 2023) → Pleno (Jul 2024)",
         lead: "Participação em todos os grandes projetos da plataforma, do produto à infraestrutura.",
         projectsLabel: "Principais projetos",
         proj1:
@@ -186,6 +188,8 @@ window.translations = {
         role: "Mid-level Fullstack Software Engineer",
         stack:
           '<span class="stack-label">Stack:</span> Python (Django, FastAPI) · ReactJS + Vite + Redux + Tailwind + styled-components · PostgreSQL and MySQL (Aurora) · Docker · AWS · Terraform · Git/GitHub',
+        progression:
+          "<strong>Progression:</strong> Intern (Apr 2022) → Junior (Jan 2023) → Mid-level (Jul 2024)",
         lead: "Involved in every major platform project, from product to infrastructure.",
         projectsLabel: "Key projects",
         proj1:
