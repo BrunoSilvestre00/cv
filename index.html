@@ -596,6 +596,36 @@
               </li>
             </ul>
           </article>
+
+          <article class="entry">
+            <div class="entry-header">
+              <h3>Grupo MMV</h3>
+              <span class="entry-date" data-i18n="experience.mmv.period"
+                >Jan 2017 – Mar 2019</span
+              >
+            </div>
+            <p class="entry-role" data-i18n="experience.mmv.role">
+              Técnico em Hardware
+            </p>
+            <ul class="entry-bullets">
+              <li data-i18n-html="experience.mmv.bullet1">
+                <strong>Manutenção de desktops e notebooks</strong> — reparos,
+                montagem, limpeza, formatação e setup em Windows e Linux
+              </li>
+              <li data-i18n-html="experience.mmv.bullet2">
+                <strong>Impressoras</strong> — setup de impressoras toner e
+                coloridas
+              </li>
+              <li data-i18n-html="experience.mmv.bullet3">
+                <strong>CFTV</strong> — instalação e configuração de câmeras e
+                DVR
+              </li>
+              <li data-i18n-html="experience.mmv.bullet4">
+                <strong>Infraestrutura de rede</strong> — montagem de racks com
+                servidor e switch
+              </li>
+            </ul>
+          </article>
         </div>
 
         <!-- Education -->
@@ -687,6 +717,22 @@
             <p class="entry-role" data-i18n="education.ifsp.degree">
               Análise e Desenvolvimento de Sistemas
             </p>
+            <div class="entry-links">
+              <a
+                href="https://drive.google.com/file/d/1KcwHOWfD2IhL3Iq1GT5wdRcvjk8OR4Hq/view"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M12 2 4 6v6c0 5 3.4 9.3 8 10 4.6-.7 8-5 8-10V6l-8-4zm-1.2 13.6L7.6 12.4 9 11l1.8 1.8L15 8.6l1.4 1.4-5.6 5.6z"
+                  ></path>
+                </svg>
+                <span data-i18n="education.ifsp.linkCertificate"
+                  >Certificado de conclusão</span
+                >
+              </a>
+            </div>
           </article>
         </div>
 
@@ -760,12 +806,40 @@
               educacionais diversos.
             </p>
           </article>
+
+          <article class="entry">
+            <div class="entry-header">
+              <h3 data-i18n="projects.ic.name">
+                Learning Analytics no E-learning da DIO
+              </h3>
+              <span class="entry-date" data-i18n="projects.ic.period"
+                >2021 – 2022</span
+              >
+            </div>
+            <p class="entry-role" data-i18n="projects.ic.type">
+              Iniciação Científica — IFSP
+            </p>
+            <p class="entry-title-quote" data-i18n-html="projects.ic.title">
+              <strong>Título:</strong> Aplicação de Learning Analytics para
+              Identificação dos Aspectos da Não Conclusão de um Curso por um
+              Discente na Plataforma da Digital Innovation One
+            </p>
+            <p class="entry-note" data-i18n="projects.ic.desc">
+              Iniciação científica aplicada à plataforma de e-learning da
+              Digital Innovation One (DIO), comunidade com mais de 2,4 milhões
+              de alunos. O objetivo foi aplicar Learning Analytics para
+              entender o comportamento dos alunos e identificar os aspectos que
+              levam à não conclusão de cursos e bootcamps, contribuindo para a
+              validação da metodologia de ensino e a avaliação de desempenho
+              dos conteúdos oferecidos.
+            </p>
+          </article>
         </div>
 
         <!-- Competitive Programming -->
         <div class="card card--competitive">
           <h2 class="section-heading" data-i18n="main.competitiveHeading">
-            Programação Competitiva
+            Competições Acadêmicas
           </h2>
 
           <article class="entry competitive-entry">
@@ -809,35 +883,78 @@
             </p>
           </article>
 
-          <p class="entry-stack" data-i18n-html="competitive.stack">
-            <span class="stack-label">Stack:</span> C/C++ e Python
-          </p>
-          <div class="entry-links">
-            <a
-              href="https://judge.beecrowd.com/pt/profile/491514"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z"
-                ></path>
-              </svg>
-              <span data-i18n="competitive.beecrowd">Perfil beecrowd</span>
-            </a>
-            <a
-              href="https://leetcode.com/u/BrunoSilvestre00/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z"
-                ></path>
-              </svg>
-              <span data-i18n="competitive.leetcode">Perfil LeetCode</span>
-            </a>
+          <!-- Not a discrete achievement like the entries above/below — this is
+               the stack + profile links for the programming contests only
+               (SBC + InterIF). Wrapped in .entry so it gets the same left
+               border, otherwise it visually floats disconnected from what it
+               refers to. div, not article: it isn't itself a résumé entry. -->
+          <div class="entry entry--meta">
+            <p class="entry-stack" data-i18n-html="competitive.stack">
+              <span class="stack-label">Stack:</span> C/C++ e Python
+            </p>
+            <div class="entry-links">
+              <a
+                href="https://judge.beecrowd.com/pt/profile/491514"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z"
+                  ></path>
+                </svg>
+                <span data-i18n="competitive.beecrowd">Perfil beecrowd</span>
+              </a>
+              <a
+                href="https://leetcode.com/u/BrunoSilvestre00/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z"
+                  ></path>
+                </svg>
+                <span data-i18n="competitive.leetcode">Perfil LeetCode</span>
+              </a>
+            </div>
           </div>
+
+          <article class="entry competitive-entry">
+            <div class="entry-header">
+              <h3 data-i18n="competitive.canguru.name">
+                Olimpíada Canguru de Matemática
+              </h3>
+              <span class="entry-date" data-i18n="competitive.canguru.period"
+                >2016</span
+              >
+            </div>
+            <p class="entry-role" data-i18n="competitive.canguru.result">
+              Medalha de Bronze
+            </p>
+            <p class="entry-note" data-i18n="competitive.canguru.desc">
+              Olimpíada de matemática aplicada em escolas de todo o Brasil pelo
+              Canguru de Matemática Brasil.
+            </p>
+          </article>
+
+          <article class="entry competitive-entry">
+            <div class="entry-header">
+              <h3 data-i18n="competitive.poscomp.name">POSCOMP</h3>
+              <span class="entry-date" data-i18n="competitive.poscomp.period"
+                >2022</span
+              >
+            </div>
+            <p class="entry-role" data-i18n="competitive.poscomp.result">
+              Pontuação: 34
+            </p>
+            <p class="entry-note" data-i18n="competitive.poscomp.desc">
+              Exame Nacional de Ingresso na Pós-Graduação em Computação:
+              avaliação nacional de conhecimentos em Computação, utilizada como
+              critério de ingresso em programas de mestrado e doutorado no
+              Brasil.
+            </p>
+          </article>
         </div>
       </section>
     </main>
