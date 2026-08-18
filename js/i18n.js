@@ -26,11 +26,11 @@ window.translations = {
       title: "Bruno Silvestre — Currículo",
     },
     controls: {
-      print: "Imprimir / PDF",
+      download: "Baixar PDF",
       langToggle: "EN",
       themeToggle: "Alternar tema claro/escuro",
-      printHint:
-        'Ao salvar em PDF, escolha <strong>"Salvar como PDF"</strong> no destino — "Microsoft Print to PDF" gera uma imagem, sem texto selecionável nem links.',
+      manualPrintHint:
+        'Prefere personalizar antes de gerar o PDF? Use <strong>Ctrl+P</strong> e escolha <strong>"Salvar como PDF"</strong> no destino — "Microsoft Print to PDF" gera uma imagem, sem texto selecionável nem links.',
     },
     sidebar: {
       title: "Engenheiro de Software Fullstack",
@@ -158,11 +158,11 @@ window.translations = {
       title: "Bruno Silvestre — Resume",
     },
     controls: {
-      print: "Print / PDF",
+      download: "Download PDF",
       langToggle: "PT",
       themeToggle: "Toggle light/dark theme",
-      printHint:
-        'When saving to PDF, choose <strong>"Save as PDF"</strong> as the destination — "Microsoft Print to PDF" produces a flat image, with no selectable text and no links.',
+      manualPrintHint:
+        'Prefer to customize before generating the PDF? Use <strong>Ctrl+P</strong> and choose <strong>"Save as PDF"</strong> as the destination — "Microsoft Print to PDF" produces a flat image, with no selectable text and no links.',
     },
     sidebar: {
       title: "Fullstack Software Engineer",

@@ -180,7 +180,7 @@ h4 { font-size: 0.7rem; font-weight: 700; }
 
 .btn-lang,
 .btn-theme,
-.btn-print {
+.btn-download {
   font-family:   var(--font-body);
   font-size:     0.78rem;
   font-weight:   600;
@@ -192,6 +192,21 @@ h4 { font-size: 0.7rem; font-weight: 700; }
   color:         var(--text-primary);
   cursor:        pointer;
   transition:    border-color var(--t-fast), background var(--t-fast), box-shadow var(--t-fast), color var(--t-fast);
+}
+
+.btn-download {
+  display:      inline-flex;
+  align-items:  center;
+  gap:          0.4rem;
+  border-color: var(--tag-border);
+  color:        var(--accent-hover);
+}
+
+.btn-download svg {
+  width:  0.95rem;
+  height: 0.95rem;
+  fill:   currentColor;
+  flex-shrink: 0;
 }
 
 .btn-lang,
@@ -229,15 +244,10 @@ h4 { font-size: 0.7rem; font-weight: 700; }
 
 .btn-lang:hover,
 .btn-theme:hover,
-.btn-print:hover {
+.btn-download:hover {
   border-color: var(--accent);
   background:   var(--btn-hover-bg);
   box-shadow:   0 0 14px var(--accent-glow);
-  color:        var(--accent-hover);
-}
-
-.btn-print {
-  border-color: var(--tag-border);
   color:        var(--accent-hover);
 }
 
@@ -669,7 +679,7 @@ h4 { font-size: 0.7rem; font-weight: 700; }
 }
 
 @media (max-width: 480px) {
-  .btn-print { font-size: 0.72rem; padding: 0.32rem 0.75rem; }
+  .btn-download { font-size: 0.72rem; padding: 0.32rem 0.75rem; }
   .entry-header { flex-direction: column; }
 }
 

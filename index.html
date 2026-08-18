@@ -33,12 +33,18 @@
     <meta name="twitter:card" content="summary" />
 
     <!-- Theme must be resolved BEFORE first paint, otherwise the page flashes
-         the wrong theme while main.js is still loading at the end of <body>. -->
+         the wrong theme while main.js is still loading at the end of <body>.
+
+         ?theme=light|dark overrides localStorage for this load only (never
+         persisted) — this is how the PDF export workflow forces the light
+         theme without needing a seeded browser profile. See js/main.js. -->
     <script>
       (function () {
         try {
+          var themeParam = new URLSearchParams(window.location.search).get('theme');
           var stored = localStorage.getItem('cv_theme');
           var theme =
+            (themeParam === 'light' || themeParam === 'dark') ? themeParam :
             stored ||
             (window.matchMedia('(prefers-color-scheme: light)').matches
               ? 'light'
@@ -105,18 +111,31 @@
         >
           <img id="lang-flag" src="assets/img/us-flag.png" alt="English" />
         </button>
-        <button id="print-btn" class="btn-print" data-i18n="controls.print">
-          Imprimir / PDF
+        <button
+          id="download-btn"
+          class="btn-download"
+          data-i18n="controls.download"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 16 6 10h3.5V3h5v7H18l-6 6zm-7 2h14v2H5v-2z"
+            ></path>
+          </svg>
+          Baixar PDF
         </button>
       </div>
-      <!-- Windows ships with "Microsoft Print to PDF" as the default printer,
-           and Chrome pre-selects the system default. That driver rasterises the
-           page and drops link annotations, which is the single most common way
-           this CV ends up as an unusable image. Hence the standing reminder. -->
-      <p class="print-hint" data-i18n-html="controls.printHint">
-        Ao salvar em PDF, escolha <strong>"Salvar como PDF"</strong> no destino —
-        "Microsoft Print to PDF" gera uma imagem, sem texto selecionável nem
-        links.
+      <!-- Ctrl+P / right-click → Print still work (see beforeprint in main.js)
+           and still honour the light/dark @page rule below — this hint only
+           covers that manual fallback. Windows ships with "Microsoft Print to
+           PDF" as the default printer, and Chrome pre-selects the system
+           default; that driver rasterises the page and drops link annotations,
+           which is the single most common way a CV print turns into a dead
+           image. The download button above sidesteps the whole problem by
+           serving a PDF Chrome already generated server-side. -->
+      <p class="print-hint" data-i18n-html="controls.manualPrintHint">
+        Prefere personalizar antes de gerar o PDF? Use <strong>Ctrl+P</strong> e
+        escolha <strong>"Salvar como PDF"</strong> no destino — "Microsoft Print
+        to PDF" gera uma imagem, sem texto selecionável nem links.
       </p>
     </header>
 
