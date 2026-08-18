@@ -27,12 +27,14 @@ Abrir `file://` também funciona — o `i18n.js` expõe as traduções em
 ## Estrutura
 
 ```
-index.html        estrutura + texto em português (ver "fallback" abaixo)
-css/style.css     design tokens, temas, layout de tela
-css/print.css     layout de impressão — deliberadamente diferente do de tela
-js/i18n.js        todo o texto, em PT e EN
-js/main.js        idade, tema, i18n, regra de @page
-assets/img/       bandeiras do seletor de idioma
+index.html                          estrutura + texto em português (ver "fallback" abaixo)
+css/style.css                       design tokens, temas, layout de tela
+css/print.css                       layout de impressão — deliberadamente diferente do de tela
+js/i18n.js                          todo o texto, em PT e EN
+js/main.js                          idade, tema, i18n, regra de @page, botão de download
+assets/img/                         bandeiras do seletor de idioma
+.github/workflows/generate-pdf.yml  gera cv-pt.pdf / cv-en.pdf a cada push em main
+cv-pt.pdf, cv-en.pdf                gerados pela Action acima — não editar à mão
 ```
 
 ---
@@ -93,9 +95,36 @@ Detalhes que importam:
 
 ---
 
-## O PDF
+## Baixando o PDF
 
-O layout de impressão é **propositalmente diferente** do de tela.
+O botão "Baixar PDF" no header **não imprime nada** — ele baixa um arquivo
+já pronto, `cv-pt.pdf` ou `cv-en.pdf` (conforme o idioma corrente), servido
+da raiz do repositório. Esse arquivo é gerado por uma GitHub Action
+(`.github/workflows/generate-pdf.yml`) a cada push em `main`, usando o próprio
+motor de PDF do Chrome (`--print-to-pdf`) contra a página em
+`?lang=<pt|en>&theme=light`. Nunca passa por um driver de impressão do
+sistema, então nunca corre o risco descrito na seção seguinte.
+
+A Action verifica sozinha que o PDF continua íntegro — 0 objetos
+`/Subtype /Image`, ao menos um `/Type /Font` e um `/Subtype /Link` — e falha
+o CI se um `print.css` futuro reintroduzir algo composto (`backdrop-filter`,
+fundo fixo, `box-shadow`, ...) que rasterize a página. Se `cv-pt.pdf` ou
+`cv-en.pdf` mudaram, ela mesma comita de volta em `main`.
+
+`?theme=` (no script inline do `<head>`) e `?lang=` (em `getUrlParam()` no
+`main.js`) sobrescrevem `localStorage` só para aquele load — nunca
+persistem. É esse mecanismo que permite à Action forçar tema e idioma sem
+precisar semear um profile de navegador; também funciona para qualquer link
+compartilhado manualmente, ex. `index.html?lang=en&theme=light`.
+
+---
+
+## O PDF: Ctrl+P / clique direito → Imprimir
+
+Esse é o caminho manual — ainda funciona, e ainda é útil para quem quer
+personalizar algo antes de gerar o PDF (por exemplo, forçar o tema escuro,
+que o botão de download não oferece). O layout de impressão é
+**propositalmente diferente** do de tela.
 
 **Coluna única.** O grid "sidebar + conteúdo" não pagina: quando os cards da
 sidebar acabam, toda página seguinte carrega uma coluna esquerda vazia. No
@@ -120,7 +149,7 @@ vazia. Seguem no site; a regra é uma só e está comentada no `print.css`.
 no claro (branco sobre branco, invisível) e `0` no escuro, para o fundo escuro
 sangrar até a borda em vez de ganhar uma moldura branca.
 
-### ⚠️ Salvando o PDF
+### ⚠️ Salvando o PDF por esse caminho
 
 No diálogo de impressão, o destino precisa ser **"Salvar como PDF"** — a opção
 nativa do Chrome.
@@ -128,7 +157,8 @@ nativa do Chrome.
 Se você escolher **"Microsoft Print to PDF"** (ou "Imprimir usando caixa de
 diálogo do sistema"), o arquivo sai como uma imagem chapada: sem seleção de
 texto e sem links clicáveis. Isso é o driver de impressão do Windows
-rasterizando a página, e nenhum CSS aqui pode evitar.
+rasterizando a página, e nenhum CSS aqui pode evitar — só o botão de download
+(seção anterior) evita esse risco por completo.
 
 ---
 
@@ -151,6 +181,12 @@ grep -aoE "/Subtype[ ]*/Link"  cv.pdf | wc -l  # > 0  → links clicáveis
 grep -aoE "/Count [0-9]+"      cv.pdf | head -1 # número de páginas
 ```
 
-Estado atual: 2 páginas, 56 objetos de fonte, **0 imagens**, 17 links.
-O tema claro está com 98% de aproveitamento de página (2023px de 2064), ou seja
-no teto — a próxima adição de conteúdo empurra para uma terceira página.
+Estado atual: 3 páginas, 56 objetos de fonte, **0 imagens**, 18 links.
+
+Não existe orçamento de uma página aqui. Mais conteúdo pagina para mais
+folhas — o que a paginação garante é que nada é cortado no meio e nenhuma
+página fica quase vazia (`break-inside: auto` nos cards, só os átomos
+protegidos; ver comentário no topo de `print.css`). Se um `.entry` muito
+grande (como o da DIO) acabar sendo empurrado inteiro para a página
+seguinte deixando um vão, é sinal de que ele também precisa da exceção que
+já existe para esse caso — `.card--experience .entry { break-inside: auto }`.

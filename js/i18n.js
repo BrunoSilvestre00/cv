@@ -26,11 +26,11 @@ window.translations = {
       title: "Bruno Silvestre — Currículo",
     },
     controls: {
-      print: "Imprimir / PDF",
+      download: "Baixar PDF",
       langToggle: "EN",
       themeToggle: "Alternar tema claro/escuro",
-      printHint:
-        'Ao salvar em PDF, escolha <strong>"Salvar como PDF"</strong> no destino — "Microsoft Print to PDF" gera uma imagem, sem texto selecionável nem links.',
+      manualPrintHint:
+        'Prefere personalizar antes de gerar o PDF? Use <strong>Ctrl+P</strong> e escolha <strong>"Salvar como PDF"</strong> no destino — "Microsoft Print to PDF" gera uma imagem, sem texto selecionável nem links.',
     },
     sidebar: {
       title: "Engenheiro de Software Fullstack",
@@ -53,7 +53,7 @@ window.translations = {
       experienceHeading: "Experiência",
       educationHeading: "Formação",
       projectsHeading: "Projetos",
-      competitiveHeading: "Programação Competitiva",
+      competitiveHeading: "Competições Acadêmicas",
     },
     badges: {
       master: "🎓 Mestre em Ciências de Computação",
@@ -101,6 +101,18 @@ window.translations = {
         hl10: "<strong>IA generativa</strong> — pipeline com Langflow, LangChain, Qdrant e OpenAI API para geração de revisão de conteúdos.",
         hl11: "<strong>E-mail transacional</strong> — disparos automáticos via SES com templates, a partir de eventos do usuário ou agendados.",
       },
+      mmv: {
+        period: "Jan 2017 – Mar 2019",
+        role: "Técnico em Hardware",
+        bullet1:
+          "<strong>Manutenção de desktops e notebooks</strong> — reparos, montagem, limpeza, formatação e setup em Windows e Linux",
+        bullet2:
+          "<strong>Impressoras</strong> — setup de impressoras toner e coloridas",
+        bullet3:
+          "<strong>CFTV</strong> — instalação e configuração de câmeras e DVR",
+        bullet4:
+          "<strong>Infraestrutura de rede</strong> — montagem de racks com servidor e switch",
+      },
     },
     education: {
       usp: {
@@ -116,6 +128,7 @@ window.translations = {
         degree: "Análise e Desenvolvimento de Sistemas",
         campus: "Campus Araraquara",
         period: "Fev 2020 – Dez 2022",
+        linkCertificate: "Certificado de conclusão",
       },
     },
     competitive: {
@@ -134,6 +147,18 @@ window.translations = {
       stack: '<span class="stack-label">Stack:</span> C/C++ e Python',
       beecrowd: "Perfil beecrowd",
       leetcode: "Perfil LeetCode",
+      canguru: {
+        name: "Olimpíada Canguru de Matemática",
+        period: "2016",
+        result: "Medalha de Bronze",
+        desc: "Olimpíada de matemática aplicada em escolas de todo o Brasil pelo Canguru de Matemática Brasil.",
+      },
+      poscomp: {
+        name: "POSCOMP",
+        period: "2022",
+        result: "Pontuação: 34",
+        desc: "Exame Nacional de Ingresso na Pós-Graduação em Computação: avaliação nacional de conhecimentos em Computação, utilizada como critério de ingresso em programas de mestrado e doutorado no Brasil.",
+      },
     },
     projects: {
       catapi: {
@@ -147,6 +172,15 @@ window.translations = {
         desc_2:
           "A API foi concebida para suportar tanto a estimação de proficiência quanto a identificação de habilidades e atributos específicos dos estudantes, possibilitando avaliações mais precisas e informativas quando comparadas aos métodos clássicos. A avaliação da solução incluiu testes controlados baseados em simulações, bem como testes práticos realizados em turmas reais, o que permitiu analisar seu comportamento em cenários educacionais concretos. Os resultados indicam que a abordagem proposta é viável, flexível e capaz de fornecer informações relevantes para avaliadores, contribuindo para o uso mais amplo de avaliações adaptativas em contextos educacionais diversos.",
       },
+      ic: {
+        name: "Learning Analytics no E-learning da DIO",
+        period: "2021 – 2022",
+        type: "Iniciação Científica — IFSP",
+        title:
+          "<strong>Título:</strong> Aplicação de Learning Analytics para Identificação dos Aspectos da Não Conclusão de um Curso por um Discente na Plataforma da Digital Innovation One",
+        desc:
+          "Iniciação científica aplicada à plataforma de e-learning da Digital Innovation One (DIO), comunidade com mais de 2,4 milhões de alunos. O objetivo foi aplicar Learning Analytics para entender o comportamento dos alunos e identificar os aspectos que levam à não conclusão de cursos e bootcamps, contribuindo para a validação da metodologia de ensino e a avaliação de desempenho dos conteúdos oferecidos.",
+      },
     },
   },
 
@@ -158,11 +192,11 @@ window.translations = {
       title: "Bruno Silvestre — Resume",
     },
     controls: {
-      print: "Print / PDF",
+      download: "Download PDF",
       langToggle: "PT",
       themeToggle: "Toggle light/dark theme",
-      printHint:
-        'When saving to PDF, choose <strong>"Save as PDF"</strong> as the destination — "Microsoft Print to PDF" produces a flat image, with no selectable text and no links.',
+      manualPrintHint:
+        'Prefer to customize before generating the PDF? Use <strong>Ctrl+P</strong> and choose <strong>"Save as PDF"</strong> as the destination — "Microsoft Print to PDF" produces a flat image, with no selectable text and no links.',
     },
     sidebar: {
       title: "Fullstack Software Engineer",
@@ -185,7 +219,7 @@ window.translations = {
       experienceHeading: "Experience",
       educationHeading: "Education",
       projectsHeading: "Projects",
-      competitiveHeading: "Competitive Programming",
+      competitiveHeading: "Academic Competitions",
     },
     badges: {
       master: "🎓 M.Sc. in Computer Science",
@@ -233,6 +267,18 @@ window.translations = {
         hl10: "<strong>Generative AI</strong> — pipeline with Langflow, LangChain, Qdrant, and the OpenAI API for automated content review generation.",
         hl11: "<strong>Transactional email</strong> — automated delivery via SES with templates, triggered by user events or scheduled.",
       },
+      mmv: {
+        period: "Jan 2017 – Mar 2019",
+        role: "Hardware Technician",
+        bullet1:
+          "<strong>Desktop and laptop maintenance</strong> — repairs, assembly, cleaning, formatting, and setup on Windows and Linux",
+        bullet2:
+          "<strong>Printers</strong> — setup of toner and color printers",
+        bullet3:
+          "<strong>CCTV</strong> — installation and configuration of cameras and DVRs",
+        bullet4:
+          "<strong>Network infrastructure</strong> — rack assembly with server and switch",
+      },
     },
     education: {
       usp: {
@@ -248,6 +294,7 @@ window.translations = {
         degree: "Systems Analysis and Development",
         campus: "Araraquara Campus",
         period: "Feb 2020 – Dec 2022",
+        linkCertificate: "Completion certificate",
       },
     },
     competitive: {
@@ -266,6 +313,18 @@ window.translations = {
       stack: '<span class="stack-label">Stack:</span> C/C++ and Python',
       beecrowd: "beecrowd profile",
       leetcode: "LeetCode profile",
+      canguru: {
+        name: "Kangaroo Mathematics Olympiad",
+        period: "2016",
+        result: "Bronze Medal",
+        desc: "Mathematics olympiad applied in schools across Brazil by Canguru de Matemática Brasil.",
+      },
+      poscomp: {
+        name: "POSCOMP",
+        period: "2022",
+        result: "Score: 34",
+        desc: "Brazil's National Exam for Admission to Graduate Programs in Computing: a nationwide assessment of Computer Science knowledge used as an admission criterion for master's and doctoral programs.",
+      },
     },
     projects: {
       catapi: {
@@ -278,6 +337,15 @@ window.translations = {
           "Abstract: CAT API is a computational solution aimed at the application of Computerized Adaptive Testing (CAT) in the context of formative assessment. The proposed solution consists of an open-source educational API that integrates Item Response Theory (IRT) models and Cognitive Diagnostic Models (CDM), which are well-established methodologies in the field of Psychometrics. The main objective is to reduce the technical and conceptual barriers associated with the adoption of adaptive assessments by means of a modular architecture with low integration effort and a reduced learning curve, enabling different educational platforms and client systems to seamlessly incorporate adaptive testing.",
         desc_2:
           "The API is designed to support both proficiency estimation and the identification of specific skills and attributes mastered by students, providing more precise and informative assessments when compared to classical testing approaches. The evaluation of the solution comprised controlled tests based on simulations, as well as practical tests conducted in real classroom settings, allowing the analysis of its behavior in real-world educational scenarios. The results indicate that the proposed approach is feasible, flexible, and capable of delivering meaningful information to evaluators, contributing to the broader adoption of adaptive assessments in diverse educational contexts.",
+      },
+      ic: {
+        name: "Learning Analytics in DIO's E-learning Platform",
+        period: "2021 – 2022",
+        type: "Undergraduate Research — IFSP",
+        title:
+          "<strong>Title:</strong> Application of Learning Analytics to Identify Aspects of Non-Completion of a Course by a Student on the Digital Innovation One Platform",
+        desc:
+          "Undergraduate research applied to Digital Innovation One's (DIO) e-learning platform, a community of more than 2.4 million students. The goal was to apply Learning Analytics to understand student behavior and identify the aspects that lead to non-completion of courses and bootcamps, contributing to validating the teaching methodology and evaluating the performance of the content offered.",
       },
     },
   },
