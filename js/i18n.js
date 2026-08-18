@@ -29,6 +29,8 @@ window.translations = {
       print: "Imprimir / PDF",
       langToggle: "EN",
       themeToggle: "Alternar tema claro/escuro",
+      printHint:
+        'Ao salvar em PDF, escolha <strong>"Salvar como PDF"</strong> no destino — "Microsoft Print to PDF" gera uma imagem, sem texto selecionável nem links.',
     },
     sidebar: {
       title: "Engenheiro de Software Fullstack",
@@ -45,7 +47,7 @@ window.translations = {
     main: {
       summaryHeading: "Resumo",
       summaryP1:
-        "Engenheiro de Software Fullstack com mais de {experienceYears} anos de experiência, quase toda construída na mesma plataforma de educação em tecnologia — o que me levou a passar por praticamente todas as suas camadas: catálogo de conteúdos, checkout de pagamento, backoffice e a infraestrutura por baixo. Além de escrever o produto, provisiono o que o mantém no ar: clusters ECS, filas, Lambdas e pipelines de CI/CD em Terraform. Respondo pelas decisões de arquitetura dos projetos grandes e pelas áreas que não toleram falha silenciosa — cobrança, ledger de créditos e autenticação.",
+        "Engenheiro de Software Fullstack com mais de {experienceYears} anos de experiência, quase toda construída na mesma plataforma de educação em tecnologia — o que me levou a passar por praticamente todas as suas camadas: catálogo de conteúdos, checkout de pagamento, backoffice e a infraestrutura por baixo. Trabalho com Python (Django, FastAPI) no backend, TypeScript com React, Redux e Tailwind no frontend, PostgreSQL e MySQL no banco e Docker para empacotar — e provisiono o que mantém isso no ar: clusters ECS, filas, Lambdas e CI/CD em Terraform. Respondo pelas decisões de arquitetura dos projetos grandes e pelas áreas que não toleram falha silenciosa — cobrança, ledger de créditos e autenticação.",
       summaryP2:
         "Mestre em Ciências de Computação pelo ICMC-USP, com pesquisa em avaliação adaptativa. A dissertação não parou no texto: virou a CAT API, um sistema de código aberto que entrou em produção e foi validado com turmas reais. É daí que vem meu interesse por IA aplicada — hoje construo pipelines de IA generativa em produção, integrando LLMs e bancos vetoriais ao produto.",
       experienceHeading: "Experiência",
@@ -159,6 +161,8 @@ window.translations = {
       print: "Print / PDF",
       langToggle: "PT",
       themeToggle: "Toggle light/dark theme",
+      printHint:
+        'When saving to PDF, choose <strong>"Save as PDF"</strong> as the destination — "Microsoft Print to PDF" produces a flat image, with no selectable text and no links.',
     },
     sidebar: {
       title: "Fullstack Software Engineer",
@@ -175,7 +179,7 @@ window.translations = {
     main: {
       summaryHeading: "Summary",
       summaryP1:
-        "Fullstack Software Engineer with {experienceYears}+ years of experience, nearly all of it at the same tech-education platform — which has taken me through almost every layer of it: content catalog, payment checkout, backoffice, and the infrastructure underneath. Beyond writing the product, I provision what keeps it running: ECS clusters, queues, Lambdas, and CI/CD pipelines in Terraform. I own the architecture decisions on the large projects, and the areas that tolerate no silent failure — billing, credit ledgers, and authentication.",
+        "Fullstack Software Engineer with {experienceYears}+ years of experience, nearly all of it at the same tech-education platform — which has taken me through almost every layer of it: content catalog, payment checkout, backoffice, and the infrastructure underneath. I work with Python (Django, FastAPI) on the backend, TypeScript with React, Redux, and Tailwind on the frontend, PostgreSQL and MySQL for data, and Docker to package it — and I provision what keeps it running: ECS clusters, queues, Lambdas, and CI/CD in Terraform. I own the architecture decisions on the large projects, and the areas that tolerate no silent failure — billing, credit ledgers, and authentication.",
       summaryP2:
         "M.Sc. in Computer Science from ICMC-USP, researching adaptive assessment. The dissertation did not stop at the text: it became CAT API, an open-source system that reached production and was validated with real classrooms. That is where my interest in applied AI comes from — today I build generative AI pipelines in production, integrating LLMs and vector databases into the product.",
       experienceHeading: "Experience",

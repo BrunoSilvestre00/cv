@@ -109,6 +109,15 @@
           Imprimir / PDF
         </button>
       </div>
+      <!-- Windows ships with "Microsoft Print to PDF" as the default printer,
+           and Chrome pre-selects the system default. That driver rasterises the
+           page and drops link annotations, which is the single most common way
+           this CV ends up as an unusable image. Hence the standing reminder. -->
+      <p class="print-hint" data-i18n-html="controls.printHint">
+        Ao salvar em PDF, escolha <strong>"Salvar como PDF"</strong> no destino —
+        "Microsoft Print to PDF" gera uma imagem, sem texto selecionável nem
+        links.
+      </p>
     </header>
 
     <!-- ======================================================
@@ -386,9 +395,11 @@
             quase toda construída na mesma plataforma de educação em tecnologia —
             o que me levou a passar por praticamente todas as suas camadas:
             catálogo de conteúdos, checkout de pagamento, backoffice e a
-            infraestrutura por baixo. Além de escrever o produto, provisiono o
-            que o mantém no ar: clusters ECS, filas, Lambdas e pipelines de CI/CD
-            em Terraform. Respondo pelas decisões de arquitetura dos projetos
+            infraestrutura por baixo. Trabalho com Python (Django, FastAPI) no
+            backend, TypeScript com React, Redux e Tailwind no frontend,
+            PostgreSQL e MySQL no banco e Docker para empacotar — e provisiono o
+            que mantém isso no ar: clusters ECS, filas, Lambdas e CI/CD em
+            Terraform. Respondo pelas decisões de arquitetura dos projetos
             grandes e pelas áreas que não toleram falha silenciosa — cobrança,
             ledger de créditos e autenticação.
           </p>
