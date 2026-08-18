@@ -78,7 +78,7 @@
   .cv-layout {
     display:               flex !important;
     flex-direction:        column !important;
-    gap:                   6pt !important;
+    gap:                   5pt !important;
     grid-template-columns: none !important;
     grid-template-areas:   none !important;
     max-width:             none !important;
@@ -121,7 +121,7 @@
     background:    var(--card-bg) !important;
     border:        1px solid var(--card-border) !important;
     border-radius: 8pt !important;
-    padding:       7pt 9pt !important;
+    padding:       6pt 8pt !important;
     break-inside:  auto !important;
   }
 
@@ -229,7 +229,7 @@
   .section-heading {
     font-size:      7pt !important;
     padding-bottom: 3pt !important;
-    margin-bottom:  4pt !important;
+    margin-bottom:  3.5pt !important;
   }
 
   .entry-subheading {
@@ -238,7 +238,7 @@
     margin-bottom: 2.5pt !important;
   }
 
-  .skills-block  { margin-bottom: 4pt !important; }
+  .skills-block  { margin-bottom: 3pt !important; }
   .skill-tags    { gap: 2.5pt !important; margin-top: 3pt !important; }
   .skill-tags li { font-size: 7pt !important; padding: 1pt 4.5pt !important; }
 
@@ -247,7 +247,7 @@
   .badge-row    { gap: 3pt !important; margin-top: 5pt !important; }
   .badge        { font-size: 7pt !important; padding: 1pt 4.5pt !important; }
 
-  .entry             { margin-bottom: 7pt !important; padding-left: 7pt !important; }
+  .entry             { margin-bottom: 6pt !important; padding-left: 7pt !important; }
   .entry-header h3   { font-size: 9.5pt !important; }
   .entry-alt-link    { font-size: 7pt !important; }
   .entry-date        { font-size: 7.4pt !important; }
