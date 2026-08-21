@@ -162,7 +162,6 @@ h4 { font-size: 0.7rem; font-weight: 700; }
   top: 0;
   z-index: 100;
   display: flex;
-  flex-wrap: wrap;
   justify-content: flex-end;
   align-items: center;
   padding: 0.6rem var(--layout-padding);
@@ -251,18 +250,43 @@ h4 { font-size: 0.7rem; font-weight: 700; }
   color:        var(--accent-hover);
 }
 
-/* Standing reminder about the print destination. It sits inside .site-header,
-   which print.css hides, so it can never leak into the PDF itself. */
+/* Reminder about the manual print fallback (Ctrl+P), shown as a tooltip on
+   hover/focus of the download button rather than as always-visible text — it
+   only matters to someone about to use that specific fallback. It sits inside
+   .site-header, which print.css hides, so it can never leak into the PDF.
+
+   position:absolute anchors against .site-header's own position:sticky,
+   which — like relative/fixed — establishes a containing block for
+   absolutely-positioned descendants; no extra positioning context needed. */
 .print-hint {
-  flex-basis:  100%;
-  text-align:  right;
+  position:   absolute;
+  top:        100%;
+  right:      var(--layout-padding);
+  margin-top: 0.5rem;
+  max-width:  300px;
+  padding:    0.55rem 0.8rem;
+  border:        1px solid var(--card-border);
+  border-radius: 10px;
+  background:    var(--card-bg);
+  box-shadow:    0 8px 24px rgba(0, 0, 0, 0.25);
   font-size:   0.68rem;
   line-height: 1.45;
+  text-align:  left;
   color:       var(--text-muted);
-  margin-top:  0.4rem;
+  opacity:        0;
+  transform:      translateY(-4px);
+  pointer-events: none;
+  transition: opacity var(--t-fast), transform var(--t-fast);
+  z-index: 101;
 }
 
 .print-hint strong { color: var(--text-secondary); font-weight: 600; }
+
+.site-header:has(#download-btn:hover) .print-hint,
+.site-header:has(#download-btn:focus-visible) .print-hint {
+  opacity:   1;
+  transform: translateY(0);
+}
 
 /* ============================================================
    5. Layout: Two-Column Grid
