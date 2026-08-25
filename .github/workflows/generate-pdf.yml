@@ -82,46 +82,65 @@ jobs:
             profile="$(mktemp -d)" # fresh profile per invocation — a shared
                                     # one can serve a stale render on the 2nd run
             rm -f "cv-$lang.pdf"
-            # `timeout` is the important part: --virtual-time-budget only bounds
-            # the page's own JS timers, not the Chrome process itself. The first
-            # two runs of this workflow hung for 6 hours (GitHub's default job
-            # timeout) and were cancelled without ever producing a PDF.
+            # The first two runs of this workflow (merges of PR #3 and #4) hung
+            # for 6 hours each — GitHub's default job timeout — and were
+            # cancelled without ever producing a PDF, undetected until now.
             #
-            # --print-to-pdf never returns on this runner (no GPU, --no-sandbox) —
-            # confirmed hanging for exactly 60s under three different flag
-            # combinations (--headless=new, --headless=old, with and without
-            # --virtual-time-budget alone). Most likely cause: without a GPU,
-            # print-to-pdf can sit forever waiting for a compositor frame that
-            # never gets submitted. --run-all-compositor-stages-before-draw
-            # forces every compositor stage to run before the page is
-            # considered ready instead of waiting on real frame submission —
-            # this is the combination Chromium's own docs recommend pairing
-            # with --virtual-time-budget for headless screenshot/PDF capture,
-            # not virtual-time-budget alone (which is what every attempt above
-            # was missing). timeout stays regardless, as a safety net.
-            if timeout 60s "$CHROME" \
+            # Root cause, found by watching dispatched runs directly: on this
+            # runner (no GPU, --no-sandbox), --print-to-pdf's Chrome process
+            # never exits on its own — but the PDF itself gets written to disk
+            # just fine, well within seconds. Confirmed by testing five flag
+            # combinations (both headless modes, with/without
+            # --virtual-time-budget, with/without
+            # --run-all-compositor-stages-before-draw, with Google Fonts
+            # blocked at the DNS level): every single one hung for exactly the
+            # same duration regardless, which only makes sense if the file was
+            # already sitting there complete the whole time — the process
+            # exiting was never actually the thing standing between us and a
+            # PDF. (--run-all-compositor-stages-before-draw stays anyway: it's
+            # the pairing Chromium's own docs recommend for headless
+            # screenshot/PDF capture, and costs nothing to keep.)
+            #
+            # So: launch in the background, poll for the file directly instead
+            # of waiting on the process to exit, and kill it as soon as the
+            # file's size is stable across two checks (guards against reading
+            # it mid-write). A genuine render failure still surfaces once the
+            # poll window elapses with nothing written.
+            "$CHROME" \
               --headless=new --disable-gpu --disable-dev-shm-usage --no-sandbox \
               --no-pdf-header-footer \
               --run-all-compositor-stages-before-draw --virtual-time-budget=15000 \
-              --host-resolver-rules="MAP fonts.googleapis.com 0.0.0.0, MAP fonts.gstatic.com 0.0.0.0" \
               --user-data-dir="$profile" \
               --print-to-pdf="cv-$lang.pdf" \
-              "http://localhost:8080/index.html?lang=$lang&theme=light"
-            then
-              : # ok
-            else
-              status=$?
-              if [ "$status" -eq 124 ]; then
-                echo "::error::Chrome hung generating cv-$lang.pdf and was killed after 60s"
-              else
-                echo "::error::Chrome exited $status generating cv-$lang.pdf"
+              "http://localhost:8080/index.html?lang=$lang&theme=light" &
+            chrome_pid=$!
+            produced=0
+            prev_size=-1
+            for i in $(seq 1 60); do
+              if [ -s "cv-$lang.pdf" ]; then
+                size=$(stat -c%s "cv-$lang.pdf")
+                # require the size to be stable across two checks 0.5s apart —
+                # a single non-empty read could catch the file mid-write
+                if [ "$size" = "$prev_size" ]; then
+                  produced=1
+                  break
+                fi
+                prev_size=$size
               fi
+              if ! kill -0 "$chrome_pid" 2>/dev/null; then
+                sleep 0.5 # give a just-exited process's last write a moment to land
+                [ -s "cv-$lang.pdf" ] && produced=1
+                break
+              fi
+              sleep 0.5
+            done
+            kill "$chrome_pid" 2>/dev/null || true
+            wait "$chrome_pid" 2>/dev/null || true
+            if [ "$produced" -ne 1 ]; then
+              echo "::error::cv-$lang.pdf was never produced (30s poll)"
               exit 1
             fi
-            if [ ! -s "cv-$lang.pdf" ]; then
-              echo "::error::cv-$lang.pdf was not produced"
-              exit 1
-            fi
+            echo "cv-$lang.pdf produced ($(stat -c%s "cv-$lang.pdf") bytes)"
           done
 
       - name: Verify PDFs stay vector text with clickable links
