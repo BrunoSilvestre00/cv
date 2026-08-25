@@ -87,17 +87,22 @@ jobs:
             # two runs of this workflow hung for 6 hours (GitHub's default job
             # timeout) and were cancelled without ever producing a PDF.
             #
-            # --print-to-pdf never returns on this runner (no GPU, --no-sandbox),
-            # confirmed by watching two dispatched runs directly — neither
-            # --headless=new nor --headless=old made a difference, both hang for
-            # exactly 60s until timeout kills them. --virtual-time-budget is next
-            # under suspicion: this page has no JS timer that needs fast-forwarding,
-            # and Chromium has open bugs where it holds the renderer in a state
-            # print-to-pdf's readiness check never resolves. timeout stays
-            # regardless, as a safety net against the next surprise.
+            # --print-to-pdf never returns on this runner (no GPU, --no-sandbox) —
+            # confirmed hanging for exactly 60s under three different flag
+            # combinations (--headless=new, --headless=old, with and without
+            # --virtual-time-budget alone). Most likely cause: without a GPU,
+            # print-to-pdf can sit forever waiting for a compositor frame that
+            # never gets submitted. --run-all-compositor-stages-before-draw
+            # forces every compositor stage to run before the page is
+            # considered ready instead of waiting on real frame submission —
+            # this is the combination Chromium's own docs recommend pairing
+            # with --virtual-time-budget for headless screenshot/PDF capture,
+            # not virtual-time-budget alone (which is what every attempt above
+            # was missing). timeout stays regardless, as a safety net.
             if timeout 60s "$CHROME" \
               --headless=new --disable-gpu --disable-dev-shm-usage --no-sandbox \
               --no-pdf-header-footer \
+              --run-all-compositor-stages-before-draw --virtual-time-budget=15000 \
               --user-data-dir="$profile" \
               --print-to-pdf="cv-$lang.pdf" \
               "http://localhost:8080/index.html?lang=$lang&theme=light"
