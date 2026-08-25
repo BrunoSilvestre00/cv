@@ -87,15 +87,17 @@ jobs:
             # two runs of this workflow hung for 6 hours (GitHub's default job
             # timeout) and were cancelled without ever producing a PDF.
             #
-            # --headless=new is the culprit, confirmed by watching a dispatched
-            # run directly: --print-to-pdf never returns under it on this
-            # runner (no GPU, --no-sandbox), even with --disable-dev-shm-usage
-            # added — timeout has to kill it at exactly 60s, every time. Old
-            # headless mode's PDF pipeline doesn't share that hang. timeout
-            # stays regardless, as a safety net against the next surprise.
+            # --print-to-pdf never returns on this runner (no GPU, --no-sandbox),
+            # confirmed by watching two dispatched runs directly — neither
+            # --headless=new nor --headless=old made a difference, both hang for
+            # exactly 60s until timeout kills them. --virtual-time-budget is next
+            # under suspicion: this page has no JS timer that needs fast-forwarding,
+            # and Chromium has open bugs where it holds the renderer in a state
+            # print-to-pdf's readiness check never resolves. timeout stays
+            # regardless, as a safety net against the next surprise.
             if timeout 60s "$CHROME" \
-              --headless=old --disable-gpu --disable-dev-shm-usage --no-sandbox \
-              --no-pdf-header-footer --virtual-time-budget=15000 \
+              --headless=new --disable-gpu --disable-dev-shm-usage --no-sandbox \
+              --no-pdf-header-footer \
               --user-data-dir="$profile" \
               --print-to-pdf="cv-$lang.pdf" \
               "http://localhost:8080/index.html?lang=$lang&theme=light"
