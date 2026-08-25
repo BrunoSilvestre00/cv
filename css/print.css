@@ -47,6 +47,11 @@
     mix-blend-mode:          normal !important;
     box-shadow:              none !important;
     text-shadow:             none !important;
+    /* Confirmed via a real CI run: .icon-link's opacity:0.6 (style.css) was
+       missing from this list, and a real Chromium PDF export was rasterising
+       small SVG icons into embedded images instead of keeping them vector —
+       non-1 opacity is a compositing trigger same as the others above. */
+    opacity:                 1 !important;
 
     animation:  none !important;
     transition: none !important;
@@ -265,6 +270,13 @@
   .entry-note        { font-size: 8pt !important; margin-top: 3pt !important; }
   .entry-title-quote { font-size: 8.2pt !important; margin-top: 3pt !important; line-height: 1.45 !important; }
   .entry-links       { gap: 3pt !important; margin-top: 4pt !important; }
+  /* Purely decorative — the link text plus the real <a href> hyperlink
+     annotation already say everything a reader needs. Removed in print
+     rather than chased further: these were the other half of the same
+     rasterisation the opacity:1 reset above targets, and dropping them is
+     zero information loss in a document that's read as text, not skimmed
+     for icons. */
+  .entry-links svg, .icon-link { display: none !important; }
   .entry-links a     { font-size: 7pt !important; padding: 1pt 4.5pt !important; }
 
   /* Hyphenation keeps justified prose from developing rivers */
