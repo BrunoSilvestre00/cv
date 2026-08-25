@@ -74,6 +74,25 @@ jobs:
           done
           echo "::error::static server never came up"; exit 1
 
+      - name: Smoke test --print-to-pdf against a trivial page (diagnostic)
+        run: |
+          set -e
+          CHROME="${{ steps.setup-chrome.outputs.chrome-path }}"
+          profile="$(mktemp -d)"
+          rm -f /tmp/smoke.pdf
+          timeout 20s "$CHROME" \
+            --headless=new --disable-gpu --disable-dev-shm-usage --no-sandbox \
+            --no-pdf-header-footer \
+            --user-data-dir="$profile" \
+            --print-to-pdf=/tmp/smoke.pdf \
+            "data:text/html,<h1>hi</h1>" \
+            || echo "smoke test exited $? (non-fatal, diagnostic only)"
+          if [ -s /tmp/smoke.pdf ]; then
+            echo "SMOKE TEST: OK, $(stat -c%s /tmp/smoke.pdf) bytes — print-to-pdf works in general on this runner"
+          else
+            echo "SMOKE TEST: FAILED — print-to-pdf produced nothing even for a trivial data: URL"
+          fi
+
       - name: Generate PDFs (light theme, pt + en)
         run: |
           set -e
