@@ -30,11 +30,13 @@ Abrir `file://` também funciona — o `i18n.js` expõe as traduções em
 index.html                          estrutura + texto em português (ver "fallback" abaixo)
 css/style.css                       design tokens, temas, layout de tela
 css/print.css                       layout de impressão — deliberadamente diferente do de tela
-js/i18n.js                          todo o texto, em PT e EN
+js/i18n.js                          todo o texto, em PT e EN — fonte de verdade
 js/main.js                          idade, tema, i18n, regra de @page, botão de download
 assets/img/                         bandeiras do seletor de idioma
-.github/workflows/generate-pdf.yml  gera cv-pt.pdf / cv-en.pdf a cada push em main
-cv-pt.pdf, cv-en.pdf                gerados pela Action acima — não editar à mão
+scripts/generate-resume-md.js       gera exports/cv-pt.md / exports/cv-en.md a partir de js/i18n.js
+.github/workflows/generate-pdf.yml  roda o script acima + gera cv-pt.pdf / cv-en.pdf, a cada push em main
+cv-pt.pdf, cv-en.pdf                gerados pela Action — não editar à mão
+exports/cv-pt.md, exports/cv-en.md  gerados pela Action — não editar à mão
 ```
 
 ---
@@ -116,6 +118,36 @@ fundo fixo, `box-shadow`, ...) que rasterize a página. Se `cv-pt.pdf` ou
 persistem. É esse mecanismo que permite à Action forçar tema e idioma sem
 precisar semear um profile de navegador; também funciona para qualquer link
 compartilhado manualmente, ex. `index.html?lang=en&theme=light`.
+
+---
+
+## O currículo em Markdown
+
+`exports/cv-pt.md` e `exports/cv-en.md`, gerados pela mesma Action —
+`scripts/generate-resume-md.js` roda antes dos passos de PDF (não precisa de
+Chrome nem de servidor, só `fs`/`path`/`vm` do próprio Node). Ficam numa pasta
+própria, separados de `cv-pt.pdf`/`cv-en.pdf`: os PDFs continuam na raiz porque
+o botão de download busca por caminho relativo fixo (ver `js/main.js`).
+
+O script **não reimplementa** busca de chave nem a interpolação de
+`{experienceYears}` — carrega `js/i18n.js` e `js/main.js` num contexto `vm`
+isolado (a mesma ordem de carga do `index.html`) e chama as funções deles
+(`getTranslation`, `wholeYearsSince`) diretamente. Uma mudança em
+`CAREER_START` ou na sintaxe de interpolação é refletida sozinha, sem
+precisar editar o script.
+
+O que **não** vem de `js/i18n.js` — porque nunca precisou ser traduzido —
+está hardcoded no topo do próprio script (contatos, links externos, listas de
+skills): são idênticos em pt/en no site também. Se esses mudarem no
+`index.html`, precisam mudar ali também; não há como o script descobri-los
+sozinho sem partir para parsing de HTML, mais frágil que manter os dois em
+sincronia à mão.
+
+Roda local sem instalar nada:
+
+```bash
+node scripts/generate-resume-md.js
+```
 
 ---
 
