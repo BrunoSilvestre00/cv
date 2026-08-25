@@ -181,7 +181,13 @@
     width:         38pt !important;
     height:        38pt !important;
     margin-bottom: 0 !important;
-    background:    var(--avatar-gradient) !important;
+    /* Flat colour, not the on-screen gradient: confirmed via a real CI run
+       that this is the one surviving gradient in the print stylesheet, and
+       some software-rendering paths (no GPU, as on a CI runner) rasterise a
+       CSS gradient into an embedded PDF image instead of a vector shading —
+       exactly the kind of thing the top-of-file rasterisation checklist
+       exists to catch. */
+    background:    var(--avatar-border) !important;
     border:        1.5pt solid var(--avatar-border) !important;
   }
 
