@@ -85,20 +85,23 @@ jobs:
             # `timeout` is the important part: --virtual-time-budget only bounds
             # the page's own JS timers, not the Chrome process itself. The first
             # two runs of this workflow hung for 6 hours (GitHub's default job
-            # timeout) and were cancelled without ever producing a PDF —
-            # --print-to-pdf can wedge indefinitely on a containerized Linux
-            # runner with no GPU, and nothing about the CLI flags times it out
-            # on its own. --disable-dev-shm-usage works around the specific,
-            # well-documented trigger (Chrome/Docker containers default /dev/shm
-            # to 64MB, too small for the renderer's shared memory) — timeout is
-            # the safety net regardless of whether that was the whole story.
-            if ! timeout 60s "$CHROME" \
-              --headless=new --disable-gpu --disable-dev-shm-usage --no-sandbox \
+            # timeout) and were cancelled without ever producing a PDF.
+            #
+            # --headless=new is the culprit, confirmed by watching a dispatched
+            # run directly: --print-to-pdf never returns under it on this
+            # runner (no GPU, --no-sandbox), even with --disable-dev-shm-usage
+            # added — timeout has to kill it at exactly 60s, every time. Old
+            # headless mode's PDF pipeline doesn't share that hang. timeout
+            # stays regardless, as a safety net against the next surprise.
+            if timeout 60s "$CHROME" \
+              --headless=old --disable-gpu --disable-dev-shm-usage --no-sandbox \
               --no-pdf-header-footer --virtual-time-budget=15000 \
               --user-data-dir="$profile" \
               --print-to-pdf="cv-$lang.pdf" \
               "http://localhost:8080/index.html?lang=$lang&theme=light"
             then
+              : # ok
+            else
               status=$?
               if [ "$status" -eq 124 ]; then
                 echo "::error::Chrome hung generating cv-$lang.pdf and was killed after 60s"
