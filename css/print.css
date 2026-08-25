@@ -257,6 +257,14 @@
   .summary-text + .summary-text { margin-top: 4pt !important; }
   .badge-row    { gap: 3pt !important; margin-top: 5pt !important; }
   .badge        { font-size: 7pt !important; padding: 1pt 4.5pt !important; }
+  /* Found via a real CI run + decoding the actual embedded image bytes: the
+     3 badge emoji (🎓🏅🏃) were the entire "6 rasterized images" mystery —
+     each is a colour glyph the font stores as a bitmap (RGB + alpha-mask
+     pair per glyph = 3×2 = 6), not something any CSS property controls. The
+     badge label text is unaffected either way — it was always real vector
+     text; only the pictograph itself rasterizes. Dropped in print since it's
+     pure decoration and costs zero information. */
+  .badge-icon   { display: none !important; }
 
   .entry             { margin-bottom: 6pt !important; padding-left: 7pt !important; }
   .entry-header h3   { font-size: 9.5pt !important; }
@@ -270,13 +278,6 @@
   .entry-note        { font-size: 8pt !important; margin-top: 3pt !important; }
   .entry-title-quote { font-size: 8.2pt !important; margin-top: 3pt !important; line-height: 1.45 !important; }
   .entry-links       { gap: 3pt !important; margin-top: 4pt !important; }
-  /* Purely decorative — the link text plus the real <a href> hyperlink
-     annotation already say everything a reader needs. Removed in print
-     rather than chased further: these were the other half of the same
-     rasterisation the opacity:1 reset above targets, and dropping them is
-     zero information loss in a document that's read as text, not skimmed
-     for icons. */
-  .entry-links svg, .icon-link { display: none !important; }
   .entry-links a     { font-size: 7pt !important; padding: 1pt 4.5pt !important; }
 
   /* Hyphenation keeps justified prose from developing rivers */

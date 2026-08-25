@@ -58,9 +58,9 @@ window.translations = {
       competitiveHeading: "Competições Acadêmicas",
     },
     badges: {
-      master: "🎓 Mestre em Ciências de Computação",
-      medal: "🏅 Medalhista InterIF",
-      marathon: "🏃 Finalista Maratona SBC",
+      master: "Mestre em Ciências de Computação",
+      medal: "Medalhista InterIF",
+      marathon: "Finalista Maratona SBC",
     },
     experience: {
       dio: {
@@ -226,9 +226,9 @@ window.translations = {
       competitiveHeading: "Academic Competitions",
     },
     badges: {
-      master: "🎓 M.Sc. in Computer Science",
-      medal: "🏅 InterIF Medal Winner",
-      marathon: "🏃 SBC Marathon Finalist",
+      master: "M.Sc. in Computer Science",
+      medal: "InterIF Medal Winner",
+      marathon: "SBC Marathon Finalist",
     },
     experience: {
       dio: {

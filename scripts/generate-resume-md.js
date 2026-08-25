@@ -203,7 +203,21 @@ function buildMarkdown(lang, ctx) {
   h(2, t('main.summaryHeading'));
   p(t('main.summaryP1'));
   p(t('main.summaryP2'));
-  p([t('badges.master'), t('badges.medal'), t('badges.marathon'), 'CEFR B2'].join(' · '));
+  // The 🎓🏅🏃 prefixes live here, not in i18n.js: a color emoji glyph gets
+  // embedded as a raster image by some PDF font-rendering pipelines (that's
+  // exactly what happened to cv-pt.pdf/cv-en.pdf — see print.css's
+  // .badge-icon rule), so index.html keeps the icon and the label in
+  // separate elements and hides the icon in print. Markdown has no such
+  // problem — a renderer just shows the Unicode glyph — so it's safe (and
+  // nicer) to keep it here.
+  p(
+    [
+      `🎓 ${t('badges.master')}`,
+      `🏅 ${t('badges.medal')}`,
+      `🏃 ${t('badges.marathon')}`,
+      'CEFR B2',
+    ].join(' · ')
+  );
   rule();
 
   // ── Skills (not in i18n.js — see file header) ──────────────────────
