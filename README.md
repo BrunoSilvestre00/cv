@@ -6,8 +6,11 @@ clicáveis, não uma imagem.
 
 **No ar:** https://brunosilvestre00.github.io/cv/
 
-Sem build, sem dependências, sem framework. Três arquivos de código e nenhuma
-etapa de compilação: dá para abrir o `index.html` direto no navegador.
+O site em si não tem build, dependências nem framework: três arquivos de
+código e nenhuma etapa de compilação, dá para abrir o `index.html` direto no
+navegador. O único `npm install` do repositório é para a *tooling* de CI que
+gera os exports (`package.json`, ver "Baixando o PDF" abaixo) — nada disso
+chega ao navegador de quem visita o site.
 
 ---
 
@@ -33,8 +36,10 @@ css/print.css                       layout de impressão — deliberadamente dif
 js/i18n.js                          todo o texto, em PT e EN — fonte de verdade
 js/main.js                          idade, tema, i18n, regra de @page, botão de download
 assets/img/                         bandeiras do seletor de idioma
+package.json                        único devDependency do repo (Puppeteer) — só para a tooling abaixo
 scripts/generate-resume-md.js       gera exports/cv-pt.md / exports/cv-en.md a partir de js/i18n.js
-.github/workflows/generate-pdf.yml  roda o script acima + gera cv-pt.pdf / cv-en.pdf, a cada push em main
+scripts/generate-pdfs.js            gera cv-pt.pdf / cv-en.pdf via Puppeteer
+.github/workflows/generate-pdf.yml  roda os dois scripts acima a cada push em main
 cv-pt.pdf, cv-en.pdf                gerados pela Action — não editar à mão
 exports/cv-pt.md, exports/cv-en.md  gerados pela Action — não editar à mão
 ```
@@ -102,10 +107,27 @@ Detalhes que importam:
 O botão "Baixar PDF" no header **não imprime nada** — ele baixa um arquivo
 já pronto, `cv-pt.pdf` ou `cv-en.pdf` (conforme o idioma corrente), servido
 da raiz do repositório. Esse arquivo é gerado por uma GitHub Action
-(`.github/workflows/generate-pdf.yml`) a cada push em `main`, usando o próprio
-motor de PDF do Chrome (`--print-to-pdf`) contra a página em
+(`.github/workflows/generate-pdf.yml`) a cada push em `main`, via
+`scripts/generate-pdfs.js` (Puppeteer) contra a página em
 `?lang=<pt|en>&theme=light`. Nunca passa por um driver de impressão do
 sistema, então nunca corre o risco descrito na seção seguinte.
+
+**Por que Puppeteer e não um `chrome --print-to-pdf` direto** (o que essa
+Action usava originalmente): as duas primeiras execuções reais penduraram
+por 6 horas cada — o timeout padrão do GitHub — e foram canceladas sem nunca
+gerar PDF nenhum, sem que ninguém notasse até muito depois. Com um `timeout`
+por fora forçando falha rápida em vez de lenta, seis combinações de flag
+diferentes (os dois modos headless, com/sem `--virtual-time-budget`, com/sem
+`--run-all-compositor-stages-before-draw`, com Google Fonts bloqueado via
+DNS) travaram todas do mesmo jeito. Um teste contra uma página `data:`
+trivial, sem servidor nem CSS nenhum envolvido, travou igual — o que descarta
+completamente esta página, este servidor e este CSS como causa: o
+`--print-to-pdf` da CLI simplesmente não retorna nesse runner com essa build
+do Chrome, para qualquer entrada. O Puppeteer aciona o mesmo motor por outro
+caminho (`Page.printToPDF` via DevTools Protocol), testado e usado por uma
+escala de projetos incomparavelmente maior que a flag de CLI isolada — e
+funcionou de primeira, gerando o mesmo resultado (0 imagens, todas as fontes
+embutidas, todos os links intactos).
 
 A Action verifica sozinha que o PDF continua íntegro — 0 objetos
 `/Subtype /Image`, ao menos um `/Type /Font` e um `/Subtype /Link` — e falha
@@ -196,15 +218,23 @@ rasterizando a página, e nenhum CSS aqui pode evitar — só o botão de downlo
 
 ## Verificando uma alteração
 
-Dá para gerar o PDF pelo mesmo motor do "Salvar como PDF" e inspecionar o
-resultado, sem abrir diálogo nenhum:
+A própria Action já faz essa verificação a cada push (ver acima). Para
+reproduzir localmente o que ela gera:
+
+```bash
+npm install
+node scripts/generate-pdfs.js
+```
+
+Alternativa rápida, sem instalar nada, para um teste manual pontual (mas
+não é o que a CI usa — ver a ressalva na seção anterior):
 
 ```bash
 chrome --headless=new --disable-gpu --no-pdf-header-footer \
   --print-to-pdf="cv.pdf" "http://127.0.0.1:5500/index.html"
 ```
 
-E conferir que continua sendo texto de verdade:
+De qualquer um dos dois, conferir que continua sendo texto de verdade:
 
 ```bash
 grep -aoE "/Type[ ]*/Font"    cv.pdf | wc -l   # > 0  → texto vetorial
