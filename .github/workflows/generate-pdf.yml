@@ -84,6 +84,14 @@ jobs:
       - name: Generate PDFs (light theme, pt + en)
         run: node scripts/generate-pdfs.js
 
+      - name: Upload PDFs as artifacts (diagnostic, temporary)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdfs-debug
+          path: cv-*.pdf
+          retention-days: 3
+
       - name: Verify PDFs stay vector text with clickable links
         run: |
           set -e
