@@ -2,9 +2,11 @@
 /**
  * scripts/generate-pdfs.js
  *
- * Renders cv-pt.pdf and cv-en.pdf at the repo root — the files the header's
+ * Renders exports/cv-pt.pdf and exports/cv-en.pdf — the files the header's
  * "Baixar PDF" button downloads (see js/main.js: setupDownloadButton).
  * Always the light theme, matching what the button itself always fetches.
+ * Lives in exports/ alongside exports/cv-*.md, keeping the repo root free of
+ * generated files — index.html finds them there via a relative path.
  *
  * Run by .github/workflows/generate-pdf.yml on every push to main. Locally:
  *
@@ -83,6 +85,8 @@ function startServer() {
 async function main() {
   const server = await startServer();
   const baseUrl = `http://127.0.0.1:${server.address().port}`;
+  const outDir = path.join(ROOT, 'exports');
+  fs.mkdirSync(outDir, { recursive: true });
   const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox', '--disable-dev-shm-usage'],
@@ -95,7 +99,7 @@ async function main() {
         waitUntil: 'networkidle0',
         timeout: 30000,
       });
-      const outPath = path.join(ROOT, `cv-${lang}.pdf`);
+      const outPath = path.join(outDir, `cv-${lang}.pdf`);
       await page.pdf({
         path: outPath,
         printBackground: true,

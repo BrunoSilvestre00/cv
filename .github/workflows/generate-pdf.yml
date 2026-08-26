@@ -1,7 +1,7 @@
 name: Generate CV exports
 
-# Produces cv-pt.pdf / cv-en.pdf at the repo root and exports/cv-pt.md /
-# exports/cv-en.md.
+# Produces exports/cv-pt.pdf / exports/cv-en.pdf and exports/cv-pt.md /
+# exports/cv-en.md. The repo root stays code-only.
 #
 # ── PDFs ──
 # The files the header's "Baixar PDF" button downloads (see js/main.js:
@@ -89,7 +89,7 @@ jobs:
           set -e
           fail=0
           for lang in pt en; do
-            f="cv-$lang.pdf"
+            f="exports/cv-$lang.pdf"
             fonts=$(grep -aoE '/Type */Font' "$f" | wc -l)
             images=$(grep -aoE '/Subtype */Image' "$f" | wc -l)
             links=$(grep -aoE '/Subtype */Link' "$f" | wc -l)
@@ -112,7 +112,7 @@ jobs:
       - name: Commit and push if the exports changed
         run: |
           set -e
-          git add cv-pt.pdf cv-en.pdf exports/cv-pt.md exports/cv-en.md
+          git add exports/cv-pt.pdf exports/cv-en.pdf exports/cv-pt.md exports/cv-en.md
           if git diff --cached --quiet; then
             echo "Exports unchanged, nothing to commit."
             exit 0
