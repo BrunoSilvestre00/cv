@@ -38,10 +38,9 @@ js/main.js                          idade, tema, i18n, regra de @page, botão de
 assets/img/                         bandeiras do seletor de idioma
 package.json                        único devDependency do repo (Puppeteer) — só para a tooling abaixo
 scripts/generate-resume-md.js       gera exports/cv-pt.md / exports/cv-en.md a partir de js/i18n.js
-scripts/generate-pdfs.js            gera cv-pt.pdf / cv-en.pdf via Puppeteer
+scripts/generate-pdfs.js            gera exports/cv-pt.pdf / exports/cv-en.pdf via Puppeteer
 .github/workflows/generate-pdf.yml  roda os dois scripts acima a cada push em main
-cv-pt.pdf, cv-en.pdf                gerados pela Action — não editar à mão
-exports/cv-pt.md, exports/cv-en.md  gerados pela Action — não editar à mão
+exports/                            tudo gerado pela Action — não editar à mão. Raiz do repo é só código.
 ```
 
 ---
@@ -105,8 +104,8 @@ Detalhes que importam:
 ## Baixando o PDF
 
 O botão "Baixar PDF" no header **não imprime nada** — ele baixa um arquivo
-já pronto, `cv-pt.pdf` ou `cv-en.pdf` (conforme o idioma corrente), servido
-da raiz do repositório. Esse arquivo é gerado por uma GitHub Action
+já pronto, `exports/cv-pt.pdf` ou `exports/cv-en.pdf` (conforme o idioma
+corrente). Esse arquivo é gerado por uma GitHub Action
 (`.github/workflows/generate-pdf.yml`) a cada push em `main`, via
 `scripts/generate-pdfs.js` (Puppeteer) contra a página em
 `?lang=<pt|en>&theme=light`. Nunca passa por um driver de impressão do
@@ -132,8 +131,8 @@ embutidas, todos os links intactos).
 A Action verifica sozinha que o PDF continua íntegro — 0 objetos
 `/Subtype /Image`, ao menos um `/Type /Font` e um `/Subtype /Link` — e falha
 o CI se um `print.css` futuro reintroduzir algo composto (`backdrop-filter`,
-fundo fixo, `box-shadow`, ...) que rasterize a página. Se `cv-pt.pdf` ou
-`cv-en.pdf` mudaram, ela mesma comita de volta em `main`.
+fundo fixo, `box-shadow`, ...) que rasterize a página. Se `exports/cv-pt.pdf`
+ou `exports/cv-en.pdf` mudaram, ela mesma comita de volta em `main`.
 
 `?theme=` (no script inline do `<head>`) e `?lang=` (em `getUrlParam()` no
 `main.js`) sobrescrevem `localStorage` só para aquele load — nunca
@@ -145,11 +144,10 @@ compartilhado manualmente, ex. `index.html?lang=en&theme=light`.
 
 ## O currículo em Markdown
 
-`exports/cv-pt.md` e `exports/cv-en.md`, gerados pela mesma Action —
-`scripts/generate-resume-md.js` roda antes dos passos de PDF (não precisa de
-Chrome nem de servidor, só `fs`/`path`/`vm` do próprio Node). Ficam numa pasta
-própria, separados de `cv-pt.pdf`/`cv-en.pdf`: os PDFs continuam na raiz porque
-o botão de download busca por caminho relativo fixo (ver `js/main.js`).
+`exports/cv-pt.md` e `exports/cv-en.md`, gerados pela mesma Action, na mesma
+pasta que os PDFs — tudo que é gerado fica em `exports/`, raiz do repositório
+é só código. `scripts/generate-resume-md.js` roda antes dos passos de PDF
+(não precisa de Chrome nem de servidor, só `fs`/`path`/`vm` do próprio Node).
 
 O script **não reimplementa** busca de chave nem a interpolação de
 `{experienceYears}` — carrega `js/i18n.js` e `js/main.js` num contexto `vm`
