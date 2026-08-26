@@ -1,0 +1,12 @@
+{
+  "name": "cv-export-tooling",
+  "private": true,
+  "description": "Build-time-only tooling for generating cv-*.pdf and exports/cv-*.md in CI. The deployed site itself (index.html, css/, js/) has zero dependencies and no build step — nothing here ships to the browser.",
+  "scripts": {
+    "generate-pdfs": "node scripts/generate-pdfs.js",
+    "generate-resume-md": "node scripts/generate-resume-md.js"
+  },
+  "devDependencies": {
+    "puppeteer": "25.9.0"
+  }
+}
